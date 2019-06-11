@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Operacje technologiczne</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Wyloguj
+        </button>
+    </form>
+
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${userName}"></span>
+            </div>
+            <div class="panel-body">
+                <form method="POST" class="form-signin">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="row">
+
+
+
+                            <h3 class="form-signin-heading" th:text="Informacje" style="text-align: center;">Informacje</h3>
+                            <br/>
+                            <div class="col-md-4">
+                                <input type="text" id="id_pracownika" name="id_pracownika" placeholder="Id pracownika"
+                                       class="form-control"/> <br/>
+                                <input type="text" id="nazwisko_pracownika" name="nazwisko_pracownika" placeholder="Nazwisko pracownika"
+                                       class="form-control"/> <br/>
+                                <input type="text" id="wydzial_pracownika" name="wydzial_pracownika" placeholder="Wydzial pracownika"
+                                       class="form-control"/> <br/>
+                                <br/>
+                                <br/>
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <!--Wybranie kodu maszyny-->
+                                <select class="form-control" id="kod_maszyny" placeholder="Kod maszyny">
+                                    <option value="a">C</option>
+                                    <option value="b">B</option>
+                                    <option value="c">A</option>
+                                </select> <br/>
+                                <input type="text" id="id_maszyny" name="id_maszyny" placeholder="Id maszyny"
+                                       class="form-control"/> <br/>
+
+                                <input type="text" id="nazwa_maszyny" name="nazwa_maszyny" placeholder="Nazwa maszyny"
+                                       class="form-control"/> <br/>
+                                <br/>
+                                <br/>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" id="zmiana" name="zmiana" placeholder="Zmiana"
+                                       class="form-control"/> <br/>
+                                <input type="text" id="data" name="data" placeholder="Data"
+                                       class="form-control"/> <br/>
+                                <input type="text" id="czas_pracy" name="czas_pracy" placeholder="Czas pracy"
+                                       class="form-control"/> <br/>
+
+
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+
+                <br />
+
+
+
+
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Id_ewidencji</label>
+                        <input type="text" id="id_ewidencji" name="id_ewidencji" placeholder="Id_ewidencji"
+                               class="form-control"/> <br/>
+
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Indeks</label>
+                        <select class="form-control">
+                            <option value="a">C</option>
+                            <option value="b">B</option>
+                            <option value="c">A</option>
+                        </select> <br/>
+
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Operacja</label>
+                        <select class="form-control">
+                            <option value="a">C</option>
+                            <option value="b">B</option>
+                            <option value="c">A</option>
+                        </select> <br/>
+
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Ilość</label>
+                        <input type="text" id="ilosc" name="ilosc" placeholder="Ilość"
+                               class="form-control"/>
+                        <br/>
+
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Nazwa operacji</label>
+                        <select class="form-control">
+                            <option value="a">C</option>
+                            <option value="b">B</option>
+                            <option value="c">A</option>
+                        </select> <br/>
+
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Nazwa indeksu</label>
+                        <select class="form-control">
+                            <option value="a">C</option>
+                            <option value="b">B</option>
+                            <option value="c">A</option>
+                        </select> <br/>
+
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Czas</label>
+                        <input type="text" id="czas" name="czas" placeholder="Czas"
+                               class="form-control"/>
+                        <br/>
+
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Data</label>
+                        <input class="form-control" type="date" id="start" name="trip-start"
+                               value="2018-07-22">
+                        </br>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+
+
+
+
+                <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit">
+                </button>
+                </form>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+</div>
+</body>
+</html>
+
