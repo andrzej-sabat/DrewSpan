@@ -1,10 +1,14 @@
 package com.drewSpan.drewSpan2.service;
 
+import com.drewSpan.drewSpan2.model.OpTech;
 import com.drewSpan.drewSpan2.model.User;
+import com.drewSpan.drewSpan2.repository.OpTechRepository;
 import com.drewSpan.drewSpan2.repository.RoleRepository;
 import com.drewSpan.drewSpan2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("userService")
 public class UserService {
@@ -31,5 +35,25 @@ public class UserService {
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         return userRepository.save(user);
     }
+
 */
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User findById(long id) {
+        return userRepository.findById(id);
+    }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    public void remove(User user) {
+        userRepository.delete(user);
+    }
+
+    public void removeUserById(long id) {
+        userRepository.deleteById(id);
+    }
 }

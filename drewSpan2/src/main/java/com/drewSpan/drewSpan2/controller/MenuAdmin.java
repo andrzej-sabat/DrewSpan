@@ -56,4 +56,12 @@ public class MenuAdmin {
         modelAndView.setViewName("admin/operacje_indeks");
         return modelAndView;
     }
+    @RequestMapping(value="/dodawanie_pracownika", method = RequestMethod.GET)
+    public ModelAndView dodawaniePracownika(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/dodawanie_pracownika");
+        return modelAndView;
+    }
+
+
 }
