@@ -25,54 +25,55 @@
                 <span th:utext="${userName}"></span>
             </div>
             <div class="panel-body">
-                <form  th:action="@{/save_op_tech}" th:object="${opTech}" method="post" >
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <label>Kod operacji</label>
-                            <input type="text" id="kod_operacji" name="kod_operacji" placeholder="Kod operacji"
-                                   class="form-control" th:field="*{kod}"/> <br/>
+                <form action="#"  th:action="@{/save_op_tech}" th:object="${opTech}" method="post" >
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <input type="hidden" th:field="*{opt_id}"/>
+                                <label>Kod operacji</label>
+                                <input type="text" id="opt_kod" name="opt_kod" placeholder="Kod operacji"
+                                       class="form-control" th:field="*{opt_kod}" th:required="required"/> <br/>
 
-                        </div>
-                        <div class="col-md-3"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <label>Nazwa operacji</label>
-                            <input type="text" id="nazwa_operacji" name="nazwa_operacji" placeholder="Nazwa operacji"
-                                   class="form-control" th:field="*{nazwa}"/> <br/>
-
-                        </div>
-                        <div class="col-md-3"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <button class="btn btn-lg btn-primary btn-block" name="dodaj_operacje" value="Dodaj" type="Submit">
-                                        Dodaj operacje
-                                    </button>
-                                </div>
                             </div>
-
-
+                            <div class="col-md-3"></div>
                         </div>
-                        <div class="col-md-3"></div>
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <label>Nazwa operacji</label>
+                                <input type="text" id="opt_nazwa" name="opt_nazwa" placeholder="Nazwa operacji"
+                                       class="form-control" th:field="*{opt_nazwa}" th:required="required"/> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-lg btn-primary btn-block" name="dodaj_operacje" value="Dodaj" type="Submit">
+                                            Zapisz operacje
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+
+
+
                     </div>
-
-
-
-
-                </div>
-                <div class="col-md-2"></div>
+                    <div class="col-md-2"></div>
                 </form>
             </div>
 
