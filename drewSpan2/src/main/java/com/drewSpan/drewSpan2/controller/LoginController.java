@@ -1,7 +1,9 @@
 package com.drewSpan.drewSpan2.controller;
 
 import com.drewSpan.drewSpan2.model.IndexOp;
+import com.drewSpan.drewSpan2.model.KrMaszyny;
 import com.drewSpan.drewSpan2.model.User;
+import com.drewSpan.drewSpan2.service.KrMaszynyService;
 import com.drewSpan.drewSpan2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,6 +20,8 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private KrMaszynyService krMaszynyService;
 
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
@@ -81,6 +85,11 @@ public class LoginController {
 
 
 
+        List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
+
+        Integer rozmiar_listy = listKrMaszynys.size();
+        modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+        modelAndView.addObject("rozmiar_listy", rozmiar_listy);
         modelAndView.addObject("user",user);
         modelAndView.addObject("userName", "Witaj " + user.getName() + " " + user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");

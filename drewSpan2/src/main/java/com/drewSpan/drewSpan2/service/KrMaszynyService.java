@@ -2,7 +2,6 @@ package com.drewSpan.drewSpan2.service;
 
 import com.drewSpan.drewSpan2.model.KrMaszyny;
 import com.drewSpan.drewSpan2.repository.KrMaszynyRepository;
-import com.drewSpan.drewSpan2.repository.KrMaszynyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

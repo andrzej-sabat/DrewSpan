@@ -26,49 +26,54 @@
             </div>
             <div class="panel-body">
 
-                <form action="#"  th:action="@{/save_ewidencja}" th:object="${user}" method="post" class="form-signin" >
+                <form action="#"  th:action="@{/save_ewidencja}"  method="post" class="form-signin" >
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
                         <div class="row">
 
-
-
                             <h3 class="form-signin-heading" th:text="Informacje" style="text-align: center;">Informacje</h3>
                             <br/>
-                            <div class="col-md-4">
+                            <div class="col-md-4" th:object="${user}">
+                                <label>Id pracownika</label>
                                 <input type="text" id="id_pracownika" name="id_pracownika" placeholder="Id pracownika"
                                        class="form-control" th:field="*{code}"/> <br/>
+                                <label>Nazwisko pracownika</label>
                                 <input type="text" id="nazwisko_pracownika" name="nazwisko_pracownika" placeholder="Nazwisko pracownika"
                                        class="form-control" th:field="*{lastName}"/> <br/>
+                                <label>Wydział pracownika</label>
                                 <input type="text" id="wydzial_pracownika" name="wydzial_pracownika" placeholder="Wydzial pracownika"
                                        class="form-control" th:field="*{section}"/> <br/>
                                 <br/>
                                 <br/>
                             </div>
 
+
                             <div class="col-md-4">
-
-                                <!--Wybranie kodu maszyny-->
-                                <select class="form-control" id="kod_maszyny" placeholder="Kod maszyny">
-                                    <option value="a">C</option>
-                                    <option value="b">B</option>
-                                    <option value="c">A</option>
+                                <label>Kod maszyny</label>
+                                <select class="form-control" id="kod_maszyny" onchange="fill_fields()" placeholder="Kod maszyny">
+                                    <option>Wybierz kod maszyny</option>
+                                    <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna}" th:text="${maszyna.krm_kod}"></option>
                                 </select> <br/>
-                                <input type="text" id="id_maszyny" name="id_maszyny" placeholder="Id maszyny"
-                                       class="form-control"/> <br/>
 
+                                <label>Id maszyny</label>
+                                <input type="text" id="id_maszyny" name="id_maszyny" placeholder="Id maszyny"
+                                       class="form-control" > <br/>
+                                <label>Nazwa maszyny</label>
                                 <input type="text" id="nazwa_maszyny" name="nazwa_maszyny" placeholder="Nazwa maszyny"
                                        class="form-control"/> <br/>
                                 <br/>
                                 <br/>
                             </div>
                             <div class="col-md-4">
+                                <label>Zmiana</label>
                                 <input type="text" id="zmiana" name="zmiana" placeholder="Zmiana"
                                        class="form-control"/> <br/>
-                                <input type="text" id="data" name="data" placeholder="Data"
-                                       class="form-control"/> <br/>
+                                <label>Data</label>
+                                <input type="text" id="date" name="data" placeholder="Data"
+                                       class="form-control" th:value="${#dates.format(#dates.createNow(),'dd-MMM-YYYY')}" /> <br/>
+                                <label>Czas pracy</label>
                                 <input type="text" id="czas_pracy" name="czas_pracy" placeholder="Czas pracy"
-                                       class="form-control"/> <br/>
+                                       class="form-control" value="480"/> <br/>
 
 
                             </div>
@@ -177,8 +182,8 @@
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
                             <label>Data</label>
-                            <input class="form-control" type="date" id="start" name="trip-start"
-                                   value="2018-07-22">
+                            <input class="form-control" type="text" id="start" name="trip-start"
+                                   th:value="${#dates.format(#dates.createNow(),'dd-MMM-YYYY')}"/>
                             </br>
                         </div>
                         <div class="col-md-3"></div>
@@ -190,14 +195,40 @@
 
                     <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit">
                     </button>
+
+                    <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                function fill_fields(){
+                                var x = document.getElementById("kod_maszyny").selectedIndex;
+                                var y = document.getElementById("kod_maszyny").options;
+                                var krm_kod = y[x].text;
+                                var rozmiar_listy = /*[[${rozmiar_listy}]]*/;
+
+                                var index;
+                                var jsonObj = JSON.parse(JSON.stringify(/*[[${listKrMaszynys}]]*/));
+                                for (index = 0; index < rozmiar_listy; ++index) {
+                                    if(krm_kod == jsonObj[index]['krm_kod']){
+                                         var id_maszyny = jsonObj[index]['krm_id'];
+                                         var nazwa_maszyny = jsonObj[index]['krm_nazwa'];
+                                         document.getElementById("id_maszyny").value = id_maszyny;
+                                         document.getElementById("nazwa_maszyny").value = nazwa_maszyny;
+                                    }
+
+                                 }
+
+                                }
+                                /*]]>*/
+                          </script>
                 </form>
+
+
 
             </div>
 
         </div>
     </div>
 
-
+    <script src="../../js/custom.js"></script>
 </div>
 </body>
 </html>
