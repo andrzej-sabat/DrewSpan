@@ -1,5 +1,6 @@
 package com.drewSpan.drewSpan2.controller;
 
+import com.drewSpan.drewSpan2.model.IndexOp;
 import com.drewSpan.drewSpan2.model.User;
 import com.drewSpan.drewSpan2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginController {
@@ -70,10 +73,15 @@ public class LoginController {
     }
 
     @RequestMapping(value="/user/user_home", method = RequestMethod.GET)
-    public ModelAndView userHome(){
+    public ModelAndView userHome(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
         User user = userService.findUserByLogin(auth.getName());
+
+
+
+        modelAndView.addObject("user",user);
         modelAndView.addObject("userName", "Witaj " + user.getName() + " " + user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("user/user_home");
