@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dodawanie maszyny</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Wyloguj
+        </button>
+    </form>
+
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${userName}"></span>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <form th:action="@{/save_krmaszyny}" th:object="${krMaszyny}" method="post" >
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <input type="hidden" th:field="*{krm_id}"/>
+                            <label>KrM Kod</label>
+                            <input type="text" id="krm_kod" name="krm_kod" placeholder="Krm kod"
+                                   class="form-control" th:field="*{krm_kod}"/> <br/>
+
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <label>Nazwa maszyny</label>
+                            <input type="text" id="nazwa_maszyny" name="nazwa_maszyny" placeholder="Nazwa maszyny"
+                                   class="form-control" th:field="*{krm_nazwa}"/> <br/>
+
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button class="btn btn-lg btn-primary btn-block" name="dodaj_maszyne" value="Dodaj" type="Submit">
+                                        Zapisz maszynę
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+
+
+
+                    </form>
+                </div>
+
+                <div class="col-md-2"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
