@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+
 
 @Controller
 public class OpTechController {
@@ -80,6 +80,14 @@ public class OpTechController {
         modelAndView.setViewName("admin/lista_operacji");
         return modelAndView;
     }
+
+    @RequestMapping(value="delete_opTech/admin/home", method = RequestMethod.GET)
+    public ModelAndView start(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/home");
+        return modelAndView;
+    }
+
 
 
 

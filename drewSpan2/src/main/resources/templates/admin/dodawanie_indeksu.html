@@ -27,13 +27,14 @@
             <div class="panel-body">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form th:action="@{/save_indeks}" th:object="${indexOp}" method="post" >
+                    <form th:action="@{/save_indexOp}" th:object="${indexOp}" method="post" >
                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
+                            <input type="hidden" th:field="*{id_indeksu}"/>
                             <label>Id Kod</label>
-                            <input type="text" id="id_kod" name="id_kod" placeholder="Id Kod"
-                                   class="form-control" th:field="*{kod}"/> <br/>
+                            <input type="text" id="id_kod" name="i_kod" placeholder="Id Kod"
+                                   class="form-control" th:field="*{i_kod}"/> <br/>
 
                         </div>
                         <div class="col-md-3"></div>
@@ -44,7 +45,7 @@
                         <div class="col-md-6">
                             <label>Nazwa indeksu</label>
                             <input type="text" id="nazwa_indeksu" name="nazwa_indeksu" placeholder="Nazwa indeksu"
-                                   class="form-control" th:field="*{nazwa}"/> <br/>
+                                   class="form-control" th:field="*{i_nazwa}"/> <br/>
 
                         </div>
                         <div class="col-md-3"></div>
@@ -58,7 +59,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <button class="btn btn-lg btn-primary btn-block" name="dodaj_indeks" value="Dodaj" type="Submit">
-                                        Dodaj indeks
+                                        Zapisz indeks
                                     </button>
                                 </div>
 
