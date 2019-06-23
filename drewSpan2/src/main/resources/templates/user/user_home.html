@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Admin Page</title>
+    <title>Ewidencja</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -26,7 +26,8 @@
             </div>
             <div class="panel-body">
 
-                <form action="#"  th:action="@{/save_ewidencja}"  method="post" class="form-signin" >
+                <div class="row">
+                    <form class="das">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
                         <div class="row">
@@ -35,13 +36,13 @@
                             <br/>
                             <div class="col-md-4" th:object="${user}">
                                 <label>Id pracownika</label>
-                                <input type="text" id="id_pracownika" name="id_pracownika" placeholder="Id pracownika"
-                                       class="form-control" th:field="*{code}"/> <br/>
+                                <input required="required" type="text" id="id_pracownika" name="id_pracownika" placeholder="Id pracownika"
+                                       class="form-control" th:field="*{id}"/> <br/>
                                 <label>Nazwisko pracownika</label>
-                                <input type="text" id="nazwisko_pracownika" name="nazwisko_pracownika" placeholder="Nazwisko pracownika"
+                                <input required="required" type="text" id="nazwisko_pracownika" name="nazwisko_pracownika" placeholder="Nazwisko pracownika"
                                        class="form-control" th:field="*{lastName}"/> <br/>
                                 <label>Wydział pracownika</label>
-                                <input type="text" id="wydzial_pracownika" name="wydzial_pracownika" placeholder="Wydzial pracownika"
+                                <input required="required" type="text" id="wydzial_pracownika" name="wydzial_pracownika" placeholder="Wydzial pracownika"
                                        class="form-control" th:field="*{section}"/> <br/>
                                 <br/>
                                 <br/>
@@ -56,23 +57,23 @@
                                 </select> <br/>
 
                                 <label>Id maszyny</label>
-                                <input type="text" id="id_maszyny" name="id_maszyny" placeholder="Id maszyny"
+                                <input required="required" type="text" id="id_maszyny" name="id_maszyny" placeholder="Id maszyny"
                                        class="form-control" > <br/>
                                 <label>Nazwa maszyny</label>
-                                <input type="text" id="nazwa_maszyny" name="nazwa_maszyny" placeholder="Nazwa maszyny"
+                                <input required="required" type="text" id="nazwa_maszyny" name="nazwa_maszyny" placeholder="Nazwa maszyny"
                                        class="form-control"/> <br/>
                                 <br/>
                                 <br/>
                             </div>
                             <div class="col-md-4">
                                 <label>Zmiana</label>
-                                <input type="text" id="zmiana" name="zmiana" placeholder="Zmiana"
+                                <input required="required" type="text" id="zmiana" name="zmiana" placeholder="Zmiana"
                                        class="form-control"/> <br/>
                                 <label>Data</label>
-                                <input type="text" id="date" name="data" placeholder="Data"
-                                       class="form-control" th:value="${#dates.format(#dates.createNow(),'dd-MMM-YYYY')}" /> <br/>
+                                <input required="required" type="text" id="date" name="data" placeholder="Data"
+                                       class="form-control" th:value="${#dates.format(#dates.createNow(),'dd/MM/YYYY')}" /> <br/>
                                 <label>Czas pracy</label>
-                                <input type="text" id="czas_pracy" name="czas_pracy" placeholder="Czas pracy"
+                                <input required="required" type="text" id="czas_pracy" name="czas_pracy" placeholder="Czas pracy"
                                        class="form-control" value="480"/> <br/>
 
 
@@ -80,114 +81,137 @@
                         </div>
                     </div>
                     <div class="col-md-2"></div>
-
+                    <br />
+                    <br />
                     <br />
 
 
 
 
 
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <label>Id_ewidencji</label>
-                            <input type="text" id="id_ewidencji" name="id_ewidencji" placeholder="Id_ewidencji"
-                                   class="form-control"/> <br/>
+        <div class="row form_signin">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6" th:object="${user}">
+                        <label>Imie pracownika</label>
+                        <input required="required" type="text" id="imie_pracownika" name="imie_pracownika" placeholder="Imie pracownika"
+                               class="form-control" th:field="*{name}"/> <br/>
 
-                        </div>
-                        <div class="col-md-3"></div>
                     </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6" th:object="${user}">
+                        <label>Kod pracownika</label>
+                        <input required="required" type="text" id="kod_pracownika" name="kod_pracownika" placeholder="Kod pracownika"
+                               class="form-control" th:field="*{code}"/> <br/>
 
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <label>Indeks</label>
-                            <select class="form-control">
-                                <option value="a">C</option>
-                                <option value="b">B</option>
-                                <option value="c">A</option>
-                            </select> <br/>
-
-                        </div>
-                        <div class="col-md-3"></div>
                     </div>
+                    <div class="col-md-3"></div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <label>Operacja</label>
-                            <select class="form-control">
-                                <option value="a">C</option>
-                                <option value="b">B</option>
-                                <option value="c">A</option>
-                            </select> <br/>
 
-                        </div>
-                        <div class="col-md-3"></div>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Id_ewidencji</label>
+                        <input required="required" type="text" id="id_ewidencji" name="id_ewidencji" placeholder="Id_ewidencji"
+                               class="form-control"/> <br/>
+
                     </div>
+                    <div class="col-md-3"></div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <label>Ilość</label>
-                            <input type="text" id="ilosc" name="ilosc" placeholder="Ilość"
-                                   class="form-control"/>
-                            <br/>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Indeks</label>
+                        <select class="form-control" id="indeks" onchange="fill_index_name()" placeholder="Indeks">
+                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_kod}"></option>
+                        </select> <br/>
 
-                        </div>
-                        <div class="col-md-3"></div>
                     </div>
+                    <div class="col-md-3"></div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <label>Nazwa operacji</label>
-                            <select class="form-control">
-                                <option value="a">C</option>
-                                <option value="b">B</option>
-                                <option value="c">A</option>
-                            </select> <br/>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Nazwa indeksu</label>
+                        <select class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()" placeholder="Nazwa indeksu">
+                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}"></option>
+                        </select> <br/>
 
-                        </div>
-                        <div class="col-md-3"></div>
                     </div>
+                    <div class="col-md-3"></div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <label>Nazwa indeksu</label>
-                            <select class="form-control">
-                                <option value="a">C</option>
-                                <option value="b">B</option>
-                                <option value="c">A</option>
-                            </select> <br/>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Operacja</label>
+                        <select class="form-control" id="kod_operacji" onchange="fill_op_name()" placeholder="Operacja">
+                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_kod}"></option>
+                        </select> <br/>
 
-                        </div>
-                        <div class="col-md-3"></div>
                     </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Nazwa operacji</label>
+                        <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()" placeholder="Nazwa operacji">
+                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_nazwa}"></option>
+                        </select> <br/>
 
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <label>Czas</label>
-                            <input type="text" id="czas" name="czas" placeholder="Czas"
-                                   class="form-control"/>
-                            <br/>
-
-                        </div>
-                        <div class="col-md-3"></div>
                     </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Ilość</label>
+                        <input required="required" type="text" id="ilosc" name="ilosc" placeholder="Ilość"
+                               class="form-control"/>
+                        <br/>
 
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <label>Data</label>
-                            <input class="form-control" type="text" id="start" name="trip-start"
-                                   th:value="${#dates.format(#dates.createNow(),'dd-MMM-YYYY')}"/>
-                            </br>
-                        </div>
-                        <div class="col-md-3"></div>
                     </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+
+
+
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Czas</label>
+                        <input required="required" type="text" id="czas" name="czas" placeholder="Czas"
+                               class="form-control"/>
+                        <br/>
+
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+                <!--<div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <label>Data</label>
+                        <input required="required" class="form-control" type="text" id="start" name="trip-start"
+                               th:value="${#dates.format(#dates.createNow(),'dd/MM/YYYY')}"/>
+                        </br>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>-->
+            </div>
+        </div>
+
 
 
 
@@ -212,15 +236,88 @@
                                          var nazwa_maszyny = jsonObj[index]['krm_nazwa'];
                                          document.getElementById("id_maszyny").value = id_maszyny;
                                          document.getElementById("nazwa_maszyny").value = nazwa_maszyny;
+
                                     }
 
                                  }
 
                                 }
                                 /*]]>*/
-                          </script>
+                     </script>
+                    <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                function fill_index_name(){
+                                var x = document.getElementById("indeks").selectedIndex;
+                                var y = document.getElementById("indeks").options;
+                                var indeks = y[x].text;
+                                var rozmiar_listy_indeksow = /*[[${rozmiar_listy_indeksow}]]*/;
+                                var index;
+                                var jsonObj = JSON.parse(JSON.stringify(/*[[${listIndexOps}]]*/));
+                                    for (index = 0; index < rozmiar_listy_indeksow; index++) {
+                                        if(indeks == jsonObj[index]['i_kod']){
+                                            var nazwa_indeksu = jsonObj[index]['i_nazwa'];
+                                            document.getElementById("nazwa_indeksu").options.selectedIndex = index;
+                                        }
+                                    }
+                                }
+                                /*]]>*/
+                      </script>
+                    <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                function fill_index_code(){
+                                var x = document.getElementById("nazwa_indeksu").selectedIndex;
+                                var y = document.getElementById("nazwa_indeksu").options;
+                                var nazwa_indeksu = y[x].text;
+                                var rozmiar_listy_indeksow = /*[[${rozmiar_listy_indeksow}]]*/;
+                                var index;
+                                var jsonObj = JSON.parse(JSON.stringify(/*[[${listIndexOps}]]*/));
+                                    for (index = 0; index < rozmiar_listy_indeksow; index++) {
+                                        if(nazwa_indeksu == jsonObj[index]['i_nazwa']){
+                                            var kod_indeksu = jsonObj[index]['i_kod'];
+                                            document.getElementById("indeks").options.selectedIndex = index;
+                                        }
+                                    }
+                                }
+                                /*]]>*/
+                      </script>
+                    <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                function fill_op_name(){
+                                var x = document.getElementById("kod_operacji").selectedIndex;
+                                var y = document.getElementById("kod_operacji").options;
+                                var kod_operacji = y[x].text;
+                                var rozmiar_listy_operacji = /*[[${rozmiar_listy_operacji}]]*/;
+                                var index;
+                                var jsonObj = JSON.parse(JSON.stringify(/*[[${listOpTechs}]]*/));
+                                    for (index = 0; index < rozmiar_listy_operacji; index++) {
+                                        if(kod_operacji == jsonObj[index]['opt_kod']){
+                                            var nazwa_operacji = jsonObj[index]['opt_nazwa'];
+                                            document.getElementById("nazwa_operacji").options.selectedIndex = index;
+                                        }
+                                    }
+                                }
+                                /*]]>*/
+                      </script>
+                    <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                function fill_op_code(){
+                                var x = document.getElementById("nazwa_operacji").selectedIndex;
+                                var y = document.getElementById("nazwa_operacji").options;
+                                var nazwa_operacji = y[x].text;
+                                var rozmiar_listy_operacji = /*[[${rozmiar_listy_operacji}]]*/;
+                                var index;
+                                var jsonObj = JSON.parse(JSON.stringify(/*[[${listOpTechs}]]*/));
+                                    for (index = 0; index < rozmiar_listy_operacji; index++) {
+                                        if(nazwa_operacji == jsonObj[index]['opt_nazwa']){
+                                            var kod_operacji = jsonObj[index]['opt_kod'];
+                                            document.getElementById("kod_operacji").options.selectedIndex = index;
+                                        }
+                                    }
+                                }
+                                /*]]>*/
+                      </script>
                 </form>
-
+                </div>
 
 
             </div>

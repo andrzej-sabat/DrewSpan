@@ -2,8 +2,11 @@ package com.drewSpan.drewSpan2.controller;
 
 import com.drewSpan.drewSpan2.model.IndexOp;
 import com.drewSpan.drewSpan2.model.KrMaszyny;
+import com.drewSpan.drewSpan2.model.OpTech;
 import com.drewSpan.drewSpan2.model.User;
+import com.drewSpan.drewSpan2.service.IndexOpService;
 import com.drewSpan.drewSpan2.service.KrMaszynyService;
+import com.drewSpan.drewSpan2.service.OpTechService;
 import com.drewSpan.drewSpan2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -22,6 +26,10 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private KrMaszynyService krMaszynyService;
+    @Autowired
+    private IndexOpService indexOpService;
+    @Autowired
+    private OpTechService opTechService;
 
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
@@ -70,7 +78,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByLogin(auth.getName());
-        modelAndView.addObject("userName", "Witaj " + user.getName() + " " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
         modelAndView.setViewName("admin/home");
         return modelAndView;
@@ -86,12 +94,21 @@ public class LoginController {
 
 
         List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
-
+        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
         Integer rozmiar_listy = listKrMaszynys.size();
+        Integer rozmiar_listy_indeksow = listIndexOps.size();
+        Integer rozmiar_listy_operacji = listOpTechs.size();
+
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);
         modelAndView.addObject("rozmiar_listy", rozmiar_listy);
+        modelAndView.addObject("listOpTechs", listOpTechs);
+        modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
+        modelAndView.addObject("listIndexOps", listIndexOps);
+        modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
+
         modelAndView.addObject("user",user);
-        modelAndView.addObject("userName", "Witaj " + user.getName() + " " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("user/user_home");
         return modelAndView;
