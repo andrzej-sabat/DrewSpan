@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -106,7 +107,7 @@ public class LoginController {
         modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
         modelAndView.addObject("listIndexOps", listIndexOps);
         modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
-
+        modelAndView.addObject("standardDate", new Date());
         modelAndView.addObject("user",user);
         modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
