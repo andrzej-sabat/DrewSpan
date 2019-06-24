@@ -24,7 +24,8 @@ public class User {
     @Column(name = "Knt_id")
     private int id;
 
-    @Column(name = "Knt_login")
+
+    @Column(name = "Knt_login",unique = true)
     @NotEmpty(message = "*Wprowadź Login")
     private String login;
 

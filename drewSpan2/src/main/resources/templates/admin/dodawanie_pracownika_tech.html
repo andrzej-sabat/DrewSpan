@@ -25,27 +25,27 @@
                 <span th:utext="${userName}"></span>
             </div>
             <div class="panel-body">
-                <form action="#"  th:action="@{/zapisz_pracownika}" th:object="${user}" method="post" >
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-3"></div>
+                <form action="#"  th:action="@{/zapisz_pracownika_tech}" th:object="${user}" method="post" >
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <label>Kod pracownika</label>
+                                <input type="text" id="code" name="code" placeholder="Kod pracownika"
+                                       class="form-control" th:field="*{code}" th:required="required"/> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
                         <div class="col-md-6">
-                            <label>Kod pracownika</label>
-                            <input type="text" id="code" name="code" placeholder="Kod pracownika"
-                                   class="form-control" th:field="*{code}" th:required="required"/> <br/>
+                            <label>Login</label>
+                            <input type="text" id="login" name="login" placeholder="Login"
+                                   class="form-control" th:field="*{login}" th:required="required"/> <br/>
 
                         </div>
                         <div class="col-md-3"></div>
                     </div>
-                    <div class="col-md-6">
-                        <label>Login</label>
-                        <input type="text" id="login" name="login" placeholder="Login"
-                               class="form-control" th:field="*{login}" th:required="required"/> <br/>
-
-                    </div>
-                    <div class="col-md-3"></div>
-                </div>
 
                     <div class="row">
                         <div class="col-md-3"></div>
@@ -101,14 +101,14 @@
 
 
                 </form>
-                </div>
-
-                <div class="col-md-2"></div>
             </div>
 
-
+            <div class="col-md-2"></div>
         </div>
+
+
     </div>
+</div>
 
 </div>
 </body>
