@@ -24,6 +24,7 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
+
     public User findUserByLogin(String login) {
         return userRepository.findByLogin(login);
     }
@@ -41,9 +42,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findById(long id) {
-        return userRepository.findById(id);
-    }
+    public User findById(Integer id) { return userRepository.findById(id); }
 
     public User save(User user) {
         return userRepository.save(user);
@@ -53,7 +52,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public void removeUserById(long id) {
+    public void removeUserById(Long id) {
         userRepository.deleteById(id);
     }
 }

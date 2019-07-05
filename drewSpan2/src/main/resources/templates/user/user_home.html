@@ -42,7 +42,7 @@
                 <span th:utext="${userName}"></span>
             </div>
             <div class="panel-body">
-
+                <form action="#"  th:action="@{/dodaj_do_ewidencji}" method="post" >
                 <div class="row">
                     <form class="das">
                     <div class="col-md-2"></div>
@@ -51,6 +51,7 @@
 
                             <h3 class="form-signin-heading" th:text="Informacje" style="text-align: center;">Informacje</h3>
                             <br/>
+
                             <div class="col-md-4" th:object="${user}">
                                 <label>Id pracownika</label>
                                 <input required="required" type="text" id="id_pracownika" name="id_pracownika" placeholder="Id pracownika"
@@ -133,10 +134,10 @@
 
                 <div class="row">
                     <div class="col-md-3"></div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" th:object="${user}">
                         <label>Id_ewidencji</label>
                         <input required="required" type="text" id="id_ewidencji" name="id_ewidencji" placeholder="Id_ewidencji"
-                               class="form-control"/> <br/>
+                               class="form-control" th:field="*{code}"/> <br/>
 
                     </div>
                     <div class="col-md-3"></div>
@@ -235,6 +236,7 @@
 
 
                     <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit">
+                        Dodaj
                     </button>
 
                     <script th:inline="javascript">
@@ -337,7 +339,7 @@
                 </form>
                 </div>
 
-
+                </form>
             </div>
 
         </div>

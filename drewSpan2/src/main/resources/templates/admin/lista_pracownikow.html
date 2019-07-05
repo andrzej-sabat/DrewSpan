@@ -65,21 +65,28 @@
                                                dt:table="true">
                                             <thead>
                                             <tr>
-                                                <th>Id operacji</th>
-                                                <th>Kod operacji</th>
-                                                <th>Nazwa operacji</th>
+                                                <th>Id pracownika</th>
+                                                <th>Kod pracownika</th>
+                                                <th>Nazwisko</th>
+                                                <th>Imię</th>
+                                                <th>Wydział</th>
+                                                <th>Login</th>
                                                 <th>Akcja</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="opTech : ${listOpTechs}">
-                                                <td th:text="${opTech?.opt_id}"></td>
-                                                <td th:text="${opTech?.opt_kod}"></td>
-                                                <td th:text="${opTech?.opt_nazwa}"></td>
+                                            <tr th:each="user : ${listUsers}">
+                                                <td th:text="${user?.id}"></td>
+                                                <td th:text="${user?.code}"></td>
+                                                <td th:text="${user?.lastName}"></td>
+                                                <td th:text="${user?.name}"></td>
+                                                <td th:text="${user?.section}"></td>
+                                                <td th:text="${user?.login}"></td>
+
                                                 <td>
-                                                    <a th:href="@{/edit_opTech/?opt_id={opt_id}(opt_id=${opTech.opt_id})}"
+                                                    <a th:href="@{/edit_user/?id={id}(id=${user.id})}"
                                                        class="btn btn-info">Edytuj</a>
-                                                    <a th:href="@{/delete_opTech/?opt_id={opt_id}(opt_id=${opTech.opt_id})}"
+                                                    <a th:href="@{/delete_user/?id={id}(id=${user.id})}"
                                                        class="btn btn-danger">Usuń</a>
                                                 </td>
                                             </tr>
