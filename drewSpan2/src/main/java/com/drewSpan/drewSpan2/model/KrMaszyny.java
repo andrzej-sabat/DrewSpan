@@ -3,6 +3,7 @@ package com.drewSpan.drewSpan2.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -18,6 +19,9 @@ public class KrMaszyny implements java.io.Serializable {
     private String krm_kod;
     @Column(name = "krm_nazwa")
     private String krm_nazwa;
+
+    @OneToMany(mappedBy = "maszyna", cascade = CascadeType.ALL)
+    private Set<Ewidencja> ewidencja;
 
     public long getKrm_id() {
         return krm_id;

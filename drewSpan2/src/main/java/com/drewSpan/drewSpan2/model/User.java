@@ -44,6 +44,9 @@ public class User {
     @Column(name = "Knt_wydział")
     private String section;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Ewidencja> ewidencja;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;

@@ -42,7 +42,7 @@
                 <span th:utext="${userName}"></span>
             </div>
             <div class="panel-body">
-
+                <form >
                 <div class="row">
                     <form class="das">
                     <div class="col-md-2"></div>
@@ -51,6 +51,8 @@
 
                             <h3 class="form-signin-heading" th:text="Informacje" style="text-align: center;">Informacje</h3>
                             <br/>
+
+
                             <div class="col-md-4" th:object="${user}">
                                 <label>Id pracownika</label>
                                 <input required="required" type="text" id="id_pracownika" name="id_pracownika" placeholder="Id pracownika"
@@ -110,43 +112,10 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-3"></div>
-                    <div class="col-md-6" th:object="${user}">
-                        <label>Imie pracownika</label>
-                        <input required="required" type="text" id="imie_pracownika" name="imie_pracownika" placeholder="Imie pracownika"
-                               class="form-control" th:field="*{name}"/> <br/>
-
-                    </div>
-                    <div class="col-md-3"></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6" th:object="${user}">
-                        <label>Kod pracownika</label>
-                        <input required="required" type="text" id="kod_pracownika" name="kod_pracownika" placeholder="Kod pracownika"
-                               class="form-control" th:field="*{code}"/> <br/>
-
-                    </div>
-                    <div class="col-md-3"></div>
-                </div>
-
-
-
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <label>Id_ewidencji</label>
-                        <input required="required" type="text" id="id_ewidencji" name="id_ewidencji" placeholder="Id_ewidencji"
-                               class="form-control"/> <br/>
-
-                    </div>
-                    <div class="col-md-3"></div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-3"></div>
                     <div class="col-md-6">
                         <label>Indeks</label>
                         <select class="form-control" id="indeks" onchange="fill_index_name()" placeholder="Indeks">
+
                             <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_kod}"></option>
                         </select> <br/>
 
@@ -159,6 +128,7 @@
                     <div class="col-md-6">
                         <label>Nazwa indeksu</label>
                         <select class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()" placeholder="Nazwa indeksu">
+
                             <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}"></option>
                         </select> <br/>
 
@@ -171,6 +141,7 @@
                     <div class="col-md-6">
                         <label>Operacja</label>
                         <select class="form-control" id="kod_operacji" onchange="fill_op_name()" placeholder="Operacja">
+
                             <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_kod}"></option>
                         </select> <br/>
 
@@ -182,6 +153,7 @@
                     <div class="col-md-6">
                         <label>Nazwa operacji</label>
                         <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()" placeholder="Nazwa operacji">
+
                             <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_nazwa}"></option>
                         </select> <br/>
 
@@ -337,7 +309,7 @@
                 </form>
                 </div>
 
-
+                </form>
             </div>
 
         </div>
