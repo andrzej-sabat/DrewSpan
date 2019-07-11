@@ -3,3 +3,10 @@
     font-size: 22px;
     color: #004080;
 }
+
+.two_columns {
+    border: 1px solid black;
+    border-color: #337ab7;
+    border-radius: 15px;
+
+}

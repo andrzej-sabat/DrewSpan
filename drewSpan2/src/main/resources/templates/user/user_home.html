@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:dt="http://java.sun.com/xml/ns/persistence/orm">
 
 <head>
     <title>Ewidencja</title>
@@ -28,7 +28,7 @@
 </head>
 
 <body onload="set_change();">
-<div class="container">
+<div class="container" style="width: 100%;">
 
     <form th:action="@{/logout}" method="get">
         <button class="btn btn-md btn-danger btn-block" name="registration"
@@ -44,10 +44,12 @@
             <div class="panel-body">
                 <form action="#"  th:action="@{/dodaj_do_ewidencji}" method="post" >
                 <div class="row">
-                    <form class="das">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
-                        <div class="row">
+                    <br class="das">
+
+                    <br class="col-md-12">
+                        <div class="row" style="padding-bottom:20px;">
+                            <div class="col-md-6">
+                        <div class="row two_columns" style="margin: auto;">
 
                             <h3 class="form-signin-heading" th:text="Informacje" style="text-align: center;">Informacje</h3>
                             <br/>
@@ -97,8 +99,119 @@
 
                             </div>
                         </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row two_columns" style="margin: auto; ">
+                                    <h3 class="form-signin-heading" th:text="Dane" style="text-align: center;">Dane do tabeli</h3>
+                                    <br/>
+
+                                    <div class="col-md-4" th:object="${user}">
+                                        <label>Imie pracownika</label>
+                                        <input required="required" type="text" id="imie_pracownika" name="imie_pracownika" placeholder="Imie pracownika"
+                                               class="form-control" th:field="*{name}"/> <br/>
+                                        <label>Kod pracownika</label>
+                                        <input required="required" type="text" id="kod_pracownika" name="kod_pracownika" placeholder="Kod pracownika"
+                                               class="form-control" th:field="*{code}"/> <br/>
+                                        <label>Id_ewidencji</label>
+                                        <input required="required" type="text" id="id_ewidencji" name="id_ewidencji" placeholder="Id_ewidencji"
+                                               class="form-control" th:field="*{code}"/> <br/>
+                                        <br/>
+                                        <br/>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <label>Indeks</label>
+                                        <select class="form-control" id="indeks" onchange="fill_index_name()" placeholder="Indeks">
+                                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_kod}"></option>
+                                        </select> <br/>
+
+                                        <label>Nazwa indeksu</label>
+                                        <select class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()" placeholder="Nazwa indeksu">
+                                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}"></option>
+                                        </select> <br/>
+                                        <label>Operacja</label>
+                                        <select class="form-control" id="kod_operacji" onchange="fill_op_name()" placeholder="Operacja">
+                                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_kod}"></option>
+                                        </select> <br/>
+                                        <br/>
+                                        <br/>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Nazwa operacji</label>
+                                        <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()" placeholder="Nazwa operacji">
+                                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_nazwa}"></option>
+                                        </select> <br/>
+                                        <label>Ilość</label>
+                                        <input required="required" type="text" id="ilosc" name="ilosc" placeholder="Ilość"
+                                               class="form-control"/></br>
+                                        <label>Czas</label>
+                                        <input required="required" type="text" id="czas" name="czas" placeholder="Czas"
+                                               class="form-control"/>
+                                        <br/>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit" style="width:40%; margin:auto;">
+                        Zapisz do tabeli
+                    </button>
+                        </br>
+                        </br>
+                        <div class="row" style="margin: auto; ">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div>
+                                        <div align="center">
+                                            <legend>Dane do zapisu do bazy danych</legend>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table id="tabela_przechowujaca" class="table table-striped table-bordered"
+                                                   dt:table="true">
+                                                <thead>
+                                                <tr>
+                                                    <th>Id ewidencji</th>
+                                                    <th>Indeks</th>
+                                                    <th>Nazwa indeksu</th>
+                                                    <th>Operacja</th>
+                                                    <th>Nazwa operacji</th>
+                                                    <th>Ilość</th>
+                                                    <th>Czas</th>
+                                                    <th>Data</th>
+                                                    <th>Akcja</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>
+                                                        <a class="btn btn-info">Edytuj</a>
+                                                        <a class="btn btn-danger">Usuń</a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit" style="width:60%; margin:auto;">
+                        Zapisz dane z tabeli do bazy
+                    </button>
                     </div>
-                    <div class="col-md-2"></div>
+
                     <br />
                     <br />
                     <br />
@@ -107,8 +220,8 @@
 
 
 
-        <div class="row form_signin">
-            <div class="col-md-12">
+        <!--<div class="row form_signin">
+            <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-6" th:object="${user}">
@@ -217,7 +330,7 @@
                     <div class="col-md-3"></div>
                 </div>
 
-                <!--<div class="row">
+                &lt;!&ndash;<div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
                         <label>Data</label>
@@ -226,19 +339,10 @@
                         </br>
                     </div>
                     <div class="col-md-3"></div>
-                </div>-->
+                </div>&ndash;&gt;
             </div>
-        </div>
-
-
-
-
-
-
-                    <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit">
-                        Dodaj
-                    </button>
-
+            <div class="col-md-6"></div>
+        </div>-->
                     <script th:inline="javascript">
                                 /*<![CDATA[*/
                                 function fill_fields(){
@@ -339,7 +443,7 @@
                 </form>
                 </div>
 
-                </form>
+
             </div>
 
         </div>
