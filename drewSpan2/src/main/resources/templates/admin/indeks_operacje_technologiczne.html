@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:xmlns="http://www.w3.org/1999/xhtml"
-xmlns:th="http://www.thymeleaf.org" xmlns:dt="http://java.sun.com/xml/ns/persistence/orm">
-<head>
-    <title>Indeks - Operacje Technologiczne</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:dt="http://java.sun.com/xml/ns/persistence/orm">
 
+<head>
+    <title>Ewidencja</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -25,6 +26,7 @@ xmlns:th="http://www.thymeleaf.org" xmlns:dt="http://java.sun.com/xml/ns/persist
                                 /*]]>*/
     </script>
 </head>
+
 <body onload="set_change();">
 <div class="container" style="width: 100%;">
 
@@ -46,59 +48,10 @@ xmlns:th="http://www.thymeleaf.org" xmlns:dt="http://java.sun.com/xml/ns/persist
 
                         <br class="col-md-12">
                         <div class="row" style="padding-bottom:20px;">
-                            <div class="col-md-6">
-                                <div class="row two_columns" style="margin: auto;">
-
-                                    <div class="col-md-4">
-                                        <label></label>
-                                        <select class="form-control" id="kod_maszyny" onchange="fill_fields()" placeholder="Kod maszyny">
-                                            <option>Wybierz kod maszyny</option>
-                                            <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna}" th:text="${maszyna.krm_kod}"></option>
-                                        </select> <br/>
-
-                                        <label>Id maszyny</label>
-                                        <input required="required" type="text" id="id_maszyny" name="id_maszyny" placeholder="Id maszyny"
-                                               class="form-control" > <br/>
-                                        <label>Nazwa maszyny</label>
-                                        <input required="required" type="text" id="nazwa_maszyny" name="nazwa_maszyny" placeholder="Nazwa maszyny"
-                                               class="form-control"/> <br/>
-                                        <br/>
-                                        <br/>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>Zmiana</label>
-                                        <input required="required" type="text" id="zmiana" name="zmiana" placeholder="Zmiana"
-                                               class="form-control" /> <br/>
-                                        <label>Data</label>
-                                        <input required="required" type="text" id="date" name="data" placeholder="Data"
-                                               class="form-control" th:value="${#dates.format(#dates.createNow(),'dd/MM/YYYY')}" /> <br/>
-                                        <label>Czas pracy</label>
-                                        <input required="required" type="text" id="czas_pracy" name="czas_pracy" placeholder="Czas pracy"
-                                               class="form-control" value="480"/> <br/>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="row two_columns" style="margin: auto; ">
                                     <h3 class="form-signin-heading" th:text="Dane" style="text-align: center;">Dane do tabeli</h3>
                                     <br/>
-
-                                    <div class="col-md-4" th:object="${user}">
-                                        <label>Imie pracownika</label>
-                                        <input required="required" type="text" id="imie_pracownika" name="imie_pracownika" placeholder="Imie pracownika"
-                                               class="form-control" th:field="*{name}"/> <br/>
-                                        <label>Kod pracownika</label>
-                                        <input required="required" type="text" id="kod_pracownika" name="kod_pracownika" placeholder="Kod pracownika"
-                                               class="form-control" th:field="*{code}"/> <br/>
-                                        <label>Id_ewidencji</label>
-                                        <input required="required" type="text" id="id_ewidencji" name="id_ewidencji" placeholder="Id_ewidencji"
-                                               class="form-control" th:field="*{code}"/> <br/>
-                                        <br/>
-                                        <br/>
-                                    </div>
-
 
                                     <div class="col-md-4">
                                         <label>Indeks</label>
@@ -110,30 +63,33 @@ xmlns:th="http://www.thymeleaf.org" xmlns:dt="http://java.sun.com/xml/ns/persist
                                         <select class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()" placeholder="Nazwa indeksu">
                                             <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}"></option>
                                         </select> <br/>
-                                        <label>Operacja</label>
-                                        <select class="form-control" id="kod_operacji" onchange="fill_op_name()" placeholder="Operacja">
-                                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_kod}"></option>
-                                        </select> <br/>
+
                                         <br/>
                                         <br/>
                                     </div>
                                     <div class="col-md-4">
+                                        <label>Operacja</label>
+                                        <select class="form-control" id="kod_operacji" onchange="fill_op_name()" placeholder="Operacja">
+                                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_kod}"></option>
+                                        </select> <br/>
                                         <label>Nazwa operacji</label>
                                         <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()" placeholder="Nazwa operacji">
                                             <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_nazwa}"></option>
                                         </select> <br/>
-                                        <label>Ilość</label>
-                                        <input required="required" type="text" id="ilosc" name="ilosc" placeholder="Ilość"
-                                               class="form-control"/></br>
+
+                                    </div>
+                                    <div class="col-md-4">
                                         <label>Czas</label>
-                                        <input required="required" type="text" id="czas" name="czas" placeholder="Czas"
+                                        <input required="required" type="text" id="czas" name="czas" placeholder="Ilość"
+                                               class="form-control"/></br>
+                                        <label>wspK</label>
+                                        <input required="required" type="text" id="wspK" name="wspK" placeholder="Czas"
                                                class="form-control"/>
                                         <br/>
-
-
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit" style="width:40%; margin:auto;">
                             Zapisz do tabeli
@@ -152,21 +108,17 @@ xmlns:th="http://www.thymeleaf.org" xmlns:dt="http://java.sun.com/xml/ns/persist
                                                    dt:table="true">
                                                 <thead>
                                                 <tr>
-                                                    <th>Id ewidencji</th>
-                                                    <th>Indeks</th>
-                                                    <th>Nazwa indeksu</th>
-                                                    <th>Operacja</th>
                                                     <th>Nazwa operacji</th>
-                                                    <th>Ilość</th>
+                                                    <th>Kod operacji</th>
+                                                    <th>Nazwa indeksu</th>
+                                                    <th>Kod indeksu</th>
+                                                    <th>wspK</th>
                                                     <th>Czas</th>
-                                                    <th>Data</th>
                                                     <th>Akcja</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
