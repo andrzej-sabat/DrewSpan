@@ -57,6 +57,13 @@ public class MenuAdmin {
         return modelAndView;
     }
 
+    @RequestMapping(value="/indeks_operacje_technologiczne", method = RequestMethod.GET)
+    public ModelAndView indeks_operacje_technologiczne(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/indeks_operacje_technologiczne");
+        return modelAndView;
+    }
+
 
 
 }

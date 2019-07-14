@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 import javax.persistence.*;
@@ -22,6 +24,11 @@ public class OpTech implements java.io.Serializable{
     private String opt_kod;
     @Column(name = "opt_nazwa")
     private String opt_nazwa;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "i_op_e_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private IndexOpElementy indexOpElementy;
 
 
     public static long getSerialVersionUID() {

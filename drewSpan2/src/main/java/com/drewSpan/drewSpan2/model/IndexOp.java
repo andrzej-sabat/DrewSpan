@@ -1,6 +1,8 @@
 package com.drewSpan.drewSpan2.model;
 
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -17,6 +19,13 @@ public class IndexOp {
     private String i_kod;
     @Column(name = "i_nazwa")
     private String i_nazwa;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "i_op_e_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private IndexOpElementy indexOpElementy;
+
+
 
 
     public long getId_indeksu() {
