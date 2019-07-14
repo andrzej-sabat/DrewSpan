@@ -7,6 +7,8 @@ import com.drewSpan.drewSpan2.repository.RoleRepository;
 import com.drewSpan.drewSpan2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,26 +80,47 @@ public class UserController {
 
 
     @PostMapping("/zapisz_pracownika")
-    public ModelAndView saveuser(@ModelAttribute User user) {
-        user.setRoles(roleRepository.findRoleById(2));
-        userService.save(user);
+    public ModelAndView saveuser(@ModelAttribute User user, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
         List<User> listUsers= userService.findAllUsers();
         modelAndView.addObject("listUsers", listUsers);
-        modelAndView.addObject("user",user);
-        modelAndView.setViewName("admin/lista_pracownikow");
+
+        User userInDatabase = userService.findUserByLogin(user.getLogin());
+        if(userInDatabase != null){
+            result.addError(new ObjectError("userExists","Login juz istnieje"));
+        }
+        if(result.hasErrors()){
+            modelAndView.addObject("user",user);
+            modelAndView.setViewName("admin/lista_pracownikow");
+            return modelAndView;
+        }
+
+        user.setRoles(roleRepository.findRoleById(2));
+        userService.save(user);
         return modelAndView;
     }
 
     @PostMapping("/zapisz_pracownika_tech")
-    public ModelAndView saveusertech(@ModelAttribute User user) {
-        user.setRoles(roleRepository.findRoleById(1));
-        userService.save(user);
+    public ModelAndView saveusertech(@ModelAttribute User user,BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
         List<User> listUsers= userService.findAllUsers();
         modelAndView.addObject("listUsers", listUsers);
-        modelAndView.addObject("user",user);
-        modelAndView.setViewName("admin/lista_pracownikow");
+
+
+
+        User userInDatabase = userService.findUserByLogin(user.getLogin());
+        if(userInDatabase != null){
+            result.addError(new ObjectError("userExists","Login juz istnieje"));
+        }
+        if(result.hasErrors()){
+            modelAndView.addObject("user",user);
+            modelAndView.setViewName("admin/lista_pracownikow");
+            return modelAndView;
+        }
+
+
+        user.setRoles(roleRepository.findRoleById(1));
+        userService.save(user);
         return modelAndView;
     }
 

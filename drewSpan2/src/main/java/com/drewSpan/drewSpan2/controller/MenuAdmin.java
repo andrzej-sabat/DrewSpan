@@ -80,35 +80,7 @@ public class MenuAdmin {
         return modelAndView;
     }
 
-    @RequestMapping(value="/indeks_operacje_technologiczne", method = RequestMethod.GET)
-    public ModelAndView indeks_operacje_technologiczne(HttpServletRequest request){
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        User user = userService.findUserByLogin(auth.getName());
-        List<IndexOpElementy> listIndexOpElementy =indexOpElementyService.getAllIndexOpElementy();
-        List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
-        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
-        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
-        Integer rozmiar_listy = listKrMaszynys.size();
-        Integer rozmiar_listy_indeksow = listIndexOps.size();
-        Integer rozmiar_listy_operacji = listOpTechs.size();
-        Integer rozmiar_listy_operacji_elementy = listIndexOpElementy.size();
-
-        modelAndView.addObject("listIndexOpElementy",listIndexOpElementy);
-        modelAndView.addObject("listKrMaszynys", listKrMaszynys);
-        modelAndView.addObject("rozmiar_listy", rozmiar_listy);
-        modelAndView.addObject("listOpTechs", listOpTechs);
-        modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
-        modelAndView.addObject("listIndexOps", listIndexOps);
-        modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
-        modelAndView.addObject("standardDate", new Date());
-        modelAndView.addObject("user",user);
-        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
-        modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
-        modelAndView.setViewName("admin/indeks_operacje_technologiczne");
-        return modelAndView;
-    }
 
 
 

@@ -42,7 +42,7 @@
                 <span th:utext="${userName}"></span>
             </div>
             <div class="panel-body">
-                <form action="#"  th:action="@{/dodaj_do_ewidencji}" method="post" >
+
                     <div class="row">
                         <br class="das">
 
@@ -52,16 +52,16 @@
                                 <div class="row two_columns" style="margin: auto; ">
                                     <h3 class="form-signin-heading" th:text="Dane" style="text-align: center;">Dane do tabeli</h3>
                                     <br/>
-
+                                    <form th:action="@{/save_index_op_tech}" th:object="${indexOpElementy}" method="post" >
                                     <div class="col-md-4">
                                         <label>Indeks</label>
-                                        <select class="form-control" id="indeks" onchange="fill_index_name()" placeholder="Indeks">
-                                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_kod}"></option>
+                                        <select class="form-control" id="indeks" onchange="fill_index_name()" placeholder="Indeks" >
+                                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_kod}" ></option>
                                         </select> <br/>
 
                                         <label>Nazwa indeksu</label>
-                                        <select class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()" placeholder="Nazwa indeksu">
-                                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}"></option>
+                                        <select class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()" placeholder="Nazwa indeksu" >
+                                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}" ></option>
                                         </select> <br/>
 
                                         <br/>
@@ -69,31 +69,36 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label>Operacja</label>
-                                        <select class="form-control" id="kod_operacji" onchange="fill_op_name()" placeholder="Operacja">
-                                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_kod}"></option>
+                                        <select class="form-control" id="kod_operacji" onchange="fill_op_name()" placeholder="Operacja" >
+                                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_kod}" ></option>
                                         </select> <br/>
                                         <label>Nazwa operacji</label>
                                         <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()" placeholder="Nazwa operacji">
-                                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_nazwa}"></option>
+                                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_nazwa}" ></option>
                                         </select> <br/>
 
                                     </div>
                                     <div class="col-md-4">
                                         <label>Czas</label>
-                                        <input required="required" type="text" id="czas" name="czas" placeholder="Ilość"
+                                        <input required="required" type="text" id="czas" name="czas" placeholder="Czas"
                                                class="form-control"/></br>
                                         <label>wspK</label>
-                                        <input required="required" type="text" id="wspK" name="wspK" placeholder="Czas"
+                                        <input required="required" type="text" id="wspK" name="wspK" placeholder="wspK"
                                                class="form-control"/>
                                         <br/>
                                     </div>
+                                        <button class="btn btn-lg btn-primary btn-block" name="dodaj_index_op_tech" value="Zapisz" type="Submit" style="width:40%; margin:auto;">
+                                            Zapisz do tabeli
+                                        </button>
+                                    </form>
                                 </div>
+
+
+
                             </div>
 
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit" style="width:40%; margin:auto;">
-                            Zapisz do tabeli
-                        </button>
+
                         </br>
                         </br>
                         <div class="row" style="margin: auto; ">
@@ -101,7 +106,6 @@
                                 <div class="row">
                                     <div>
                                         <div align="center">
-                                            <legend>Dane do zapisu do bazy danych</legend>
                                         </div>
                                         <div class="table-responsive">
                                             <table id="tabela_przechowujaca" class="table table-striped table-bordered"
@@ -372,7 +376,7 @@
                                 /*]]>*/
                       </script>
 
-                </form>
+
             </div>
 
 

@@ -1,10 +1,14 @@
 package com.drewSpan.drewSpan2.service;
 
 import com.drewSpan.drewSpan2.model.IndexOpElementy;
+import com.drewSpan.drewSpan2.model.KrMaszyny;
 import com.drewSpan.drewSpan2.model.OpTech;
 import com.drewSpan.drewSpan2.repository.IndexOpElementyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +17,7 @@ import java.util.List;
 public class IndexOpElementyService {
     @Autowired
     private IndexOpElementyRepository indexOpElementyRepository;
+
 
 
     public void addIndexOpElementy(IndexOpElementy indexOp) {
@@ -40,6 +45,8 @@ public class IndexOpElementyService {
         indexOpElementyRepository.findAll().forEach(indexOpElementies::add);
         return indexOpElementies;
     }
+
+
 
 
 
