@@ -31,7 +31,7 @@ public class IndexOpElementyController {
     @Autowired
     private OpTechService opTechService;
 
-
+/*
     @RequestMapping("/save_index_op_tech")
     public ModelAndView savaIndexOPTech(IndexOpElementy indexOpElementy){
         ModelAndView modelAndView = new ModelAndView();
@@ -45,24 +45,24 @@ public class IndexOpElementyController {
         return modelAndView;
 
     }
+    */
 
-    /*
+
+
     @PostMapping("/save_index_op_tech")
     public ModelAndView saveIndexOpTech(@ModelAttribute IndexOpElementy indexOpElementy) {
 
         ModelAndView modelAndView = new ModelAndView();
         List<IndexOpElementy> indexOpElementyList = indexOpElementyService.getAllIndexOpElementy();
 
-        modelAndView.addObject("index",indexOpElementy.getIndexOp());
-        modelAndView.addObject("operacja",indexOpElementy.getOpTech());
         modelAndView.addObject("indexOpElementyList", indexOpElementyList);
-        //modelAndView.addObject("indexOpElementy",indexOpElementy);
+        modelAndView.addObject("indexOpElementy",indexOpElementy);
         indexOpElementyService.save(indexOpElementy);
         modelAndView.setViewName("admin/indeks_operacje_technologiczne");
         return modelAndView;
     }
 
-     */
+
 
 
 
