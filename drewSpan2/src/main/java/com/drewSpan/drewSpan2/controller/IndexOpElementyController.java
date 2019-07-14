@@ -31,33 +31,19 @@ public class IndexOpElementyController {
     @Autowired
     private OpTechService opTechService;
 
-/*
-    @RequestMapping("/save_index_op_tech")
-    public ModelAndView savaIndexOPTech(IndexOpElementy indexOpElementy){
-        ModelAndView modelAndView = new ModelAndView();
-        List<IndexOpElementy> indexOpElementyList = indexOpElementyService.getAllIndexOpElementy();
-        modelAndView.addObject("index",indexOpElementy.getIndexOp());
-        modelAndView.addObject("operacja",indexOpElementy.getOpTech());
-        modelAndView.addObject("indexOpElementyList", indexOpElementyList);
-        modelAndView.addObject("indexOpElementy",indexOpElementy);
-        indexOpElementyService.save(indexOpElementy);
-        modelAndView.setViewName("admin/indeks_operacje_technologiczne");
-        return modelAndView;
 
-    }
-    */
 
 
 
     @PostMapping("/save_index_op_tech")
     public ModelAndView saveIndexOpTech(@ModelAttribute IndexOpElementy indexOpElementy) {
-
+        indexOpElementyService.save(indexOpElementy);
         ModelAndView modelAndView = new ModelAndView();
         List<IndexOpElementy> indexOpElementyList = indexOpElementyService.getAllIndexOpElementy();
 
         modelAndView.addObject("indexOpElementyList", indexOpElementyList);
+        modelAndView.addObject("indexOP",indexOpElementy.getIndexOp());
         modelAndView.addObject("indexOpElementy",indexOpElementy);
-        indexOpElementyService.save(indexOpElementy);
         modelAndView.setViewName("admin/indeks_operacje_technologiczne");
         return modelAndView;
     }
@@ -71,6 +57,7 @@ public class IndexOpElementyController {
     public ModelAndView indeks_operacje_technologiczne(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        IndexOpElementy indexOpElementy = new IndexOpElementy();
 
         User user = userService.findUserByLogin(auth.getName());
         List<IndexOpElementy> listIndexOpElementy =indexOpElementyService.getAllIndexOpElementy();
@@ -82,6 +69,7 @@ public class IndexOpElementyController {
         Integer rozmiar_listy_operacji = listOpTechs.size();
         Integer rozmiar_listy_operacji_elementy = listIndexOpElementy.size();
 
+        modelAndView.addObject("indexOpElementy",indexOpElementy);
         modelAndView.addObject("listIndexOpElementy",listIndexOpElementy);
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);
         modelAndView.addObject("rozmiar_listy", rozmiar_listy);

@@ -41,5 +41,43 @@ public class IndexOpElementy {
     @Column(name = "wspK")
     private double wspK;
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public OpTech getOpTech() {
+        return opTech;
+    }
+
+    public void setOpTech(OpTech opTech) {
+        this.opTech = opTech;
+    }
+
+    public IndexOp getIndexOp() {
+        return indexOp;
+    }
+
+    public void setIndexOp(IndexOp indexOp) {
+        this.indexOp = indexOp;
+    }
+
+    public long getCzas() {
+        return czas;
+    }
+
+    public void setCzas(long czas) {
+        this.czas = czas;
+    }
+
+    public double getWspK() {
+        return wspK;
+    }
+
+    public void setWspK(double wspK) {
+        this.wspK = wspK;
+    }
 }

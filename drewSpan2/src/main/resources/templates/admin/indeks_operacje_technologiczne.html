@@ -56,11 +56,8 @@
                                     <div class="col-md-4">
 
 
-                                        <select  class="form-control" id="id_indeksu" placeholder="Id_indeksu" th:field="*{id_indeksu}">
-                                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.id_indeksu}"></option>
-                                        </select> <br/>
                                         <label>Indeks</label>
-                                        <select class="form-control" id="indeks" onchange="fill_index_name()" placeholder="Indeks" >
+                                        <select class="form-control" id="indeks" onchange="fill_index_name()" placeholder="Indeks" th:field="*{indexOp}">
                                             <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_kod}" ></option>
                                         </select> <br/>
 
