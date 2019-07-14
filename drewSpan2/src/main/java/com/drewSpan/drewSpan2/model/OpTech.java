@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -25,10 +26,8 @@ public class OpTech implements java.io.Serializable{
     @Column(name = "opt_nazwa")
     private String opt_nazwa;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "i_op_e_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private IndexOpElementy indexOpElementy;
+    @OneToMany(mappedBy = "opTech", cascade = CascadeType.ALL)
+    private Set<IndexOpElementy> indexOpElementies;
 
 
     public static long getSerialVersionUID() {

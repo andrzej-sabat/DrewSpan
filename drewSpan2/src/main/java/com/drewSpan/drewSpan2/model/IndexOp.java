@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,10 +21,8 @@ public class IndexOp {
     @Column(name = "i_nazwa")
     private String i_nazwa;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "i_op_e_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private IndexOpElementy indexOpElementy;
+    @OneToMany(mappedBy = "indexOp", cascade = CascadeType.ALL)
+    private Set<IndexOpElementy> indexOpElementies;
 
 
 

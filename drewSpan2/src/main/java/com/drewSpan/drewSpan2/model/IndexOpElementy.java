@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -21,11 +23,17 @@ public class IndexOpElementy {
     @Column(name = "i_op_e_id")
     private long id;
 
-    @OneToMany(mappedBy = "indexOpElementy", cascade = CascadeType.ALL)
-    private Set<OpTech> opTech;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "opt_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private OpTech opTech;
 
-    @OneToMany(mappedBy = "indexOpElementy", cascade = CascadeType.ALL)
-    private Set<IndexOp> indexOp;
+
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_indeksu")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private IndexOp indexOp;
 
     @Column(name = "Czas")
     private long czas;
