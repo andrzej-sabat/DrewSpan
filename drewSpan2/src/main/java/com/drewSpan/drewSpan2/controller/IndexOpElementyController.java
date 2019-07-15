@@ -37,13 +37,14 @@ public class IndexOpElementyController {
 
     @PostMapping("/save_index_op_tech")
     public ModelAndView saveIndexOpTech(@ModelAttribute IndexOpElementy indexOpElementy) {
-        indexOpElementyService.save(indexOpElementy);
+
         ModelAndView modelAndView = new ModelAndView();
         List<IndexOpElementy> indexOpElementyList = indexOpElementyService.getAllIndexOpElementy();
 
         modelAndView.addObject("indexOpElementyList", indexOpElementyList);
         modelAndView.addObject("indexOP",indexOpElementy.getIndexOp());
         modelAndView.addObject("indexOpElementy",indexOpElementy);
+        indexOpElementyService.save(indexOpElementy);
         modelAndView.setViewName("admin/indeks_operacje_technologiczne");
         return modelAndView;
     }
