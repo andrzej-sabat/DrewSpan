@@ -37,13 +37,29 @@ public class IndexOpElementyController {
 
     @PostMapping("/save_index_op_tech")
     public ModelAndView saveIndexOpTech(@ModelAttribute IndexOpElementy indexOpElementy) {
-        indexOpElementyService.save(indexOpElementy);
+
         ModelAndView modelAndView = new ModelAndView();
         List<IndexOpElementy> indexOpElementyList = indexOpElementyService.getAllIndexOpElementy();
+        List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
+        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+        Integer rozmiar_listy = listKrMaszynys.size();
+        Integer rozmiar_listy_indeksow = listIndexOps.size();
+        Integer rozmiar_listy_operacji = listOpTechs.size();
 
+        modelAndView.addObject("rozmiar_listy", rozmiar_listy);
+        modelAndView.addObject("listOpTechs", listOpTechs);
+        modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+        modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
+        modelAndView.addObject("listIndexOps", listIndexOps);
+        modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
+        modelAndView.addObject("wspK",indexOpElementy.getWspK());
+        modelAndView.addObject("czas",indexOpElementy.getCzas());
+        modelAndView.addObject("opTech",indexOpElementy.getOpTech());
         modelAndView.addObject("indexOpElementyList", indexOpElementyList);
-        modelAndView.addObject("indexOP",indexOpElementy.getIndexOp());
+        modelAndView.addObject("indexOp",indexOpElementy.getIndexOp());
         modelAndView.addObject("indexOpElementy",indexOpElementy);
+        indexOpElementyService.save(indexOpElementy);
         modelAndView.setViewName("admin/indeks_operacje_technologiczne");
         return modelAndView;
     }
@@ -67,7 +83,6 @@ public class IndexOpElementyController {
         Integer rozmiar_listy = listKrMaszynys.size();
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
-        Integer rozmiar_listy_operacji_elementy = listIndexOpElementy.size();
 
         modelAndView.addObject("indexOpElementy",indexOpElementy);
         modelAndView.addObject("listIndexOpElementy",listIndexOpElementy);
