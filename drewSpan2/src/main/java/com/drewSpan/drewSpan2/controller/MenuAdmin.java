@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,14 @@ public class MenuAdmin {
         return modelAndView;
     }
 
+    @RequestMapping(value="/lista_ewidencji" , method = RequestMethod.GET)
+    public ModelAndView ListKrMaszyny(ModelAndView model) throws IOException {
+        List<User> listOfUsers = userService.findAllUsers();
+        model.addObject("listOfUsers", listOfUsers);
+        model.setViewName("admin/lista_ewidencji");
+
+        return model;
+    }
 
 
     @RequestMapping(value="/kartoteki", method = RequestMethod.GET)
