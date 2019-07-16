@@ -1,5 +1,8 @@
 package com.drewSpan.drewSpan2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Set;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Data
 @Entity
 @Table(name = "op_tech")
@@ -26,6 +29,7 @@ public class OpTech implements java.io.Serializable{
     @Column(name = "opt_nazwa")
     private String opt_nazwa;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "opTech", cascade = CascadeType.ALL)
     private Set<IndexOpElementy> indexOpElementies;
 
@@ -57,6 +61,26 @@ public class OpTech implements java.io.Serializable{
     public void setOpt_nazwa(String opt_nazwa) {
         this.opt_nazwa = opt_nazwa;
     }
+
+    public Set<IndexOpElementy> getIndexOpElementies() {
+        return indexOpElementies;
+    }
+
+    public void setIndexOpElementies(Set<IndexOpElementy> indexOpElementies) {
+        this.indexOpElementies = indexOpElementies;
+    }
+
+    @Override
+    public String toString() {
+        return "OpTech{" +
+                "opt_id=" + opt_id +
+                ", opt_kod='" + opt_kod + '\'' +
+                ", opt_nazwa='" + opt_nazwa +
+                '}';
+    }
+
+
+
 }
 
 

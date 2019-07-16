@@ -1,9 +1,8 @@
 package com.drewSpan.drewSpan2.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -24,15 +23,15 @@ public class IndexOpElementy {
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "opt_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @EqualsAndHashCode.Exclude
     private OpTech opTech;
 
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_indeksu")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @EqualsAndHashCode.Exclude
     private IndexOp indexOp;
 
     @Column(name = "Czas")
@@ -65,6 +64,8 @@ public class IndexOpElementy {
         this.indexOp = indexOp;
     }
 
+
+
     public long getCzas() {
         return czas;
     }
@@ -80,4 +81,17 @@ public class IndexOpElementy {
     public void setWspK(double wspK) {
         this.wspK = wspK;
     }
+
+    @Override
+    public String toString() {
+        return "IndexOpElementy{" +
+                "id=" + id +
+               // ", opTech=" + opTech +
+              //  ", indexOp=" + indexOp +
+                ", czas=" + czas +
+                ", wspK=" + wspK +
+                '}';
+    }
+
+
 }
