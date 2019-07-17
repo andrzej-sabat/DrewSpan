@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -94,6 +95,13 @@ public String save(
 
 
 
+    @RequestMapping(value="/indeks_operacje_technologiczne_menu", method = RequestMethod.GET)
+    public ModelAndView indeks_operacje_technologiczne_menu(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/indeks_operacje_technologiczne_menu");
+        return modelAndView;
+    }
+
     @RequestMapping(value="/indeks_operacje_technologiczne", method = RequestMethod.GET)
     public ModelAndView indeks_operacje_technologiczne(){
         ModelAndView modelAndView = new ModelAndView();
@@ -118,9 +126,19 @@ public String save(
         //modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
         modelAndView.addObject("standardDate", new Date());
         //modelAndView.addObject("user",user);
-        //modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        //modelAndView.addObject("userName", "Witaj " +  user.getLastName() + " (" + user.getLogin() + ")");
         //modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("admin/indeks_operacje_technologiczne");
         return modelAndView;
     }
+
+    @RequestMapping(value="/indeks_operacje_technologiczne_lista" , method = RequestMethod.GET)
+    public ModelAndView listaIndexow(ModelAndView model) throws IOException {
+        List<IndexOpElementy> listIndexOpElementy= indexOpElementyService.getAllIndexOpElementy();
+        model.addObject("listIndexOpElementy", listIndexOpElementy);
+        model.setViewName("admin/indeks_operacje_technologiczne_lista");
+
+        return model;
+    }
+
 }
