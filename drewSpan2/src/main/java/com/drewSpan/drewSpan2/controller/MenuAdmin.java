@@ -37,21 +37,6 @@ public class MenuAdmin {
         modelAndView.setViewName("admin/produkcja");
         return modelAndView;
     }
-    @RequestMapping(value="/dodawanie_ewidencji", method = RequestMethod.GET)
-    public ModelAndView dodawanieEwidencji(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin/ewidencja");
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/lista_ewidencji" , method = RequestMethod.GET)
-    public ModelAndView ListKrMaszyny(ModelAndView model) throws IOException {
-        List<User> listOfUsers = userService.findAllUsers();
-        model.addObject("listOfUsers", listOfUsers);
-        model.setViewName("admin/lista_ewidencji");
-
-        return model;
-    }
 
 
     @RequestMapping(value="/kartoteki", method = RequestMethod.GET)
