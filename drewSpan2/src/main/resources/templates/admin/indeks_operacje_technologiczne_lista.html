@@ -28,7 +28,7 @@
              id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
                 <li class="active"></li>
-                <li><a href="/dodawanie_pracownika">Dodaj indeksOpElem</a></li>
+                <li><a href="/indeks_operacje_technologiczne">Dodaj indeksOpElem</a></li>
 
             </ul>
         </div>
@@ -48,30 +48,38 @@
                 <span th:utext="${userName}"></span>
             </div>
             <div class="panel-body">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
+
+                <div class="col-md-12">
 
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="row">
+                            <!--<div class="row">
 
-                                <div class="col-md-3"></div>
-                                <div class="col-md-6">
-                                    <label>Wybierz Index</label>
-                                    <select class="form-control" id="wybranie_pracownika">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+
+
+                                    <select class="form-control" id="wybranie_indeksu">
                                         <option th:each="index : ${listIndexOpElementy}" th:value="${index.IndexOp.I_nazwa}" th:text="${index.IndexOp.I_nazwa}" ></option>
                                     </select> <br/>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>-->
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div align="center">
+                                        <legend>IndexOpElementy</legend></br>
+                                        <input  class="form-control" data-live-search="true" type="text" id="searchInput" onkeyup="searchIndex()" placeholder="Wyszukiwanie po nazwie operacji...">
+                                        </br>
+                                    </div>
                                 </div>
                                 <div class="col-md-3"></div>
                             </div>
                             <div class="row">
-                                <div>
-                                    <div align="center">
-                                        <legend>IndexOpElementy</legend>
-                                    </div>
                                     <div class="table-responsive">
-                                        <table id="tabela_przechowujaca" class="table table-striped table-bordered"
+                                        <table id="tabela_indeksow" class="table table-striped table-bordered"
                                                dt:table="true">
                                             <thead>
                                             <tr>
@@ -93,8 +101,10 @@
                                                 <td th:text="${list?.wspK}"></td>
                                                 <td th:text="${list?.czas}"></td>
                                                 <td>
-                                                    <a class="btn btn-info">Edytuj</a>
-                                                    <a class="btn btn-danger">Usuń</a>
+                                                    <a th:href="@{/edit_indeks_operacje_technologiczne/?id={id}(id=${list.id})}"
+                                                       class="btn btn-info">Edytuj</a>
+                                                    <a th:href="@{/delete_indeks_operacje_technologiczne/?id={id}(id=${list.id})}"
+                                                       class="btn btn-danger">Usuń</a>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -102,7 +112,7 @@
 
 
                                     </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -115,7 +125,7 @@
 
 
                 </div>
-                <div class="col-md-1"></div>
+
             </div>
 
 
@@ -123,6 +133,32 @@
     </div>
 </div>
 
+<script th:inline="javascript">
+        /*<![CDATA[*/
+        function searchIndex() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("searchInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("tabela_indeksow");
+  tr = table.getElementsByTagName("tr");
 
+
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+
+}
+
+        /*]]>*/
+</script>
 </body>
 </html>

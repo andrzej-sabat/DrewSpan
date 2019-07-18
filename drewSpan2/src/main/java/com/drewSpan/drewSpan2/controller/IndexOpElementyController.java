@@ -141,4 +141,26 @@ public String save(
         return model;
     }
 
+    @RequestMapping(value = "/edit_indeks_operacje_technologiczne", method = RequestMethod.GET)
+    public ModelAndView editIndeksOpElem(HttpServletRequest request) {
+        int indexOpElementyId = Integer.parseInt(request.getParameter("id"));
+
+        IndexOpElementy indexOpElementy = indexOpElementyService.getIndexOpElementy(indexOpElementyId);
+        ModelAndView model = new ModelAndView("admin/indeks_operacje_technologiczne");
+        model.addObject("indexopElementy",indexOpElementy);
+
+        return model;
+    }
+
+    @RequestMapping(value = "/delete_indeks_operacje_technologiczne", method = RequestMethod.GET)
+    public ModelAndView deleteIndexOpElementy(HttpServletRequest request) {
+        long indexOpElementyId = Integer.parseInt(request.getParameter("id"));
+        indexOpElementyService.deleteIndexOpElementy(indexOpElementyId);
+        ModelAndView modelAndView = new ModelAndView();
+        List<IndexOpElementy> listIndexOpElementy= indexOpElementyService.getAllIndexOpElementy();
+        modelAndView.addObject("listIndexOpElementy", listIndexOpElementy);
+        modelAndView.setViewName("admin/indeks_operacje_technologiczne_lista");
+        return modelAndView;
+    }
+
 }
