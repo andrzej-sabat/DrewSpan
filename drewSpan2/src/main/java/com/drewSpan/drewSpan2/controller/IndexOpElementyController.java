@@ -147,7 +147,10 @@ public String save(
 
         IndexOpElementy indexOpElementy = indexOpElementyService.getIndexOpElementy(indexOpElementyId);
         ModelAndView model = new ModelAndView("admin/indeks_operacje_technologiczne");
-        model.addObject("indexopElementy",indexOpElementy);
+        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+        model.addObject("listIndexOps",listIndexOps);
+        model.addObject("listOpTechs",listOpTechs);
 
         return model;
     }
