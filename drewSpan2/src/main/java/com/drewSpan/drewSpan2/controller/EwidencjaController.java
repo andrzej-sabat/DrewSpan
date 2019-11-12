@@ -1,23 +1,37 @@
 package com.drewSpan.drewSpan2.controller;
 
-import com.drewSpan.drewSpan2.model.Ewidencja;
-import com.drewSpan.drewSpan2.model.User;
-import com.drewSpan.drewSpan2.service.EwidencjaService;
+import com.drewSpan.drewSpan2.model.*;
+import com.drewSpan.drewSpan2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class EwidencjaController {
 
     @Autowired
+    private  EwidencjaElementyService ewidencjaElementyService;
+    @Autowired
     private EwidencjaService ewidencjaService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private KrMaszynyService krMaszynyService;
+    @Autowired
+    private IndexOpService indexOpService;
+    @Autowired
+    private OpTechService opTechService;
 
     @RequestMapping(value="/lista_ewidencji" , method = RequestMethod.GET)
     public ModelAndView listaEwidencji(ModelAndView model) throws IOException {
@@ -31,21 +45,90 @@ public class EwidencjaController {
     @RequestMapping(value="/dodawanie_ewidencji", method = RequestMethod.GET)
     public ModelAndView dodawanieEwidencji(){
         ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        EwidencjaElementy ewidencjaElementy = new EwidencjaElementy();
+        Ewidencja ewidencja = new Ewidencja();
+
+        List<Ewidencja> listEwidencja = ewidencjaService.findAllEwidencja();
+        List<EwidencjaElementy> listEwidencjaElementy = ewidencjaElementyService.findAllEwidencjaElementy();
+
+        User user = userService.findUserByLogin(auth.getName());
+        long user_id = userService.findUserByLogin(auth.getName()).getId();
+        String user_code = user.getCode();
+        String user_lastName = user.getLastName();
+        String user_section = user.getSection();
+        String user_name = user.getName();
+        List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
+        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+        long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
+        Integer rozmiar_listy = listKrMaszynys.size();
+        Integer rozmiar_listy_indeksow = listIndexOps.size();
+        Integer rozmiar_listy_operacji = listOpTechs.size();
+
+        modelAndView.addObject("user_id",user_id);
+        modelAndView.addObject("user_code",user_code);
+        modelAndView.addObject("user_lastName",user_lastName);
+        modelAndView.addObject("user_section",user_section);
+        modelAndView.addObject("user_name",user_name);
+        modelAndView.addObject("id_maszyny",id_maszyny);
+        modelAndView.addObject("ewidencjaElementy",ewidencjaElementy);
+        modelAndView.addObject("ewidencja",ewidencja);
+        modelAndView.addObject("listEwidencja",listEwidencja);
+        modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+        modelAndView.addObject("rozmiar_listy", rozmiar_listy);
+        modelAndView.addObject("listOpTechs", listOpTechs);
+        modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
+        modelAndView.addObject("listIndexOps", listIndexOps);
+        modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
+        modelAndView.addObject("standardDate", new Date());
+        modelAndView.addObject("user",user);
+        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("admin/ewidencja");
         return modelAndView;
     }
 
     @RequestMapping(value = "/edit_ewidencja", method = RequestMethod.GET)
     public ModelAndView editEwidencja(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
         int ewidencjaId = Integer.parseInt(request.getParameter("id"));
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Ewidencja ewidencja= ewidencjaService.findById(ewidencjaId);
-        ModelAndView model = new ModelAndView("admin/ewidencja");
+        EwidencjaElementy ewidencjaElementy = new EwidencjaElementy();
+
+        User user = userService.findUserByLogin(auth.getName());
+        long user_id = userService.findUserByLogin(auth.getName()).getId();
+        String user_code = user.getCode();
+        String user_lastName = user.getLastName();
+        String user_section = user.getSection();
+        String user_name = user.getName();
+
         List<Ewidencja> ewidencjaList= ewidencjaService.findAllEwidencja();
-        model.addObject("ewidencjaList",ewidencjaList);
+        List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
+        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+        long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
+        Integer rozmiar_listy = listKrMaszynys.size();
+        Integer rozmiar_listy_indeksow = listIndexOps.size();
+        Integer rozmiar_listy_operacji = listOpTechs.size();
+        modelAndView.addObject("ewidencjaList",ewidencjaList);
+        modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+        modelAndView.addObject("rozmiar_listy", rozmiar_listy);
+        modelAndView.addObject("listOpTechs", listOpTechs);
+        modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
+        modelAndView.addObject("listIndexOps", listIndexOps);
+        modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
+        modelAndView.addObject("id_maszyny",id_maszyny);
+        modelAndView.addObject("user_id",user_id);
+        modelAndView.addObject("user_code",user_code);
+        modelAndView.addObject("user_lastName",user_lastName);
+        modelAndView.addObject("user_section",user_section);
+        modelAndView.addObject("user_name",user_name);
 
-
-        return model;
+        modelAndView.setViewName("admin/ewidencja");
+        return modelAndView;
     }
 
     @RequestMapping(value = "/delete_ewidencja", method = RequestMethod.GET)
@@ -57,5 +140,38 @@ public class EwidencjaController {
         modelAndView.addObject("ewidencjaList",ewidencjaList);
         modelAndView.setViewName("admin/lista_ewidencji");
         return modelAndView;
+    }
+    @RequestMapping(value = "/delete_ewidencja_elementy", method = RequestMethod.GET)
+    public ModelAndView deleteEwidencjaElementy(HttpServletRequest request) {
+        int ewidencjaElementyId = Integer.parseInt(request.getParameter("id"));
+        ewidencjaElementyService.removeEwidencjaElementyById(ewidencjaElementyId);
+        ModelAndView modelAndView = new ModelAndView();
+        List<EwidencjaElementy> ewidencjaElementyList= ewidencjaElementyService.findAllEwidencjaElementy();
+        modelAndView.addObject("ewidencjaElementyList",ewidencjaElementyList);
+        modelAndView.setViewName("admin/lista_ewidencji_elementy");
+        return modelAndView;
+    }
+
+    @PostMapping("/save_ewidencja")
+    public ModelAndView saveEwidencja(@ModelAttribute Ewidencja ewidencja, @ModelAttribute EwidencjaElementy ewidencjaElementy) {
+
+        ewidencjaService.save(ewidencja);
+        ewidencjaElementyService.save(ewidencjaElementy);
+        ModelAndView modelAndView = new ModelAndView();
+        List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
+        List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
+        modelAndView.addObject("ewidencjaList", ewidencjaList);
+        modelAndView.addObject("ewidencjaElementyList", ewidencjaElementyList);
+        modelAndView.setViewName("admin/home");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value="/lista_ewidencji_elementy" , method = RequestMethod.GET)
+    public ModelAndView listaEwidencjiElementy(ModelAndView model) throws IOException {
+        List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
+        model.addObject("ewidencjaElementyList",ewidencjaElementyList);
+        model.setViewName("admin/lista_ewidencji_elementy");
+        return model;
     }
 }

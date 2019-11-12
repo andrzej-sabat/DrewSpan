@@ -24,21 +24,39 @@ public class EwidencjaElementy {
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "e_id", nullable = false)
+    @JoinColumn(name = "opt_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private OpTech opTech;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_indeksu")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private IndexOp indexOp;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "e_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Ewidencja ewidencja;
+
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "KrMaszyny_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private KrMaszyny maszyna;
 
-    @Column(name = "e_Zmiana")
-    private int zmiana;
+    @Column(name = "ilosc")
+    private int ilosc;
 
-    @Column(name = "e_CzasPracy")
+    @Column(name = "czas")
     private int czas;
 
-    @Column(name = "e_Data")
+    @Column(name = "data")
     private Date data;
+
 }
