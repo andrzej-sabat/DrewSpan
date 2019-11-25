@@ -30,7 +30,7 @@ public class Ewidencja {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "KrMaszyny_id", nullable = false)
+    @JoinColumn(name = "kr_maszyny_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private KrMaszyny maszyna;
 

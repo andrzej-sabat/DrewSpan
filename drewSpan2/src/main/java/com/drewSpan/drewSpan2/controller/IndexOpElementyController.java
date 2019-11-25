@@ -2,8 +2,6 @@ package com.drewSpan.drewSpan2.controller;
 
 import com.drewSpan.drewSpan2.model.*;
 import com.drewSpan.drewSpan2.service.*;
-import com.sun.javafx.collections.MappingChange;
-import jdk.internal.util.xml.impl.Input;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,10 +41,6 @@ public class IndexOpElementyController {
         List<IndexOpElementy> indexOpElementyList = indexOpElementyService.getAllIndexOpElementy();
         List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
-        System.out.println(indexOpElementy.getCzas());
-        System.out.println(indexOpElementy.getWspK());
-        System.out.println(indexOpElementy.getIndexOp().getI_nazwa());
-        System.out.println(indexOpElementy.getOpTech().getOpt_nazwa());
         modelAndView.addObject("listOpTechs", listOpTechs);
         modelAndView.addObject("listIndexOps", listIndexOps);
         modelAndView.addObject("indexOpElementyList", indexOpElementyList);
@@ -105,29 +99,18 @@ public String save(
     @RequestMapping(value="/indeks_operacje_technologiczne", method = RequestMethod.GET)
     public ModelAndView indeks_operacje_technologiczne(){
         ModelAndView modelAndView = new ModelAndView();
-        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
         IndexOpElementy indexOpElementy = new IndexOpElementy();
 
-        //User user = userService.findUserByLogin(auth.getName());
         List<IndexOpElementy> listIndexOpElementy =indexOpElementyService.getAllIndexOpElementy();
 
         List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
-        //Integer rozmiar_listy = listKrMaszynys.size();
-        //Integer rozmiar_listy_indeksow = listIndexOps.size();
-        //Integer rozmiar_listy_operacji = listOpTechs.size();
-
         modelAndView.addObject("indexOpElementy",indexOpElementy);
         modelAndView.addObject("listIndexOpElementy",listIndexOpElementy);
-        //modelAndView.addObject("rozmiar_listy", rozmiar_listy);
         modelAndView.addObject("listOpTechs", listOpTechs);
-        //modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
         modelAndView.addObject("listIndexOps", listIndexOps);
-        //modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
         modelAndView.addObject("standardDate", new Date());
-        //modelAndView.addObject("user",user);
-        //modelAndView.addObject("userName", "Witaj " +  user.getLastName() + " (" + user.getLogin() + ")");
-        //modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("admin/indeks_operacje_technologiczne");
         return modelAndView;
     }
