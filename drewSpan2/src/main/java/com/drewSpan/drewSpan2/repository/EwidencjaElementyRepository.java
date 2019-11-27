@@ -8,4 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EwidencjaElementyRepository extends JpaRepository<EwidencjaElementy, Long> {
     EwidencjaElementy findById(long id);
+
+    EwidencjaElementy deleteByEwidencja(Ewidencja ewidencja);
+
 }

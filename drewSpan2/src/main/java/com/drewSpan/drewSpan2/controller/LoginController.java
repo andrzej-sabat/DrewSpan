@@ -85,6 +85,29 @@ public class LoginController {
         return modelAndView;
     }
 
+    @RequestMapping(value="/delete_ewidencja/admin/home", method = RequestMethod.GET)
+    public ModelAndView homeAfterDeleteEwidencja(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByLogin(auth.getName());
+        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
+        modelAndView.setViewName("admin/home");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/delete_ewidencja_elementy/admin/home", method = RequestMethod.GET)
+    public ModelAndView homeAfterDeleteEwidencjaElementy(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByLogin(auth.getName());
+        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
+        modelAndView.setViewName("admin/home");
+        return modelAndView;
+    }
+
+
     @RequestMapping(value="/user/user_home", method = RequestMethod.GET)
     public ModelAndView userHome(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();

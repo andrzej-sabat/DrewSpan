@@ -1,15 +1,14 @@
 package com.drewSpan.drewSpan2.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.Date;
+
 
 @Data
 @Builder
@@ -19,20 +18,23 @@ import java.util.Date;
 @Table(name = "ewidencja")
 public class Ewidencja {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "e_id")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude @ToString.Exclude private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "kr_maszyny_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private KrMaszyny maszyna;
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude @ToString.Exclude private KrMaszyny maszyna;
 
     @Column(name = "e_Zmiana")
     private int zmiana;
@@ -44,6 +46,51 @@ public class Ewidencja {
     private Date data;
 
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public KrMaszyny getMaszyna() {
+        return maszyna;
+    }
+
+    public void setMaszyna(KrMaszyny maszyna) {
+        this.maszyna = maszyna;
+    }
+
+    public int getZmiana() {
+        return zmiana;
+    }
+
+    public void setZmiana(int zmiana) {
+        this.zmiana = zmiana;
+    }
+
+    public int getCzas_pracy() {
+        return czas_pracy;
+    }
+
+    public void setCzas_pracy(int czas_pracy) {
+        this.czas_pracy = czas_pracy;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
 }

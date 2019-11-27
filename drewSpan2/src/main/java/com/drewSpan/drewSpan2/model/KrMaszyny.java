@@ -1,5 +1,6 @@
 package com.drewSpan.drewSpan2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class KrMaszyny implements java.io.Serializable {
     private String krm_nazwa;
 
     @OneToMany(mappedBy = "maszyna", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Ewidencja> ewidencja;
 
     public long getKrm_id() {

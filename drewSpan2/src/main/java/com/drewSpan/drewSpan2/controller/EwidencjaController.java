@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Date;
@@ -47,18 +48,13 @@ public class EwidencjaController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        EwidencjaElementy ewidencjaElementy = new EwidencjaElementy();
-        Ewidencja ewidencja = new Ewidencja();
-
-        List<Ewidencja> listEwidencja = ewidencjaService.findAllEwidencja();
-        List<EwidencjaElementy> listEwidencjaElementy = ewidencjaElementyService.findAllEwidencjaElementy();
-
         User user = userService.findUserByLogin(auth.getName());
-        long user_id = userService.findUserByLogin(auth.getName()).getId();
+        long user_id = user.getId();
         String user_code = user.getCode();
         String user_lastName = user.getLastName();
         String user_section = user.getSection();
         String user_name = user.getName();
+
         List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
         List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
@@ -73,9 +69,6 @@ public class EwidencjaController {
         modelAndView.addObject("user_section",user_section);
         modelAndView.addObject("user_name",user_name);
         modelAndView.addObject("id_maszyny",id_maszyny);
-        modelAndView.addObject("ewidencjaElementy",ewidencjaElementy);
-        modelAndView.addObject("ewidencja",ewidencja);
-        modelAndView.addObject("listEwidencja",listEwidencja);
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);
         modelAndView.addObject("rozmiar_listy", rozmiar_listy);
         modelAndView.addObject("listOpTechs", listOpTechs);
@@ -99,22 +92,24 @@ public class EwidencjaController {
         EwidencjaElementy ewidencjaElementy = new EwidencjaElementy();
 
         User user = userService.findUserByLogin(auth.getName());
-        long user_id = userService.findUserByLogin(auth.getName()).getId();
+        long user_id = user.getId();
         String user_code = user.getCode();
         String user_lastName = user.getLastName();
         String user_section = user.getSection();
         String user_name = user.getName();
-
         List<Ewidencja> ewidencjaList= ewidencjaService.findAllEwidencja();
         List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
         List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+        List<User> userList = userService.findAllUsers();
+
         long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
         Integer rozmiar_listy = listKrMaszynys.size();
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
         modelAndView.addObject("ewidencjaList",ewidencjaList);
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+        modelAndView.addObject("userList",userList);
         modelAndView.addObject("rozmiar_listy", rozmiar_listy);
         modelAndView.addObject("listOpTechs", listOpTechs);
         modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
@@ -134,7 +129,9 @@ public class EwidencjaController {
     @RequestMapping(value = "/delete_ewidencja", method = RequestMethod.GET)
     public ModelAndView deleteEwidencja(HttpServletRequest request) {
         int ewidencjaId = Integer.parseInt(request.getParameter("id"));
+        Ewidencja ewidencja = ewidencjaService.findById(ewidencjaId);
         ewidencjaService.removeEwidencjaById(ewidencjaId);
+
         ModelAndView modelAndView = new ModelAndView();
         List<Ewidencja> ewidencjaList= ewidencjaService.findAllEwidencja();
         modelAndView.addObject("ewidencjaList",ewidencjaList);
@@ -155,7 +152,9 @@ public class EwidencjaController {
     @PostMapping("/save_ewidencja")
     public ModelAndView saveEwidencja(@ModelAttribute Ewidencja ewidencja, @ModelAttribute EwidencjaElementy ewidencjaElementy) {
 
+
         ewidencjaService.save(ewidencja);
+        ewidencjaElementy.setEwidencja(ewidencja);
         ewidencjaElementyService.save(ewidencjaElementy);
         ModelAndView modelAndView = new ModelAndView();
         List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();

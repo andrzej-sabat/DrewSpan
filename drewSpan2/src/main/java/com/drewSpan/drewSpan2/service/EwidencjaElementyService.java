@@ -1,5 +1,6 @@
 package com.drewSpan.drewSpan2.service;
 
+import com.drewSpan.drewSpan2.model.Ewidencja;
 import com.drewSpan.drewSpan2.model.EwidencjaElementy;
 import com.drewSpan.drewSpan2.model.OpTech;
 import com.drewSpan.drewSpan2.repository.EwidencjaElementyRepository;
@@ -31,5 +32,9 @@ public class EwidencjaElementyService {
 
     public void removeEwidencjaElementyById(long id) {
         EwidencjaElementyRepository.deleteById(id);
+    }
+
+    public void removeEwidencjaElementyByEwidencja(Ewidencja ewidencja) { EwidencjaElementyRepository.deleteByEwidencja(ewidencja);
+
     }
 }
