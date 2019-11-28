@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +55,9 @@ public class EwidencjaController {
         String user_code = user.getCode();
         String user_lastName = user.getLastName();
         String user_section = user.getSection();
-        String user_name = user.getName();
+        String user_login = user.getLogin();
+
+
 
         List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
         List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
@@ -62,12 +66,13 @@ public class EwidencjaController {
         Integer rozmiar_listy = listKrMaszynys.size();
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
+        modelAndView.addObject("localDate", LocalDate.now());
 
         modelAndView.addObject("user_id",user_id);
         modelAndView.addObject("user_code",user_code);
         modelAndView.addObject("user_lastName",user_lastName);
         modelAndView.addObject("user_section",user_section);
-        modelAndView.addObject("user_name",user_name);
+        modelAndView.addObject("user_login",user_login);
         modelAndView.addObject("id_maszyny",id_maszyny);
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);
         modelAndView.addObject("rozmiar_listy", rozmiar_listy);
@@ -87,9 +92,10 @@ public class EwidencjaController {
     public ModelAndView editEwidencja(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         int ewidencjaId = Integer.parseInt(request.getParameter("id"));
+        Ewidencja ewidencja = ewidencjaService.findById(ewidencjaId);
+        EwidencjaElementy ewidencjaElementy = ewidencjaElementyService.findByEwidencja(ewidencja);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Ewidencja ewidencja= ewidencjaService.findById(ewidencjaId);
-        EwidencjaElementy ewidencjaElementy = new EwidencjaElementy();
 
         User user = userService.findUserByLogin(auth.getName());
         long user_id = user.getId();
@@ -107,6 +113,8 @@ public class EwidencjaController {
         Integer rozmiar_listy = listKrMaszynys.size();
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
+        modelAndView.addObject("ewidencja",ewidencja);
+        modelAndView.addObject("ewidencjaElementy",ewidencjaElementy);
         modelAndView.addObject("ewidencjaList",ewidencjaList);
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);
         modelAndView.addObject("userList",userList);
@@ -162,6 +170,23 @@ public class EwidencjaController {
         modelAndView.addObject("ewidencjaList", ewidencjaList);
         modelAndView.addObject("ewidencjaElementyList", ewidencjaElementyList);
         modelAndView.setViewName("admin/home");
+        return modelAndView;
+    }
+
+    @PostMapping("/save_ewidencja_user")
+    public ModelAndView saveEwidencjaUser(@ModelAttribute Ewidencja ewidencja, @ModelAttribute EwidencjaElementy ewidencjaElementy) {
+
+
+        ewidencjaService.save(ewidencja);
+        ewidencjaElementy.setEwidencja(ewidencja);
+        ewidencjaElementyService.save(ewidencjaElementy);
+
+        ModelAndView modelAndView = new ModelAndView();
+        List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
+        List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
+        modelAndView.addObject("ewidencjaList", ewidencjaList);
+        modelAndView.addObject("ewidencjaElementyList", ewidencjaElementyList);
+        modelAndView.setViewName("user/home");
         return modelAndView;
     }
 

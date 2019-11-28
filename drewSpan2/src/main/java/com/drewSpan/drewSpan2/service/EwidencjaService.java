@@ -1,11 +1,13 @@
 package com.drewSpan.drewSpan2.service;
 
 import com.drewSpan.drewSpan2.model.Ewidencja;
-import com.drewSpan.drewSpan2.model.OpTech;
+import com.drewSpan.drewSpan2.model.User;
 import com.drewSpan.drewSpan2.repository.EwidencjaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,9 +19,14 @@ public class EwidencjaService {
         return ewidencjaRepository.findAll();
     }
 
+    public Ewidencja findEwidencjaByUser(User user){ return  ewidencjaRepository.findEwidencjaByUser(user);};
     public Ewidencja findById(long id) {
         return ewidencjaRepository.findById(id);
     }
+    public LocalDate getLocalDate() {
+        return LocalDate.now();
+    }
+
 
     public Ewidencja save(Ewidencja ewidencja) {
         return ewidencjaRepository.save(ewidencja);

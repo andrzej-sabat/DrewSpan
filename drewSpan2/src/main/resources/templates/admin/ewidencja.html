@@ -27,7 +27,7 @@
     </script>
 </head>
 
-<body onload="set_change();">
+<body onload="set_change(),fill_fields();">
 <div class="container" style="width: 100%;">
 
     <form th:action="@{/logout}" method="get">
@@ -51,50 +51,53 @@
 
                             <div class="col-md-6">
                                 <div class="row two_columns" style="margin: auto;">
-                                     <h3 class="form-signin-heading" th:text="EwidencjaAdmin" style="text-align: center;">EwidencjaAdmin</h3>
+                                    <h3 class="form-signin-heading" style="text-align: center;">Dane do ewidencji</h3>
                                     <br/>
                                     <!--Id pracownika - Nazwisko pracownika - Wydział pracownika -->
                                     <div class="col-md-4">
-                                        <label>Id pracownika</label>
-                                        <input required="required" type="text" id="user" name="user" placeholder="Id pracownika"
-                                               class="form-control" th:value="${user_id}"/> <br/>
                                         <label>Nazwisko pracownika</label>
-                                        <input required="required" type="text" id="nazwisko_pracownika" name="lastName" placeholder="Nazwisko pracownika"
+                                        <input  required="required" type="text" id="nazwisko_pracownika" name="lastName" placeholder="Nazwisko pracownika"
                                                class="form-control" th:value="${user_lastName}"/> <br/>
+                                        <label>Id pracownika</label>
+                                        <input  required="required" type="text" id="user" name="user" placeholder="Id pracownika"
+                                               class="form-control" th:value="${user_id}"/> <br/>
                                         <label>Wydział pracownika</label>
-                                        <input required="required" type="text" id="wydzial_pracownika" name="wydzial_pracownika" placeholder="Wydzial pracownika"
+                                        <input  required="required" type="text" id="wydzial_pracownika" name="wydzial_pracownika" placeholder="Wydzial pracownika"
                                                class="form-control" th:value="${user_section}"/> <br/>
                                         <br/>
                                         <br/>
                                     </div>
 
-                                    <!--Kod maszyny - Id maszyny - Nazwa maszyny -->
+                                    <!--Imie - Kod - Id ewidencji-->
                                     <div class="col-md-4">
-                                         <label>Kod maszyny</label>
-                                         <select required="required" class="form-control" id="kod_maszyny" onchange="fill_fields()" placeholder="Kod maszyny">
-                                             <option th:each="maszyna : ${listKrMaszynys}"  th:value="${maszyna.krm_kod}" th:text="${maszyna.krm_kod}"></option>
-                                         </select> <br/>
+                                        <label>Login</label>
+                                        <input  required="required" type="text" id="imie_pracownika" name="imie_pracownika" placeholder="Imie pracownika"
+                                               class="form-control" th:value="${user_login}"/> <br/>
 
-                                        <label>Id maszyny</label>
-                                        <select required="required" class="form-control" id="maszyna" name="maszyna" placeholder="Id maszyny">
-                                            <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_id}" th:text="${maszyna.krm_id}"></option>
-                                        </select> <br/>
-                                         <label>Nazwa maszyny</label>
-                                         <select required="required" class="form-control" id="nazwa_maszyny" placeholder="Nazwa maszyny">
-                                             <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_nazwa}" th:text="${maszyna.krm_nazwa}"></option>
-                                         </select> <br/>
+                                        <label>Kod pracownika</label>
+
+                                        <input  required="required" type="text" name="user" placeholder="Kod pracownika"
+                                               class="form-control" th:value="${user_code}"/> <br/>
+
+                                        <!-- <label>Id ewidencji</label>
+                                         <input required="required" type="text" id="ewidencja" name="ewidencja" placeholder="e_id"
+                                                class="form-control" th:value="${user_code}"/> <br/>-->
+
                                         <br/>
                                         <br/>
                                     </div>
 
+
+
                                     <!--Zmiana - Data - Czas pracy -->
                                     <div class="col-md-4">
                                         <label>Zmiana</label>
-                                        <input required="required" type="text" id="zmiana" name="zmiana" placeholder="Zmiana"
+                                        <input  required="required" type="text" id="zmiana" name="zmiana" placeholder="Zmiana"
                                                class="form-control" /> <br/>
                                         <label>Data</label>
-                                        <input required="required" type="text" id="date" name="data" placeholder="Data"
-                                               class="form-control" th:value="${#dates.format(#dates.createNow(),'dd/MM/YYYY HH:mm:ss')}" /> <br/>
+                                        <input  required="required" type="text" id="date" name="data" placeholder="Data"
+                                               class="form-control" th:value="${#temporals.format(localDate, 'dd-MM-yyyy')}" /> <br/>
+
                                         <label>Czas pracy</label>
                                         <input required="required" type="text" id="czas_pracy" name="czas_pracy" placeholder="Czas pracy"
                                                class="form-control" th:value="480"/> <br/>
@@ -104,73 +107,80 @@
                                 </div>
                             </div>
 
-                                <!-- PRAWA    KOLUMNA    DANYCH -->
+                            <!-- PRAWA    KOLUMNA    DANYCH -->
 
-                             <div class="col-md-6">
-                                 <div class="row two_columns" style="margin: auto; ">
-                                     <h3 class="form-signin-heading" th:text="Dane" style="text-align: center;">Dane do tabeli</h3>
-                                     <br/>
+                            <div class="col-md-6">
+                                <div class="row two_columns" style="margin: auto; ">
+                                    <h3 class="form-signin-heading"  style="text-align: center;">Dane elementu</h3>
+                                    <br/>
 
-                                     <!--Imie - Kod - Id ewidencji-->
-                                     <div class="col-md-4">
-                                       <!--  <label>Imie pracownika</label>
-                                         <input required="required" type="text" id="imie_pracownika" name="imie_pracownika" placeholder="Imie pracownika"
-                                                class="form-control" th:value="${user_name}"/> <br/>
-
-                                         <label>Kod pracownika</label>
-
-                                         <input required="required" type="text" name="user" placeholder="Kod pracownika"
-                                                class="form-control" th:value="${user_code}"/> <br/>
-
-                                         <label>e_id</label>
-                                         <input required="required" type="text" id="ewidencja" name="ewidencja" placeholder="e_id"
-                                                class="form-control" th:value="${user_code}"/> <br/>-->
-
-                                             <br/>
-                                         <br/>
-                                     </div>
-
-                                     <!--Indeks - Nazwa indeksu - Operacja-->
-                                     <div class="col-md-4">
-                                         <label>Indeks</label>
-                                         <select required="required"class="form-control" id="indeks" name="indexOp" onchange="fill_index_name()" placeholder="Indeks">
-                                             <option th:each="indexOp : ${listIndexOps}" th:value="${indexOp.id_indeksu}" th:text="${indexOp.i_kod}"></option>
+                                    <!--Kod maszyny - Id maszyny - Nazwa maszyny -->
+                                    <div class="col-md-4">
+                                        <label>Kod maszyny</label>
+                                        <select required="required" class="form-control" id="kod_maszyny" onchange="fill_fields()" placeholder="Kod maszyny">
+                                            <option th:each="maszyna : ${listKrMaszynys}"  th:value="${maszyna.krm_kod}" th:text="${maszyna.krm_kod}"></option>
+                                        </select> <br/>
+                                        <label>Id maszyny</label>
+                                        <input  required="required" type="text" id="maszyna" name="maszyna" placeholder="Czas pracy"
+                                               class="form-control"/> <br/>
+                                        <label>Nazwa maszyny</label>
+                                        <input  required="required" type="text" id="nazwa_maszyny" name="nazwa_maszyny" placeholder="Czas pracy"
+                                               class="form-control"/> <br/>
+                                        <!-- <label>Id maszyny</label>
+                                         <select  required="required" class="form-control" id="maszyna" name="maszyna" placeholder="Id maszyny">
+                                             <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_id}" th:text="${maszyna.krm_id}"></option>
                                          </select> <br/>
+                                         <label>Nazwa maszyny</label>
+                                         <select  required="required" class="form-control" id="nazwa_maszyny" placeholder="Nazwa maszyny">
+                                             <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_nazwa}" th:text="${maszyna.krm_nazwa}"></option>
+                                         </select> <br/>-->
+                                        <br/>
+                                        <br/>
+                                    </div>
 
-                                         <label>Nazwa indeksu</label>
-                                         <select  required="required" class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()" placeholder="Nazwa indeksu">
-                                             <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}"></option>
-                                         </select> <br/>
-                                         <label>Operacja</label>
-                                         <select  required="required"class="form-control" id="kod_operacji" name="opTech" onchange="fill_op_name()" placeholder="Operacja">
-                                             <option th:each="opTech : ${listOpTechs}" th:value="${opTech.opt_id}" th:text="${opTech.opt_kod}"></option>
-                                         </select> <br/>
-                                         <br/>
-                                         <br/>
-                                     </div>
+                                    <!--Indeks - Nazwa indeksu - Ilość-->
+                                    <div class="col-md-4">
+                                        <label>Indeks</label>
+                                        <select required="required"class="form-control" id="indeks" name="indexOp" onchange="fill_index_name()" placeholder="Indeks">
+                                            <option th:each="indexOp : ${listIndexOps}" th:value="${indexOp.id_indeksu}" th:text="${indexOp.i_kod}"></option>
+                                        </select> <br/>
 
-                                     <!--Nazwa operacji - Ilosc - Czas -->
-                                     <div class="col-md-4">
-                                         <label>Nazwa operacji</label>
-                                         <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()" placeholder="Nazwa operacji">
-                                             <option th:each="operacja : ${listOpTechs}" th:value="${operacja.opt_nazwa}" th:text="${operacja.opt_nazwa}"></option>
-                                         </select> <br/>
-                                         <label>Ilość</label>
-                                         <input required="required" type="text" id="ilosc" name="ilosc" placeholder="Ilość"
-                                                class="form-control"/></br>
-                                         <label>Czas</label>
-                                         <input required="required" type="text" id="czas" name="czas" placeholder="Czas"
-                                                class="form-control" />
-                                         <br/>
+                                        <label>Nazwa indeksu</label>
+                                        <select  required="required" class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()" placeholder="Nazwa indeksu">
+                                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}"></option>
+                                        </select> <br/>
+
+                                        <label>Ilość</label>
+                                        <input required="required" type="text" id="ilosc" name="ilosc" placeholder="Ilość"
+                                               class="form-control"/></br>
+
+                                        <br/>
+                                        <br/>
+                                    </div>
+
+                                    <!--Operacja - Nazwa operacji - Czas -->
+                                    <div class="col-md-4">
+                                        <label>Operacja</label>
+                                        <select  required="required"class="form-control" id="kod_operacji" name="opTech" onchange="fill_op_name()" placeholder="Operacja">
+                                            <option th:each="opTech : ${listOpTechs}" th:value="${opTech.opt_id}" th:text="${opTech.opt_kod}"></option>
+                                        </select> <br/>
+                                        <label>Nazwa operacji</label>
+                                        <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()" placeholder="Nazwa operacji">
+                                            <option th:each="operacja : ${listOpTechs}" th:value="${operacja.opt_nazwa}" th:text="${operacja.opt_nazwa}"></option>
+                                        </select> <br/>
+                                        <label>Czas</label>
+                                        <input required="required" type="text" id="czas" name="czas" placeholder="Czas"
+                                               class="form-control" />
+                                        <br/>
 
 
-                                     </div>
-                                 </div>
-                             </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit" style="width:40%; margin:auto;">
-                            Zapisz do tabeli
+                            Dodaj
                         </button>
 
                     </div>
@@ -178,7 +188,6 @@
                     <script th:inline="javascript">
                         /*<![CDATA[*/
                         function fill_fields(){
-                            alert("Helloooooo");
                             var x = document.getElementById("kod_maszyny").selectedIndex;
                             var y = document.getElementById("kod_maszyny").options;
                             var krm_kod = y[x].text;
@@ -192,7 +201,7 @@
                                     var nazwa_maszyny = jsonObj[index]['krm_nazwa'];
                                     document.getElementById("maszyna").value = id_maszyny;
                                     document.getElementById("nazwa_maszyny").value = nazwa_maszyny;
-                                    alert("Hello");
+
                                 }
 
                             }

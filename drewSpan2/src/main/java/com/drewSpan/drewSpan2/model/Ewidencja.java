@@ -1,10 +1,11 @@
 package com.drewSpan.drewSpan2.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,7 +18,6 @@ import java.util.Date;
 @Entity
 @Table(name = "ewidencja")
 public class Ewidencja {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,8 +43,9 @@ public class Ewidencja {
     private int czas_pracy;
 
     @Column(name = "e_Data")
+    @DateTimeFormat(pattern="dd-MM-yyyy")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date data;
-
 
     public long getId() {
         return id;
@@ -78,6 +79,7 @@ public class Ewidencja {
         this.zmiana = zmiana;
     }
 
+
     public int getCzas_pracy() {
         return czas_pracy;
     }
@@ -86,10 +88,11 @@ public class Ewidencja {
         this.czas_pracy = czas_pracy;
     }
 
+    @DateTimeFormat(pattern="dd-MM-yyyy")
     public Date getData() {
         return data;
     }
-
+    @DateTimeFormat(pattern="dd-MM-yyyy")
     public void setData(Date data) {
         this.data = data;
     }
