@@ -2,16 +2,20 @@ package com.drewSpan.drewSpan2.controller;
 
 import com.drewSpan.drewSpan2.model.*;
 import com.drewSpan.drewSpan2.service.*;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.extras.java8time.expression.Temporals;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.temporal.Temporal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -123,12 +127,15 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        LocalDate date = LocalDate.now();
+        System.out.println(date);
         User user = userService.findUserByLogin(auth.getName());
         long user_id = user.getId();
         String user_code = user.getCode();
         String user_lastName = user.getLastName();
         String user_section = user.getSection();
         String user_login = user.getLogin();
+
 
         List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
         List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();

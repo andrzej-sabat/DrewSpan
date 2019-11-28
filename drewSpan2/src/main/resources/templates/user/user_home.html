@@ -20,6 +20,19 @@
             } else {
                 document.getElementById("zmiana").value = "3";
             }
+
+            document.getElementById("maszyna").value = null;
+            document.getElementById("kod_maszyny").value = null;
+            document.getElementById("nazwa_maszyny").value = null;
+            document.getElementById("indeks").value = null;
+            document.getElementById("ilosc").value = null;
+            document.getElementById("kod_operacji").value = null;
+            document.getElementById("nazwa_operacji").value = null;
+            document.getElementById("czas").value = null;
+            document.getElementById("nazwa_indeksu").value = null;
+
+            var data = /*[[${#dates.format(standardDate, 'dd-MM-yyyy')}]]*/;
+            document.getElementById("date").value = data;
         }
 
 
@@ -96,7 +109,7 @@
                                                class="form-control" /> <br/>
                                         <label>Data</label>
                                         <input readonly required="required" type="text" id="date" name="data" placeholder="Data"
-                                               class="form-control" th:value="${#temporals.format(localDate, 'dd-MM-yyyy')}" /> <br/>
+                                               class="form-control" /> <br/>
                                         <label>Czas pracy</label>
                                         <input required="required" type="text" id="czas_pracy" name="czas_pracy" placeholder="Czas pracy"
                                                class="form-control" th:value="480"/> <br/>
@@ -116,23 +129,23 @@
                                     <!--Kod maszyny - Id maszyny - Nazwa maszyny -->
                                     <div class="col-md-4">
                                         <label>Kod maszyny</label>
-                                        <select required="required" class="form-control" id="kod_maszyny" onchange="fill_fields()" placeholder="Kod maszyny">
+                                        <select required="required" class="form-control" id="kod_maszyny" onchange="fill_fields()">
                                             <option th:each="maszyna : ${listKrMaszynys}"  th:value="${maszyna.krm_kod}" th:text="${maszyna.krm_kod}"></option>
                                         </select> <br/>
                                         <label>Id maszyny</label>
-                                        <input readonly required="required" type="text" id="maszyna" name="maszyna" placeholder="Czas pracy"
-                                               class="form-control"/> <br/>
+                                        <input  required="required" type="text" id="maszyna" name="maszyna"
+                                                class="form-control"/> <br/>
                                         <label>Nazwa maszyny</label>
-                                        <input readonly required="required" type="text" id="nazwa_maszyny" name="nazwa_maszyny" placeholder="Czas pracy"
-                                               class="form-control"/> <br/>
-                                       <!-- <label>Id maszyny</label>
-                                        <select readonly required="required" class="form-control" id="maszyna" name="maszyna" placeholder="Id maszyny">
-                                            <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_id}" th:text="${maszyna.krm_id}"></option>
-                                        </select> <br/>
-                                        <label>Nazwa maszyny</label>
-                                        <select readonly required="required" class="form-control" id="nazwa_maszyny" placeholder="Nazwa maszyny">
-                                            <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_nazwa}" th:text="${maszyna.krm_nazwa}"></option>
-                                        </select> <br/>-->
+                                        <input  required="required" type="text" id="nazwa_maszyny" name="nazwa_maszyny"
+                                                class="form-control"/> <br/>
+                                        <!-- <label>Id maszyny</label>
+                                         <select  required="required" class="form-control" id="maszyna" name="maszyna" placeholder="Id maszyny">
+                                             <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_id}" th:text="${maszyna.krm_id}"></option>
+                                         </select> <br/>
+                                         <label>Nazwa maszyny</label>
+                                         <select  required="required" class="form-control" id="nazwa_maszyny" placeholder="Nazwa maszyny">
+                                             <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_nazwa}" th:text="${maszyna.krm_nazwa}"></option>
+                                         </select> <br/>-->
                                         <br/>
                                         <br/>
                                     </div>
@@ -140,17 +153,17 @@
                                     <!--Indeks - Nazwa indeksu - Ilość-->
                                     <div class="col-md-4">
                                         <label>Indeks</label>
-                                        <select required="required"class="form-control" id="indeks" name="indexOp" onchange="fill_index_name()" placeholder="Indeks">
-                                            <option th:each="indexOp : ${listIndexOps}" th:value="${indexOp.id_indeksu}" th:text="${indexOp.i_kod}"></option>
+                                        <select required="required"class="form-control" id="indeks" name="indexOp" onchange="fill_index_name()">
+                                            <option th:each="indexOp : ${listIndexOps}" th:value="${indexOp.id_indeksu}" th:text="${indexOp.i_kod}">></option>
                                         </select> <br/>
 
                                         <label>Nazwa indeksu</label>
-                                        <select  required="required" class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()" placeholder="Nazwa indeksu">
+                                        <select  required="required" class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()">
                                             <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}"></option>
                                         </select> <br/>
 
                                         <label>Ilość</label>
-                                        <input required="required" type="text" id="ilosc" name="ilosc" placeholder="Ilość"
+                                        <input required="required" type="text" id="ilosc" name="ilosc"
                                                class="form-control"/></br>
 
                                         <br/>
@@ -160,15 +173,15 @@
                                     <!--Operacja - Nazwa operacji - Czas -->
                                     <div class="col-md-4">
                                         <label>Operacja</label>
-                                        <select  required="required"class="form-control" id="kod_operacji" name="opTech" onchange="fill_op_name()" placeholder="Operacja">
+                                        <select  required="required"class="form-control" id="kod_operacji" name="opTech" onchange="fill_op_name()">
                                             <option th:each="opTech : ${listOpTechs}" th:value="${opTech.opt_id}" th:text="${opTech.opt_kod}"></option>
                                         </select> <br/>
                                         <label>Nazwa operacji</label>
-                                        <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()" placeholder="Nazwa operacji">
+                                        <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()">
                                             <option th:each="operacja : ${listOpTechs}" th:value="${operacja.opt_nazwa}" th:text="${operacja.opt_nazwa}"></option>
                                         </select> <br/>
                                         <label>Czas</label>
-                                        <input required="required" type="text" id="czas" name="czas" placeholder="Czas"
+                                        <input required="required" type="text" id="czas" name="czas"
                                                class="form-control" />
                                         <br/>
 

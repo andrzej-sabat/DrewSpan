@@ -167,9 +167,46 @@ public class EwidencjaController {
         ModelAndView modelAndView = new ModelAndView();
         List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
         List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByLogin(auth.getName());
+        long user_id = user.getId();
+        String user_code = user.getCode();
+        String user_lastName = user.getLastName();
+        String user_section = user.getSection();
+        String user_name = user.getName();
+        String user_login = user.getLogin();
+
+        List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
+        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+        List<User> userList = userService.findAllUsers();
+
+        long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
+        Integer rozmiar_listy = listKrMaszynys.size();
+        Integer rozmiar_listy_indeksow = listIndexOps.size();
+        Integer rozmiar_listy_operacji = listOpTechs.size();
         modelAndView.addObject("ewidencjaList", ewidencjaList);
         modelAndView.addObject("ewidencjaElementyList", ewidencjaElementyList);
-        modelAndView.setViewName("admin/home");
+        modelAndView.addObject("ewidencja",ewidencja);
+        modelAndView.addObject("ewidencjaElementy",ewidencjaElementy);
+        modelAndView.addObject("ewidencjaList",ewidencjaList);
+        modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+        modelAndView.addObject("userList",userList);
+        modelAndView.addObject("rozmiar_listy", rozmiar_listy);
+        modelAndView.addObject("listOpTechs", listOpTechs);
+        modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
+        modelAndView.addObject("listIndexOps", listIndexOps);
+        modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
+        modelAndView.addObject("id_maszyny",id_maszyny);
+        modelAndView.addObject("user_id",user_id);
+        modelAndView.addObject("user_code",user_code);
+        modelAndView.addObject("user_login",user_login);
+        modelAndView.addObject("user_lastName",user_lastName);
+        modelAndView.addObject("user_section",user_section);
+        modelAndView.addObject("user_name",user_name);
+        modelAndView.addObject("standardDate", new Date());
+
+        modelAndView.setViewName("admin/ewidencja");
         return modelAndView;
     }
 
@@ -182,11 +219,40 @@ public class EwidencjaController {
         ewidencjaElementyService.save(ewidencjaElementy);
 
         ModelAndView modelAndView = new ModelAndView();
-        List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
-        List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
-        modelAndView.addObject("ewidencjaList", ewidencjaList);
-        modelAndView.addObject("ewidencjaElementyList", ewidencjaElementyList);
-        modelAndView.setViewName("user/home");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        User user = userService.findUserByLogin(auth.getName());
+        long user_id = user.getId();
+        String user_code = user.getCode();
+        String user_lastName = user.getLastName();
+        String user_section = user.getSection();
+        String user_login = user.getLogin();
+
+        List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
+        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+        long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
+        Integer rozmiar_listy = listKrMaszynys.size();
+        Integer rozmiar_listy_indeksow = listIndexOps.size();
+        Integer rozmiar_listy_operacji = listOpTechs.size();
+
+        modelAndView.addObject("user_id",user_id);
+        modelAndView.addObject("user_code",user_code);
+        modelAndView.addObject("user_lastName",user_lastName);
+        modelAndView.addObject("user_section",user_section);
+        modelAndView.addObject("user_login",user_login);
+        modelAndView.addObject("id_maszyny",id_maszyny);
+        modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+        modelAndView.addObject("rozmiar_listy", rozmiar_listy);
+        modelAndView.addObject("listOpTechs", listOpTechs);
+        modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
+        modelAndView.addObject("listIndexOps", listIndexOps);
+        modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
+        modelAndView.addObject("standardDate", new Date());
+        modelAndView.addObject("user",user);
+        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
+        modelAndView.setViewName("user/user_home");
         return modelAndView;
     }
 
