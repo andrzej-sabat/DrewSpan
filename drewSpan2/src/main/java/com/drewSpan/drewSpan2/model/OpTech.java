@@ -24,7 +24,7 @@ public class OpTech implements java.io.Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "opt_id")
     private long opt_id;
-    @Column(name = "opt_kod")
+    @Column(name = "opt_kod", length = 200, unique = true)
     private String opt_kod;
     @Column(name = "opt_nazwa")
     private String opt_nazwa;

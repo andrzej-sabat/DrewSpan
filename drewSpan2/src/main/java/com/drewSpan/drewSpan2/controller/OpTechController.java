@@ -59,8 +59,12 @@ public class OpTechController {
 
     @PostMapping("/save_op_tech")
     public ModelAndView saveOpTechh(@ModelAttribute OpTech opTech) {
-
-        OpTechService.save(opTech);
+        try {
+            OpTechService.save(opTech);
+        }
+        catch (Exception ex){
+            throw new IllegalArgumentException("Niepoprawne dane");
+        }
         ModelAndView modelAndView = new ModelAndView();
         List<OpTech> listOpTechs = OpTechService.getAllOpTechs();
         modelAndView.addObject("listOpTechs", listOpTechs);
