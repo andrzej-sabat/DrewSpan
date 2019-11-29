@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
+import javax.sound.sampled.Line;
 import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -160,16 +161,28 @@ public class EwidencjaController {
     @PostMapping("/save_ewidencja")
     public ModelAndView saveEwidencja(@ModelAttribute Ewidencja ewidencja, @ModelAttribute EwidencjaElementy ewidencjaElementy) {
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        ewidencjaService.save(ewidencja);
-        ewidencjaElementy.setEwidencja(ewidencja);
-        ewidencjaElementyService.save(ewidencjaElementy);
+        long user_id = userService.findUserByLogin(auth.getName()).getId();
+        Date date = userService.convertToDate((LocalDate.now()));
+
+        List<Ewidencja> ewidencjaListByDate = ewidencjaService.findAllByUserAndData(user_id,date);
+        if(ewidencjaListByDate.size()<1){
+
+            ewidencjaService.save(ewidencja);
+        }
+        else {
+
+            Ewidencja istniejaca_ewidencja = ewidencjaListByDate.get(0);
+            ewidencjaElementy.setEwidencja(istniejaca_ewidencja);
+            ewidencjaElementyService.save(ewidencjaElementy);
+
+        };
+
         ModelAndView modelAndView = new ModelAndView();
         List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
         List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByLogin(auth.getName());
-        long user_id = user.getId();
         String user_code = user.getCode();
         String user_lastName = user.getLastName();
         String user_section = user.getSection();
@@ -212,17 +225,29 @@ public class EwidencjaController {
 
     @PostMapping("/save_ewidencja_user")
     public ModelAndView saveEwidencjaUser(@ModelAttribute Ewidencja ewidencja, @ModelAttribute EwidencjaElementy ewidencjaElementy) {
-
-
-        ewidencjaService.save(ewidencja);
-        ewidencjaElementy.setEwidencja(ewidencja);
-        ewidencjaElementyService.save(ewidencjaElementy);
-
-        ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        long user_id = userService.findUserByLogin(auth.getName()).getId();
+        Date date = userService.convertToDate((LocalDate.now()));
+
+        List<Ewidencja> ewidencjaListByDate = ewidencjaService.findAllByUserAndData(user_id,date);
+        if(ewidencjaListByDate.size()<1){
+
+            ewidencjaService.save(ewidencja);
+        }
+        else {
+
+            Ewidencja istniejaca_ewidencja = ewidencjaListByDate.get(0);
+            ewidencjaElementy.setEwidencja(istniejaca_ewidencja);
+            ewidencjaElementyService.save(ewidencjaElementy);
+
+        };
+
+
+        ModelAndView modelAndView = new ModelAndView();
+
         User user = userService.findUserByLogin(auth.getName());
-        long user_id = user.getId();
+        /*long user_id = user.getId();*/
         String user_code = user.getCode();
         String user_lastName = user.getLastName();
         String user_section = user.getSection();

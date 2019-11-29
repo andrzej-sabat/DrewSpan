@@ -18,7 +18,7 @@ public class EwidencjaService {
     public List<Ewidencja> findAllEwidencja() {
         return ewidencjaRepository.findAll();
     }
-
+    public List<Ewidencja> findAllByUserAndData(Long user_id,Date date) { return  ewidencjaRepository.findAllByUserIdAndData(user_id,date);}
     public Ewidencja findEwidencjaByUser(User user){ return  ewidencjaRepository.findEwidencjaByUser(user);};
     public Ewidencja findById(long id) {
         return ewidencjaRepository.findById(id);
