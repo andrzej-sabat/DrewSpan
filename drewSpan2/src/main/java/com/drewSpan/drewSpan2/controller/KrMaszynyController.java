@@ -54,8 +54,12 @@ public class KrMaszynyController {
 
     @PostMapping("/save_krmaszyny")
     public ModelAndView saveKrMaszynyh(@ModelAttribute KrMaszyny krMaszyny) {
-
-        krMaszynyService.save(krMaszyny);
+        try {
+            krMaszynyService.save(krMaszyny);
+        }
+        catch (Exception ex){
+            throw new IllegalArgumentException("Niepoprawne dane");
+        }
         ModelAndView modelAndView = new ModelAndView();
         List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);

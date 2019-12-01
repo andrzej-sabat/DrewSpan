@@ -17,7 +17,7 @@ public class KrMaszyny implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "krm_id")
     private long krm_id;
-    @Column(name = "krm_kod")
+    @Column(name = "krm_kod", length = 200, unique = true)
     private String krm_kod;
     @Column(name = "krm_nazwa")
     private String krm_nazwa;

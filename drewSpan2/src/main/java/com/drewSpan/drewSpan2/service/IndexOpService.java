@@ -45,7 +45,6 @@ public class IndexOpService {
 
 
 
-
     public List<IndexOp> findAllOpTech() {
         return indexOpRepository.findAll();
     }
