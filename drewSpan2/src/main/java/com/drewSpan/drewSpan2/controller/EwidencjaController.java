@@ -58,8 +58,6 @@ public class EwidencjaController {
         String user_section = user.getSection();
         String user_login = user.getLogin();
 
-
-
         List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
         List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
@@ -234,6 +232,8 @@ public class EwidencjaController {
         if(ewidencjaListByDate.size()<1){
 
             ewidencjaService.save(ewidencja);
+            ewidencjaElementy.setEwidencja(ewidencja);
+            ewidencjaElementyService.save(ewidencjaElementy);
         }
         else {
 
@@ -280,7 +280,6 @@ public class EwidencjaController {
         modelAndView.setViewName("user/user_home");
         return modelAndView;
     }
-
 
     @RequestMapping(value="/lista_ewidencji_elementy" , method = RequestMethod.GET)
     public ModelAndView listaEwidencjiElementy(ModelAndView model) throws IOException {
