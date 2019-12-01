@@ -168,6 +168,8 @@ public class EwidencjaController {
         if(ewidencjaListByDate.size()<1){
 
             ewidencjaService.save(ewidencja);
+            ewidencjaElementy.setEwidencja(ewidencja);
+            ewidencjaElementyService.save(ewidencjaElementy);
         }
         else {
 
