@@ -26,7 +26,9 @@ public class EwidencjaElementyService {
         return EwidencjaElementyRepository.findById(id);
     }
     public List<EwidencjaElementy> findAllByUserAndData(Long user_id,Date date) { return  EwidencjaElementyRepository.findAllByUserIdAndData(user_id,date);}
-
+    public void updateEwidencjaElementy(Long id_element, Long krMaszyny_id, Integer czas, Date data, Integer ilosc, Long id_indeksu, Long user_id, Long opt_id, Long e_id,Long id_elementu) {
+         EwidencjaElementyRepository.updateEwidencjaElementy(id_element,  krMaszyny_id,  czas,  data,  ilosc,  id_indeksu,  user_id,  opt_id,  e_id, id_elementu);
+    }
     public EwidencjaElementy findByEwidencja(Ewidencja ewidencja) { return EwidencjaElementyRepository.findByEwidencja(ewidencja);}
 
     public EwidencjaElementy save(EwidencjaElementy EwidencjaElementy) {

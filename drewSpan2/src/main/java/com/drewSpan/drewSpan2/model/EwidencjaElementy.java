@@ -22,7 +22,7 @@ public class EwidencjaElementy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_element")
+    @Column(name = "id_element", unique = false)
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -40,7 +40,7 @@ public class EwidencjaElementy {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, /*orphanRemoval = true,*/ optional = false)
     @JoinColumn(name = "e_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Ewidencja ewidencja;
@@ -133,4 +133,6 @@ public class EwidencjaElementy {
     public void setData(Date data) {
         this.data = data;
     }
+
+
 }

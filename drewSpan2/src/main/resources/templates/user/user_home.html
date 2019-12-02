@@ -21,19 +21,18 @@
                 document.getElementById("zmiana").value = "3";
             }
 
-            document.getElementById("maszyna").value = null;
-            document.getElementById("kod_maszyny").value = null;
-            document.getElementById("nazwa_maszyny").value = null;
-            document.getElementById("indeks").value = null;
-            document.getElementById("ilosc").value = null;
-            document.getElementById("kod_operacji").value = null;
-            document.getElementById("nazwa_operacji").value = null;
-            document.getElementById("czas").value = null;
-            document.getElementById("nazwa_indeksu").value = null;
+             document.getElementById("maszyna").value = null;
+             document.getElementById("kod_maszyny").value = null;
+             document.getElementById("nazwa_maszyny").value = null;
+             document.getElementById("indeks").value = null;
+             document.getElementById("ilosc").value = null;
+             document.getElementById("kod_operacji").value = null;
+             document.getElementById("nazwa_operacji").value = null;
+             document.getElementById("czas").value = null;
+             document.getElementById("nazwa_indeksu").value = null;
 
             var data = /*[[${#dates.format(standardDate, 'dd-MM-yyyy')}]]*/;
-            document.getElementById("date").value = data;
-
+            document.getElementById("data").value = data;
         }
 
 
@@ -41,7 +40,7 @@
     </script>
 </head>
 
-<body onload="set_change(),fill_fields();">
+<body onload="set_change()">
 <div class="container" style="width: 100%;">
 
     <form th:action="@{/logout}" method="get">
@@ -49,7 +48,7 @@
                 type="Submit">Wyloguj
         </button>
     </form>
-
+    <a class="navbar-brand" href="admin/home">Kartoteki i produkcja</a>
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -62,22 +61,22 @@
                         <div class="row" style="padding-bottom:20px;">
 
                             <!-- LEWA   KOLUMNA   DANYCH -->
-
-                            <div class="col-md-6">
+                            <div class="col-md-6" >
                                 <div class="row two_columns" style="margin: auto;">
                                     <h3 class="form-signin-heading" style="text-align: center;">Dane do ewidencji</h3>
                                     <br/>
                                     <!--Id pracownika - Nazwisko pracownika - Wydział pracownika -->
                                     <div class="col-md-4">
+
                                         <label>Nazwisko pracownika</label>
-                                        <input readonly required="required" type="text" id="nazwisko_pracownika" name="lastName" placeholder="Nazwisko pracownika"
-                                               class="form-control" th:value="${user_lastName}"/> <br/>
+                                        <input  readonly required="required" type="text" id="nazwisko_pracownika" name="lastName"
+                                                class="form-control"  th:field="*{ewidencja.user.lastName}"/> <br/>
                                         <label>Id pracownika</label>
-                                        <input readonly required="required" type="text" id="user" name="user" placeholder="Id pracownika"
-                                               class="form-control" th:value="${user_id}"/> <br/>
+                                        <input readonly required="required" type="text" id="user" name="user"
+                                                class="form-control"  th:field="*{ewidencja.user.id}" /> <br/>
                                         <label>Wydział pracownika</label>
-                                        <input readonly required="required" type="text" id="wydzial_pracownika" name="wydzial_pracownika" placeholder="Wydzial pracownika"
-                                               class="form-control" th:value="${user_section}"/> <br/>
+                                        <input readonly required="required" type="text" id="wydzial_pracownika" name="wydzial_pracownika"
+                                                class="form-control"  th:field="*{ewidencja.user.section}"/> <br/>
                                         <br/>
                                         <br/>
                                     </div>
@@ -85,16 +84,17 @@
                                     <!--Imie - Kod - Id ewidencji-->
                                     <div class="col-md-4">
                                         <label>Login</label>
-                                        <input readonly required="required" type="text" id="imie_pracownika" name="imie_pracownika" placeholder="Imie pracownika"
-                                               class="form-control" th:value="${user_login}"/> <br/>
+                                        <input  readonly required="required" type="text" id="login" name="user"
+                                                class="form-control"  th:field="*{ewidencja.user.login}"/> <br/>
 
                                         <label>Kod pracownika</label>
 
-                                        <input readonly required="required" type="text" name="user" placeholder="Kod pracownika"
-                                               class="form-control" th:value="${user_code}"/> <br/>
+                                        <input  readonly required="required" type="text" name="user"
+                                                class="form-control"  th:field="*{ewidencja.user.code}"/> <br/>
+                                        <input type="hidden" th:field="*{ewidencjaElementy.ewidencja.id}"/>
 
                                         <!-- <label>Id ewidencji</label>
-                                         <input readonlyrequired="required" type="text" id="ewidencja" name="ewidencja" placeholder="e_id"
+                                         <input required="required" type="text" id="ewidencja" name="ewidencja" placeholder="e_id"
                                                 class="form-control" th:value="${user_code}"/> <br/>-->
 
                                         <br/>
@@ -106,15 +106,15 @@
                                     <!--Zmiana - Data - Czas pracy -->
                                     <div class="col-md-4">
                                         <label>Zmiana</label>
-                                        <input readonly required="required" type="text" id="zmiana" name="zmiana" placeholder="Zmiana"
-                                               class="form-control" /> <br/>
+                                        <input readonly required="required" type="text" id="zmiana" name="zmiana"
+                                                class="form-control" th:field="*{ewidencja.zmiana}" /> <br/>
                                         <label>Data</label>
-                                        <input readonly required="required" type="text" id="date" name="data" placeholder="Data"
-                                               class="form-control" /> <br/>
-                                        <label>Czas pracy</label>
-                                        <input required="required" type="text" id="czas_pracy" name="czas_pracy" placeholder="Czas pracy"
-                                               class="form-control" th:value="480"/> <br/>
+                                        <input  readonly required="required" type="text" id="data" name="data"
+                                                class="form-control"/><br/>
 
+                                        <label>Czas pracy</label>
+                                        <input required="required" type="text" id="czas_pracy" name="czas_pracy"
+                                               class="form-control" th:value="480" > <br/>
 
 
                                     </div>
@@ -122,21 +122,21 @@
                             </div>
 
                             <!-- PRAWA    KOLUMNA    DANYCH -->
-
-                            <div class="col-md-6">
+                            <div class="col-md-6" th:object="${ewidencjaElementy}">
                                 <div class="row two_columns" style="margin: auto; ">
                                     <h3 class="form-signin-heading"  style="text-align: center;">Dane elementu</h3>
                                     <br/>
 
                                     <!--Kod maszyny - Id maszyny - Nazwa maszyny -->
                                     <div class="col-md-4">
+                                        <input type="hidden" th:field="*{id}">
                                         <label>Kod maszyny</label>
-                                        <select required="required" class="form-control" id="kod_maszyny" onchange="fill_fields()">
+                                        <select required="required" class="form-control" id="kod_maszyny" name="kod_maszyny" onchange="fill_fields()">
                                             <option th:each="maszyna : ${listKrMaszynys}"  th:value="${maszyna.krm_kod}" th:text="${maszyna.krm_kod}"></option>
                                         </select> <br/>
                                         <label>Id maszyny</label>
                                         <input  required="required" type="text" id="maszyna" name="maszyna"
-                                                class="form-control"/> <br/>
+                                                class="form-control" /> <br/>
                                         <label>Nazwa maszyny</label>
                                         <input  required="required" type="text" id="nazwa_maszyny" name="nazwa_maszyny"
                                                 class="form-control"/> <br/>
@@ -191,6 +191,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
                         <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit" style="width:40%; margin:auto;">
