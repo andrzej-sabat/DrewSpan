@@ -61,7 +61,7 @@ public class EwidencjaController {
         List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
         List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
-        long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
+        //long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
         Integer rozmiar_listy = listKrMaszynys.size();
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
@@ -72,7 +72,7 @@ public class EwidencjaController {
         modelAndView.addObject("user_lastName",user_lastName);
         modelAndView.addObject("user_section",user_section);
         modelAndView.addObject("user_login",user_login);
-        modelAndView.addObject("id_maszyny",id_maszyny);
+        //modelAndView.addObject("id_maszyny",id_maszyny);
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);
         modelAndView.addObject("rozmiar_listy", rozmiar_listy);
         modelAndView.addObject("listOpTechs", listOpTechs);
@@ -108,7 +108,7 @@ public class EwidencjaController {
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
         List<User> userList = userService.findAllUsers();
 
-        long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
+        //long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
         Integer rozmiar_listy = listKrMaszynys.size();
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
@@ -122,7 +122,7 @@ public class EwidencjaController {
         modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
         modelAndView.addObject("listIndexOps", listIndexOps);
         modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
-        modelAndView.addObject("id_maszyny",id_maszyny);
+        //modelAndView.addObject("id_maszyny",id_maszyny);
         modelAndView.addObject("user_id",user_id);
         modelAndView.addObject("user_code",user_code);
         modelAndView.addObject("user_lastName",user_lastName);
@@ -177,7 +177,7 @@ public class EwidencjaController {
             ewidencjaElementy.setEwidencja(istniejaca_ewidencja);
             ewidencjaElementyService.save(ewidencjaElementy);
 
-        };
+        }
 
         ModelAndView modelAndView = new ModelAndView();
         List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
@@ -194,7 +194,7 @@ public class EwidencjaController {
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
         List<User> userList = userService.findAllUsers();
 
-        long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
+        //long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
         Integer rozmiar_listy = listKrMaszynys.size();
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
@@ -210,7 +210,7 @@ public class EwidencjaController {
         modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
         modelAndView.addObject("listIndexOps", listIndexOps);
         modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
-        modelAndView.addObject("id_maszyny",id_maszyny);
+        //modelAndView.addObject("id_maszyny",id_maszyny);
         modelAndView.addObject("user_id",user_id);
         modelAndView.addObject("user_code",user_code);
         modelAndView.addObject("user_login",user_login);
@@ -258,7 +258,7 @@ public class EwidencjaController {
         List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
         List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
-        long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
+        //long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
         Integer rozmiar_listy = listKrMaszynys.size();
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
@@ -268,7 +268,7 @@ public class EwidencjaController {
         modelAndView.addObject("user_lastName",user_lastName);
         modelAndView.addObject("user_section",user_section);
         modelAndView.addObject("user_login",user_login);
-        modelAndView.addObject("id_maszyny",id_maszyny);
+        //modelAndView.addObject("id_maszyny",id_maszyny);
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);
         modelAndView.addObject("rozmiar_listy", rozmiar_listy);
         modelAndView.addObject("listOpTechs", listOpTechs);
