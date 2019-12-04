@@ -21,6 +21,9 @@
                 document.getElementById("zmiana").value = "3";
             }
 
+            var data = /*[[${#dates.format(standardDate, 'dd-MM-yyyy')}]]*/;
+            document.getElementById("data").value = data;
+
              document.getElementById("maszyna").value = null;
              document.getElementById("kod_maszyny").value = null;
              document.getElementById("nazwa_maszyny").value = null;
@@ -30,9 +33,9 @@
              document.getElementById("nazwa_operacji").value = null;
              document.getElementById("czas").value = null;
              document.getElementById("nazwa_indeksu").value = null;
+             document.getElementById("kod_indeksu").value = null;
 
-            var data = /*[[${#dates.format(standardDate, 'dd-MM-yyyy')}]]*/;
-            document.getElementById("data").value = data;
+
         }
 
 
@@ -48,7 +51,8 @@
                 type="Submit">Wyloguj
         </button>
     </form>
-    <a class="navbar-brand" href="admin/home">Kartoteki i produkcja</a>
+    <br/>
+    <a class="btn btn-md btn-primary btn-block" href="user/home">Powrót do menu</a>
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -101,8 +105,6 @@
                                         <br/>
                                     </div>
 
-
-
                                     <!--Zmiana - Data - Czas pracy -->
                                     <div class="col-md-4">
                                         <label>Zmiana</label>
@@ -129,40 +131,48 @@
 
                                     <!--Kod maszyny - Id maszyny - Nazwa maszyny -->
                                     <div class="col-md-4">
-                                        <input type="hidden" th:field="*{id}">
-                                        <label>Kod maszyny</label>
-                                        <select required="required" class="form-control" id="kod_maszyny" name="kod_maszyny" onchange="fill_fields()">
-                                            <option th:each="maszyna : ${listKrMaszynys}"  th:value="${maszyna.krm_kod}" th:text="${maszyna.krm_kod}"></option>
-                                        </select> <br/>
                                         <label>Id maszyny</label>
-                                        <input  required="required" type="text" id="maszyna" name="maszyna"
-                                                class="form-control" /> <br/>
+                                        <input list="lista_id_maszyn" id="id_maszyny" name="maszyna" type="text" class="form-control" onchange="fill_maszyna_name_and_code()" onkeyup="fill_maszyna_name_and_code()" />
+                                        <datalist id="lista_id_maszyn">
+                                            <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_id}" th:text="${maszyna.krm_id}"></option>
+                                        </datalist>
+                                        <br/>
+                                        <label>Kod maszyny</label>
+                                        <input list="lista_kodow_maszyn" id="kod_maszyny" type="text" class="form-control" onchange="fill_maszyna_name_and_id()" onkeyup="fill_maszyna_name_and_id()" />
+                                        <datalist id="lista_kodow_maszyn">
+                                            <option th:each="maszyna : ${listKrMaszynys}"  th:value="${maszyna.krm_kod}" th:text="${maszyna.krm_kod}"></option>
+                                        </datalist> <br/>
+
                                         <label>Nazwa maszyny</label>
-                                        <input  required="required" type="text" id="nazwa_maszyny" name="nazwa_maszyny"
-                                                class="form-control"/> <br/>
-                                        <!-- <label>Id maszyny</label>
-                                         <select  required="required" class="form-control" id="maszyna" name="maszyna" placeholder="Id maszyny">
-                                             <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_id}" th:text="${maszyna.krm_id}"></option>
-                                         </select> <br/>
-                                         <label>Nazwa maszyny</label>
-                                         <select  required="required" class="form-control" id="nazwa_maszyny" placeholder="Nazwa maszyny">
-                                             <option th:each="maszyna : ${listKrMaszynys}" th:value="${maszyna.krm_nazwa}" th:text="${maszyna.krm_nazwa}"></option>
-                                         </select> <br/>-->
+                                        <input list="lista_nazw_maszyn" id="nazwa_maszyny" type="text" class="form-control" onchange="fill_maszyna_code_and_id()" onkeyup="fill_maszyna_code_and_id()" />
+                                        <datalist id="lista_nazw_maszyn">
+                                            <option th:each="maszyna : ${listKrMaszynys}"  th:value="${maszyna.krm_nazwa}" th:text="${maszyna.krm_nazwa}"></option>
+                                        </datalist>
                                         <br/>
                                         <br/>
                                     </div>
 
                                     <!--Indeks - Nazwa indeksu - Ilość-->
                                     <div class="col-md-4">
-                                        <label>Indeks</label>
-                                        <select required="required"class="form-control" id="indeks" name="indexOp" onchange="fill_index_name()">
-                                            <option th:each="indexOp : ${listIndexOps}" th:value="${indexOp.id_indeksu}" th:text="${indexOp.i_kod}">></option>
-                                        </select> <br/>
+                                        <label>Id indeksu</label>
+                                        <input list="lista_id_indeksow" id="id_indeksu" name="indexOp" type="text" class="form-control" onchange="fill_index_name_and_code()" onkeyup="fill_index_name_and_code()" />
+                                        <datalist id="lista_id_indeksow">
+                                            <option th:each="indexOp : ${listIndexOps}" th:value="${indexOp.id_indeksu}" th:text="${indexOp.id_indeksu}">></option>
+                                        </datalist>
+                                        <br/>
+                                        <label>Kod indeksu</label>
+                                        <input list="lista_kodow_indeksow" required="required" class="form-control" id="kod_indeksu" onchange="fill_index_name_and_id()" onkeyup="fill_index_name_and_id()">
+                                        <datalist id="lista_kodow_indeksow">
+                                            <option th:each="indexOp : ${listIndexOps}" th:value="${indexOp.i_kod}" th:text="${indexOp.i_kod}">></option>
+                                        </datalist>
+                                        <br/>
 
                                         <label>Nazwa indeksu</label>
-                                        <select  required="required" class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()">
-                                            <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}"></option>
-                                        </select> <br/>
+                                        <input list="lista_nazw_indeksow" required="required" class="form-control" id="nazwa_indeksu"  onchange="fill_index_code_and_id()" onkeyup="fill_index_code_and_id()">
+                                        <datalist id="lista_nazw_indeksow">
+                                            <option th:each="index : ${listIndexOps}" th:value="${index.i_nazwa}" th:text="${index.i_nazwa}"></option>
+                                        </datalist>
+                                        <br/>
 
                                         <label>Ilość</label>
                                         <input required="required" type="text" id="ilosc" name="ilosc"
@@ -172,16 +182,26 @@
                                         <br/>
                                     </div>
 
-                                    <!--Operacja - Nazwa operacji - Czas -->
+                                    <!--Id Operacji - Kod Operacji - Nazwa operacji - Czas -->
                                     <div class="col-md-4">
-                                        <label>Operacja</label>
-                                        <select  required="required"class="form-control" id="kod_operacji" name="opTech" onchange="fill_op_name()">
-                                            <option th:each="opTech : ${listOpTechs}" th:value="${opTech.opt_id}" th:text="${opTech.opt_kod}"></option>
-                                        </select> <br/>
+                                        <label>Id operacji</label>
+                                        <input list="lista_id_operacji" id="id_operacji" name="opTech" type="text" class="form-control" onchange="fill_op_name_and_code()" onkeyup="fill_op_name_and_code()" />
+                                        <datalist id="lista_id_operacji">
+                                            <option th:each="opTech : ${listOpTechs}" th:value="${opTech.opt_id}" th:text="${opTech.opt_id}"></option>
+                                        </datalist>
+                                        <br/>
+                                        <label>Kod operacji</label>
+                                        <input list="lista_kodow_operacji" id="kod_operacji" type="text" class="form-control" onchange="fill_op_name_and_id()" onkeyup="fill_op_name_and_id()" />
+                                        <datalist id="lista_kodow_operacji">
+                                            <option th:each="opTech : ${listOpTechs}" th:value="${opTech.opt_kod}" th:text="${opTech.opt_kod}"></option>
+                                        </datalist>
+                                        <br/>
                                         <label>Nazwa operacji</label>
-                                        <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()">
+                                        <input list="lista_nazw_operacji" id="nazwa_operacji" type="text" class="form-control" onchange="fill_op_code_and_id" onkeyup="fill_op_code_and_id()" />
+                                        <datalist id="lista_nazw_operacji">
                                             <option th:each="operacja : ${listOpTechs}" th:value="${operacja.opt_nazwa}" th:text="${operacja.opt_nazwa}"></option>
-                                        </select> <br/>
+                                        </datalist>
+                                        <!-- </select>--> <br/>
                                         <label>Czas</label>
                                         <input required="required" type="text" id="czas" name="czas"
                                                class="form-control" />
@@ -194,29 +214,65 @@
 
                         </div>
 
-                        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Zapisz" type="Submit" style="width:40%; margin:auto;">
+                        <button class="btn btn-md btn-primary btn-block" name="Submit" value="Zapisz" type="Submit" style="width:40%; margin:auto;">
                             Dodaj
                         </button>
 
                     </div>
 
+                    <!-- fill_maszyna_name_and_id() -->
                     <script th:inline="javascript">
                         /*<![CDATA[*/
-                        function fill_fields(){
-                            var x = document.getElementById("kod_maszyny").selectedIndex;
-                            var y = document.getElementById("kod_maszyny").options;
-                            var krm_kod = y[x].text;
+                        function fill_maszyna_name_and_id(){
+                            var krm_kod = document.getElementById("kod_maszyny").value;
                             var rozmiar_listy = /*[[${rozmiar_listy}]]*/;
 
                             var index;
                             var jsonObj = JSON.parse(JSON.stringify(/*[[${listKrMaszynys}]]*/));
                             for (index = 0; index < rozmiar_listy; ++index) {
-                                if(krm_kod == jsonObj[index]['krm_kod']){
-                                    var id_maszyny = jsonObj[index]['krm_id'];
-                                    var nazwa_maszyny = jsonObj[index]['krm_nazwa'];
-                                    document.getElementById("maszyna").value = id_maszyny;
-                                    document.getElementById("nazwa_maszyny").value = nazwa_maszyny;
+                                if(krm_kod == ''){
 
+                                    document.getElementById("nazwa_maszyny").value = '';
+                                    document.getElementById("id_maszyny").value = '';
+
+                                }else {
+                                    if (krm_kod == jsonObj[index]['krm_kod']) {
+                                        var id_maszyny = jsonObj[index]['krm_id'];
+                                        var nazwa_maszyny = jsonObj[index]['krm_nazwa'];
+                                        document.getElementById("id_maszyny").value = id_maszyny;
+                                        document.getElementById("nazwa_maszyny").value = nazwa_maszyny;
+
+                                    }
+                                }
+                            }
+
+                        }
+                        /*]]>*/
+                    </script>
+
+                    <!-- fill_maszyna_code_and_id() -->
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        function fill_maszyna_code_and_id(){
+                            var nazwa_maszyny = document.getElementById("nazwa_maszyny").value;
+                            var rozmiar_listy = /*[[${rozmiar_listy}]]*/;
+
+                            var index;
+                            var jsonObj = JSON.parse(JSON.stringify(/*[[${listKrMaszynys}]]*/));
+                            for (index = 0; index < rozmiar_listy; ++index) {
+                                if(nazwa_maszyny == ''){
+
+                                    document.getElementById("kod_maszyny").value = '';
+                                    document.getElementById("id_maszyny").value = '';
+
+                                }else {
+                                    if (nazwa_maszyny == jsonObj[index]['krm_nazwa']) {
+                                        var id_maszyny = jsonObj[index]['krm_id'];
+                                        var kod_maszyny = jsonObj[index]['krm_kod'];
+                                        document.getElementById("id_maszyny").value = id_maszyny;
+                                        document.getElementById("kod_maszyny").value = kod_maszyny;
+
+                                    }
                                 }
 
                             }
@@ -224,73 +280,204 @@
                         }
                         /*]]>*/
                     </script>
+
+                    <!-- fill_maszyna_name_and_code() -->
                     <script th:inline="javascript">
                         /*<![CDATA[*/
-                        function fill_index_name(){
-                            var x = document.getElementById("indeks").selectedIndex;
-                            var y = document.getElementById("indeks").options;
-                            var indeks = y[x].text;
+                        function fill_maszyna_name_and_code(){
+                            var id_maszyny = document.getElementById("id_maszyny").value;
+                            var rozmiar_listy = /*[[${rozmiar_listy}]]*/;
+
+                            var index;
+                            var jsonObj = JSON.parse(JSON.stringify(/*[[${listKrMaszynys}]]*/));
+                            for (index = 0; index < rozmiar_listy; ++index) {
+                                if(id_maszyny == ''){
+
+                                    document.getElementById("nazwa_maszyny").value = '';
+                                    document.getElementById("kod_maszyny").value = '';
+
+                                }else{
+                                    if(id_maszyny == jsonObj[index]['krm_id']){
+                                        var kod_maszyny = jsonObj[index]['krm_kod'];
+                                        var nazwa_maszyny = jsonObj[index]['krm_nazwa'];
+                                        document.getElementById("kod_maszyny").value = kod_maszyny;
+                                        document.getElementById("nazwa_maszyny").value = nazwa_maszyny;
+
+                                    }
+                                }
+
+                            }
+
+                        }
+                        /*]]>*/
+                    </script>
+
+                    <!-- fill_index_name_and_id() -->
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        function fill_index_name_and_id(){
+
+                            var indeks = document.getElementById("kod_indeksu").value;
                             var rozmiar_listy_indeksow = /*[[${rozmiar_listy_indeksow}]]*/;
                             var index;
                             var jsonObj = JSON.parse(JSON.stringify(/*[[${listIndexOps}]]*/));
                             for (index = 0; index < rozmiar_listy_indeksow; index++) {
-                                if(indeks == jsonObj[index]['i_kod']){
-                                    var nazwa_indeksu = jsonObj[index]['i_nazwa'];
-                                    document.getElementById("nazwa_indeksu").options.selectedIndex = index;
+                                if(indeks == ''){
+
+                                    document.getElementById("nazwa_indeksu").value = '';
+                                    document.getElementById("id_indeksu").value = '';
+
+                                }
+                                else {
+                                    if (indeks == jsonObj[index]['i_kod']) {
+                                        var nazwa_indeksu = jsonObj[index]['i_nazwa'];
+                                        document.getElementById("nazwa_indeksu").value = nazwa_indeksu;
+                                        var id_indeksu = jsonObj[index]['id_indeksu'];
+                                        document.getElementById("id_indeksu").value = id_indeksu;
+                                    }
                                 }
                             }
                         }
                         /*]]>*/
                     </script>
+
+                    <!-- fill_index_name_and_code() -->
                     <script th:inline="javascript">
                         /*<![CDATA[*/
-                        function fill_index_code(){
-                            var x = document.getElementById("nazwa_indeksu").selectedIndex;
-                            var y = document.getElementById("nazwa_indeksu").options;
-                            var nazwa_indeksu = y[x].text;
+                        function fill_index_name_and_code(){
+
+                            var indeks = document.getElementById("id_indeksu").value;
                             var rozmiar_listy_indeksow = /*[[${rozmiar_listy_indeksow}]]*/;
                             var index;
                             var jsonObj = JSON.parse(JSON.stringify(/*[[${listIndexOps}]]*/));
                             for (index = 0; index < rozmiar_listy_indeksow; index++) {
-                                if(nazwa_indeksu == jsonObj[index]['i_nazwa']){
-                                    var kod_indeksu = jsonObj[index]['i_kod'];
-                                    document.getElementById("indeks").options.selectedIndex = index;
+                                if(indeks == ''){
+
+                                    document.getElementById("nazwa_indeksu").value = '';
+                                    document.getElementById("kod_indeksu").value = '';
+
+                                }
+                                else {
+                                    if (indeks == jsonObj[index]['id_indeksu']) {
+                                        var nazwa_indeksu = jsonObj[index]['i_nazwa'];
+                                        document.getElementById("nazwa_indeksu").value = nazwa_indeksu;
+                                        var kod_indeksu = jsonObj[index]['i_kod'];
+                                        document.getElementById("kod_indeksu").value = kod_indeksu;
+                                    }
                                 }
                             }
                         }
                         /*]]>*/
                     </script>
+
+                    <!-- fill_index_code_and_id() -->
                     <script th:inline="javascript">
                         /*<![CDATA[*/
-                        function fill_op_name(){
-                            var x = document.getElementById("kod_operacji").selectedIndex;
-                            var y = document.getElementById("kod_operacji").options;
-                            var kod_operacji = y[x].text;
-                            var rozmiar_listy_operacji = /*[[${rozmiar_listy_operacji}]]*/;
+                        function fill_index_code_and_id(){
+
+                            var nazwa_indeksu = document.getElementById("nazwa_indeksu").value;
+                            var rozmiar_listy_indeksow = /*[[${rozmiar_listy_indeksow}]]*/;
                             var index;
-                            var jsonObj = JSON.parse(JSON.stringify(/*[[${listOpTechs}]]*/));
-                            for (index = 0; index < rozmiar_listy_operacji; index++) {
-                                if(kod_operacji == jsonObj[index]['opt_kod']){
-                                    var nazwa_operacji = jsonObj[index]['opt_nazwa'];
-                                    document.getElementById("nazwa_operacji").options.selectedIndex = index;
+                            var jsonObj = JSON.parse(JSON.stringify(/*[[${listIndexOps}]]*/));
+                            for (index = 0; index < rozmiar_listy_indeksow; index++) {
+                                if(nazwa_indeksu == ''){
+
+                                    document.getElementById("kod_indeksu").value = '';
+                                    document.getElementById("id_indeksu").value = '';
+
+                                }
+                                else {
+                                    if (nazwa_indeksu == jsonObj[index]['i_nazwa']) {
+                                        var kod_indeksu = jsonObj[index]['i_kod'];
+                                        document.getElementById("kod_indeksu").value = kod_indeksu;
+                                        var id_indeksu = jsonObj[index]['id_indeksu'];
+                                        document.getElementById("id_indeksu").value = id_indeksu;
+                                    }
                                 }
                             }
                         }
                         /*]]>*/
                     </script>
+
+                    <!-- fill_op_name_and_id() -->
                     <script th:inline="javascript">
                         /*<![CDATA[*/
-                        function fill_op_code(){
-                            var x = document.getElementById("nazwa_operacji").selectedIndex;
-                            var y = document.getElementById("nazwa_operacji").options;
-                            var nazwa_operacji = y[x].text;
+                        function fill_op_name_and_id(){
+                            var kod_operacji = document.getElementById("kod_operacji").value;
                             var rozmiar_listy_operacji = /*[[${rozmiar_listy_operacji}]]*/;
                             var index;
                             var jsonObj = JSON.parse(JSON.stringify(/*[[${listOpTechs}]]*/));
                             for (index = 0; index < rozmiar_listy_operacji; index++) {
-                                if(nazwa_operacji == jsonObj[index]['opt_nazwa']){
-                                    var kod_operacji = jsonObj[index]['opt_kod'];
-                                    document.getElementById("kod_operacji").options.selectedIndex = index;
+                                if(kod_operacji == ''){
+
+                                    document.getElementById("nazwa_operacji").value = '';
+                                    document.getElementById("id_operacji").value = '';
+
+                                }
+                                else {
+                                    if (kod_operacji == jsonObj[index]['opt_kod']) {
+                                        var nazwa_operacji = jsonObj[index]['opt_nazwa'];
+                                        var id_operacji = jsonObj[index]['opt_id'];
+                                        document.getElementById("nazwa_operacji").value = nazwa_operacji;
+                                        document.getElementById("id_operacji").value = id_operacji;
+                                    }
+
+                                }
+                            }
+                        }
+                        /*]]>*/
+                    </script>
+
+                    <!-- fill_op_code_and_id() -->
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        function fill_op_code_and_id(){
+                            var nazwa_operacji = document.getElementById("nazwa_operacji").value;
+                            var rozmiar_listy_operacji = /*[[${rozmiar_listy_operacji}]]*/;
+                            var index;
+                            var jsonObj = JSON.parse(JSON.stringify(/*[[${listOpTechs}]]*/));
+                            for (index = 0; index < rozmiar_listy_operacji; index++) {
+                                if(nazwa_operacji == ''){
+
+                                    document.getElementById("kod_operacji").value = '';
+                                    document.getElementById("id_operacji").value = '';
+
+                                }
+                                else {
+                                    if (nazwa_operacji == jsonObj[index]['opt_nazwa']) {
+                                        var kod_operacji = jsonObj[index]['opt_kod'];
+                                        document.getElementById("kod_operacji").value = kod_operacji;
+                                        var id_operacji = jsonObj[index]['opt_id'];
+                                        document.getElementById("id_operacji").value = id_operacji;
+                                    }
+                                }
+                            }
+                        }
+                        /*]]>*/
+                    </script>
+
+                    <!-- fill_op_name_and_code() -->
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        function fill_op_name_and_code(){
+                            var id_operacji = document.getElementById("id_operacji").value;
+                            var rozmiar_listy_operacji = /*[[${rozmiar_listy_operacji}]]*/;
+                            var index;
+                            var jsonObj = JSON.parse(JSON.stringify(/*[[${listOpTechs}]]*/));
+                            for (index = 0; index < rozmiar_listy_operacji; index++) {
+                                if(id_operacji == ''){
+
+                                    document.getElementById("nazwa_operacji").value = '';
+                                    document.getElementById("kod_operacji").value = '';
+
+                                }
+                                else {
+                                    if (id_operacji == jsonObj[index]['opt_id']) {
+                                        var kod_operacji = jsonObj[index]['opt_kod'];
+                                        document.getElementById("kod_operacji").value = kod_operacji;
+                                        var nazwa_operacji = jsonObj[index]['opt_nazwa'];
+                                        document.getElementById("nazwa_operacji").value = nazwa_operacji;
+                                    }
                                 }
                             }
                         }

@@ -88,7 +88,7 @@ public class EwidencjaController {
         modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
         modelAndView.addObject("standardDate", new Date());
         modelAndView.addObject("user",user);
-        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("admin/ewidencja");
         return modelAndView;
@@ -137,7 +137,7 @@ public class EwidencjaController {
         modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
         modelAndView.addObject("standardDate", new Date());
         modelAndView.addObject("user",user);
-        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("user/user_home");
         return modelAndView;
@@ -490,7 +490,7 @@ public class EwidencjaController {
         modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
         modelAndView.addObject("standardDate", new Date());
         modelAndView.addObject("user",user);
-        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("user/user_home");
         return modelAndView;

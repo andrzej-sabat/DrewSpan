@@ -85,7 +85,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByLogin(auth.getName());
-        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
         modelAndView.setViewName("user/home");
         return modelAndView;
@@ -97,7 +97,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByLogin(auth.getName());
-        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
         modelAndView.setViewName("admin/home");
         return modelAndView;
@@ -108,7 +108,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByLogin(auth.getName());
-        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
         modelAndView.setViewName("admin/home");
         return modelAndView;
@@ -119,7 +119,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByLogin(auth.getName());
-        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
         modelAndView.setViewName("admin/home");
         return modelAndView;
@@ -179,7 +179,7 @@ public class LoginController {
         modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
         modelAndView.addObject("standardDate", new Date());
         modelAndView.addObject("user",user);
-        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("user/user_home");
         return modelAndView;
@@ -219,7 +219,7 @@ public class LoginController {
         modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
         modelAndView.addObject("standardDate", new Date());
         modelAndView.addObject("user",user);
-        modelAndView.addObject("userName", "Witaj " + user.getLastName() + " (" + user.getLogin() + ")");
+        modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("user/user_home");
         return modelAndView;
