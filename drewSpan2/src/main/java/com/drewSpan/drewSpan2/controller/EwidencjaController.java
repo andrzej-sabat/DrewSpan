@@ -347,16 +347,16 @@ public class EwidencjaController {
         int czas_pracy = ewidencja.getCzas_pracy();
 
         List<Ewidencja> ewidencjaListByDate = ewidencjaService.findAllByUserAndData(user_id,date);
-        System.out.println("ID ELEMENTU:  " + id_elementu);
         if(id_elementu == 0 ) {
+
             if(ewidencjaListByDate.isEmpty()){
                 ewidencjaService.save(ewidencja);
                 ewidencjaElementy.setEwidencja(ewidencja);
                 ewidencjaElementyService.save(ewidencjaElementy);
                 ewidencjaElementy.setId(0);
+
             }
             else{
-
                 long id_aktualne = ewidencjaListByDate.get(0).getId();
                 ewidencjaService.updateEwidencja(id_aktualne,czas_pracy,data,zmiana,id_maszyny,id_user,id_aktualne);
                 ewidencjaElementy.setEwidencja(ewidencjaService.findById(id_aktualne));

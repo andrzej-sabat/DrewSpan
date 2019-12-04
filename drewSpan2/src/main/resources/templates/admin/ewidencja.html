@@ -135,6 +135,7 @@
 
                                     <!--Kod maszyny - Id maszyny - Nazwa maszyny -->
                                     <div class="col-md-4">
+                                        <input type="hidden" th:field="*{id}">
                                         <label>Id maszyny</label>
                                         <input list="lista_id_maszyn" id="id_maszyny" name="maszyna" type="text" class="form-control" onchange="fill_maszyna_name_and_code()" onkeyup="fill_maszyna_name_and_code()" />
                                         <datalist id="lista_id_maszyn">
