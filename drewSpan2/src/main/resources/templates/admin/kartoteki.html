@@ -4,14 +4,14 @@
 
 <head>
     <title>Kartoteki</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-<div class="container" style="width: 100%;">
+<div class="container" style="text-align:center; width: 100%;">
 
     <form th:action="@{/logout}" method="get">
         <button class="btn btn-md btn-danger btn-block" name="registration"
@@ -20,7 +20,7 @@
     </form>
 
     <br/>
-    <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do Powrót do menu głownego</a>
+    <a class="btn btn-md btn-primary btn-block" href="/admin/home">Wstecz</a>
 
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
@@ -29,13 +29,13 @@
             </div>
             <div class="panel-body">
                 <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <a href="/kartoteka_pracownikow" class="btn btn-info btn-md" role="button">Kartoteka pracowników</a>
-                    <a href="/kartoteka_maszyn" class="btn btn-info btn-md" role="button">Kartoteka maszyn</a>
+                <div class="col-md-8" style="text-align: center">
+
                     <a href="/operacje_technologiczne" class="btn btn-info btn-md" role="button">Operacje technologiczne</a>
                     <a href="/operacje_indeks" class="btn btn-info btn-md" role="button">Operacje indeks</a>
-                    <a href="/indeks_operacje_technologiczne_menu" class="btn btn-info btn-md" role="button">Indeks - Operacje technologiczne</a>
-
+                    <a href="/indeks_operacje_technologiczne_menu" class="btn btn-info btn-md" role="button">Indeks - Operacje technologiczne</a><br/><br/>
+                    <a href="/kartoteka_pracownikow" class="btn btn-info btn-md" role="button">Kartoteka pracowników</a>
+                    <a href="/kartoteka_maszyn" class="btn btn-info btn-md" role="button">Kartoteka maszyn</a>
                 </div>
                 <div class="col-md-2"></div>
             </div>

@@ -4,14 +4,14 @@
 
 <head>
     <title>Kartoteka pracowników</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-<div class="container" style="width:100%">
+<div class="container" style="text-align:center; width:100%">
 
     <form th:action="@{/logout}" method="get">
         <button class="btn btn-md btn-danger btn-block" name="registration"
@@ -19,7 +19,7 @@
         </button>
     </form>
     <br/>
-    <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do menu głownego</a>
+    <a class="btn btn-md btn-primary btn-block" href="/kartoteki">Wstecz</a>
 
 
     <div class="panel-group" style="margin-top:40px">
@@ -29,7 +29,7 @@
             </div>
             <div class="panel-body">
                 <div class="col-md-2"></div>
-                <div class="col-md-8">
+                <div class="col-md-8" style="text-align: center">
                     <a href="/lista_pracownikow" class="btn btn-info" role="button">Lista pracowników</a>
                     <a href="/dodawanie_pracownika" class="btn btn-info" role="button">Dodaj pracownika</a>
                     <a href="/dodawanie_pracownika_tech" class="btn btn-info" role="button">Dodaj pracownika technicznego</a>

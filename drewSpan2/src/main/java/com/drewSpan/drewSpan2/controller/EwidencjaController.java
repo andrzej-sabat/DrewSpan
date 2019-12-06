@@ -143,51 +143,6 @@ public class EwidencjaController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/edit_ewidencja", method = RequestMethod.GET)
-    public ModelAndView editEwidencja(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView();
-        int ewidencjaId = Integer.parseInt(request.getParameter("id"));
-        Ewidencja ewidencja = ewidencjaService.findById(ewidencjaId);
-        EwidencjaElementy ewidencjaElementy = ewidencjaElementyService.findByEwidencja(ewidencja);
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        User user = userService.findUserByLogin(auth.getName());
-        long user_id = user.getId();
-        String user_code = user.getCode();
-        String user_lastName = user.getLastName();
-        String user_section = user.getSection();
-        String user_name = user.getName();
-        List<Ewidencja> ewidencjaList= ewidencjaService.findAllEwidencja();
-        List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
-        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
-        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
-        List<User> userList = userService.findAllUsers();
-
-        long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
-        Integer rozmiar_listy = listKrMaszynys.size();
-        Integer rozmiar_listy_indeksow = listIndexOps.size();
-        Integer rozmiar_listy_operacji = listOpTechs.size();
-        modelAndView.addObject("ewidencja",ewidencja);
-        modelAndView.addObject("ewidencjaElementy",ewidencjaElementy);
-        modelAndView.addObject("ewidencjaList",ewidencjaList);
-        modelAndView.addObject("listKrMaszynys", listKrMaszynys);
-        modelAndView.addObject("userList",userList);
-        modelAndView.addObject("rozmiar_listy", rozmiar_listy);
-        modelAndView.addObject("listOpTechs", listOpTechs);
-        modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
-        modelAndView.addObject("listIndexOps", listIndexOps);
-        modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
-        modelAndView.addObject("id_maszyny",id_maszyny);
-        modelAndView.addObject("user_id",user_id);
-        modelAndView.addObject("user_code",user_code);
-        modelAndView.addObject("user_lastName",user_lastName);
-        modelAndView.addObject("user_section",user_section);
-        modelAndView.addObject("user_name",user_name);
-
-        modelAndView.setViewName("admin/ewidencja");
-        return modelAndView;
-    }
 
     @RequestMapping(value = "/edit_ewidencja_elementy", method = RequestMethod.GET)
     public ModelAndView editEwidencjaa(HttpServletRequest request) {
@@ -323,9 +278,34 @@ public class EwidencjaController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/delete_ewidencjaElementy_user", method = RequestMethod.GET)
+    public ModelAndView deleteEwidencjaElementyUser(HttpServletRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        int ewidencjaElementyId = Integer.parseInt(request.getParameter("id"));
+        ewidencjaElementyService.removeEwidencjaElementyById(ewidencjaElementyId);
+        ModelAndView modelAndView = new ModelAndView();
+
+        long user_id = userService.findUserByLogin(auth.getName()).getId();
+        Date date = userService.convertToDate((LocalDate.now()));
+        System.out.println(date);
+        List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllByUserAndData(user_id,date);
+        modelAndView.addObject("ewidencjaElementyList",ewidencjaElementyList);
+        modelAndView.setViewName("user/lista_dodanych");
+        return modelAndView;
+
+    }
+
+    @RequestMapping(value = "/delete_ewidencjaElementy_user/user/home", method = RequestMethod.GET)
+    public ModelAndView deleteEwidencjaElementyUserAfterDelete(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("user/home");
+        return modelAndView;
+
+    }
+
     @PostMapping("/save_ewidencja")
     public ModelAndView saveEwidencja(@ModelAttribute Ewidencja ewidencja, @ModelAttribute EwidencjaElementy ewidencjaElementy) {
-
+        ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         long user_id = userService.findUserByLogin(auth.getName()).getId();
@@ -350,18 +330,36 @@ public class EwidencjaController {
         if(id_elementu == 0 ) {
 
             if(ewidencjaListByDate.isEmpty()){
-                ewidencjaService.save(ewidencja);
-                ewidencjaElementy.setEwidencja(ewidencja);
-                ewidencjaElementyService.save(ewidencjaElementy);
-                ewidencjaElementy.setId(0);
+                try {
+                    ewidencjaService.save(ewidencja);
+                    ewidencjaElementy.setEwidencja(ewidencja);
+                    ewidencjaElementyService.save(ewidencjaElementy);
+                    ewidencjaElementy.setId(0);
+                    modelAndView.addObject("succes","Dodano do ewidencji");
+
+                }
+                catch(Exception ex){
+                    modelAndView.addObject("error","Błąd, dodawanie zakończone niepowodzeniem");
+
+                }
 
             }
             else{
-                long id_aktualne = ewidencjaListByDate.get(0).getId();
-                ewidencjaService.updateEwidencja(id_aktualne,czas_pracy,data,zmiana,id_maszyny,id_user,id_aktualne);
-                ewidencjaElementy.setEwidencja(ewidencjaService.findById(id_aktualne));
-                ewidencjaElementyService.save(ewidencjaElementy);
-                ewidencjaElementy.setId(0);
+                try {
+                    long id_aktualne = ewidencjaListByDate.get(0).getId();
+                    ewidencjaService.updateEwidencja(id_aktualne, czas_pracy, data, zmiana, id_maszyny, id_user, id_aktualne);
+                    ewidencjaElementy.setEwidencja(ewidencjaService.findById(id_aktualne));
+                    ewidencjaElementyService.save(ewidencjaElementy);
+                    modelAndView.addObject("succes", "Dodano do ewidencji");
+                    ewidencjaElementy.setId(0);
+                }
+
+
+                catch(Exception ex){
+                modelAndView.addObject("error","Błąd, dodawanie zakończone niepowodzeniem");
+
+            }
+
             }
 
 
@@ -370,28 +368,37 @@ public class EwidencjaController {
 
             if(ewidencjaListByDate.isEmpty()){
 
-                ewidencjaService.save(ewidencja);
-                ewidencjaElementy.setEwidencja(ewidencja);
-                ewidencjaElementyService.save(ewidencjaElementy);
-                ewidencjaElementy.setId(0);
+                try {
+                    ewidencjaService.save(ewidencja);
+                    ewidencjaElementy.setEwidencja(ewidencja);
+                    ewidencjaElementyService.save(ewidencjaElementy);
+                    modelAndView.addObject("succes", "Dodano do ewidencji");
+                    ewidencjaElementy.setId(0);
+                }
+                catch (Exception ex){
+                    modelAndView.addObject("error","Błąd, dodawanie zakończone niepowodzeniem");
+                }
 
             }
             else {
 
-                long id_aktualne = ewidencjaListByDate.get(0).getId();
-                ewidencjaService.updateEwidencja(id_aktualne,czas_pracy,data,zmiana,id_maszyny,id_user,id_aktualne);
-                ewidencjaElementy.setEwidencja(ewidencja);
-                ewidencjaElementyService.updateEwidencjaElementy(id_elementu,id_maszyny,czas,data,ilosc,id_indeksu,id_user,opt_id,e_id,id_elementu);
-                ewidencjaElementy.setId(0);
+                try {
+                    long id_aktualne = ewidencjaListByDate.get(0).getId();
+                    ewidencjaService.updateEwidencja(id_aktualne, czas_pracy, data, zmiana, id_maszyny, id_user, id_aktualne);
+                    ewidencjaElementy.setEwidencja(ewidencja);
+                    ewidencjaElementyService.updateEwidencjaElementy(id_elementu, id_maszyny, czas, data, ilosc, id_indeksu, id_user, opt_id, e_id, id_elementu);
+                    modelAndView.addObject("succes", "Dodano do ewidencji");
+                    ewidencjaElementy.setId(0);
+                }
+                catch(Exception ex){
+                    modelAndView.addObject("error","Błąd, dodawanie zakończone niepowodzeniem");
+
+                }
 
             }
 
         }
 
-
-
-
-        ModelAndView modelAndView = new ModelAndView();
         List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
         List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
         User user = userService.findUserByLogin(auth.getName());
@@ -407,7 +414,7 @@ public class EwidencjaController {
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
         List<User> userList = userService.findAllUsers();
 
-        long id_maszynyy = krMaszynyService.getKrMaszyny(1).getKrm_id();
+
         Integer rozmiar_listy = listKrMaszynys.size();
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
@@ -421,7 +428,6 @@ public class EwidencjaController {
         modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
         modelAndView.addObject("listIndexOps", listIndexOps);
         modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
-        modelAndView.addObject("id_maszyny",id_maszynyy);
         modelAndView.addObject("user_id",user_id);
         modelAndView.addObject("user_code",user_code);
         modelAndView.addObject("user_login",user_login);

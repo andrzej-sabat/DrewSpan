@@ -4,38 +4,37 @@
 
 <head>
     <title>Operacje technologiczne</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script th:inline="javascript">
-                                /*<![CDATA[*/
-                                function set_change(){
-                                    var zmiana = /*[[${#dates.format(standardDate, 'HH')}]]*/;
-                                    if(zmiana >= 7 && zmiana < 15){
-                                        document.getElementById("zmiana").value = "1";
-                                    } else if(zmiana >=15 && zmiana < 23){
-                                        document.getElementById("zmiana").value = "2";
-                                    } else {
-                                        document.getElementById("zmiana").value = "3";
-                                    }
-                                }
+        /*<![CDATA[*/
+        function values_null(){
+
+            document.getElementById("indeks").value = null;
+            document.getElementById("kod_operacji").value = null;
+            document.getElementById("wspK").value = null;
+            document.getElementById("czas").value = null;
+
+        }
 
 
-                                /*]]>*/
+        /*]]>*/
     </script>
+
 </head>
 
-<body onload="set_change();">
-<div class="container" style="width: 100%;">
+<body onload="values_null();">
+<div class="container" style="text-align:center; width: 100%;">
     <form th:action="@{/logout}" method="get">
         <button class="btn btn-md btn-danger btn-block" name="registration"
                 type="Submit">Wyloguj
         </button>
     </form>
     <br/>
-    <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do menu</a>
+    <a class="btn btn-md btn-primary btn-block" href="/indeks_operacje_technologiczne_menu">Wstecz</a>
 
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
@@ -50,13 +49,15 @@
                     <br class="col-md-12">
                     <div class="row" style="padding-bottom:20px;">
                         <div class="col-md-12">
+                            <div style="text-align:center;font-size:20px;">
+                                <div th:if="${error}" th:text="${error}" class="alert alert-danger"/>
+                                <div th:if="${succes}" th:text="${succes}" class="alert alert-info"/>
+                            </div>
                             <div class="row two_columns" style="margin: auto; ">
                                 <h3 class="form-signin-heading" th:text="Dane" style="text-align: center;">Dane do tabeli</h3>
                                 <br/>
                                 <form th:action="@{/save_index_op_tech}" th:object="${indexOpElementy}" method="post" >
                                     <div class="col-md-9">
-
-
 
                                         <label>Indeks</label>
                                         <select class="form-control" id="indeks" onchange="fill_index_name()" placeholder="Indeks" th:field="*{indexOp}">

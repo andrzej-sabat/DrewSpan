@@ -4,16 +4,29 @@
 
 <head>
     <title>Dodawanie operacji</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function values_null(){
+
+            document.getElementById("opt_nazwa").value = null;
+            document.getElementById("opt_kod").value = null;
+
+        }
+
+
+        /*]]>*/
+    </script>
+
 </head>
 
 <body>
 <div class="container">
 
-    <div class="container" style="width: 100%;">
+    <div class="container" style="text-align:center; width: 100%;">
 
         <form th:action="@{/logout}" method="get">
             <button class="btn btn-md btn-danger btn-block" name="registration"
@@ -21,7 +34,7 @@
             </button>
         </form>
         <br/>
-        <a class="btn btn-md btn-primary btn-block" href="admin/home">Kartoteki i produkcja</a>
+        <a class="btn btn-md btn-primary btn-block" href="/operacje_technologiczne">Wstecz</a>
 
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
@@ -33,6 +46,10 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
                         <div class="row">
+                            <div style="text-align:center;font-size:20px;">
+                                <div th:if="${error}" th:text="${error}" class="alert alert-danger"/>
+                                <div th:if="${succes}" th:text="${succes}" class="alert alert-info"/>
+                            </div>
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
                                 <input type="hidden" th:field="*{opt_id}"/>
@@ -68,6 +85,7 @@
                                     </div>
                                 </div>
 
+                                <br/>
 
                             </div>
                             <div class="col-md-3"></div>

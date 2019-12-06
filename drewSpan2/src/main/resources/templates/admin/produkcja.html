@@ -4,21 +4,22 @@
 
 <head>
     <title>Produkcja</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-<div class="container" style="width: 100%;">
+<div class="container" style="text-align:center; width: 100%;">
 
     <form th:action="@{/logout}" method="get">
         <button class="btn btn-md btn-danger btn-block" name="registration"
                 type="Submit">Wyloguj
         </button>
     </form>
-
+    <br/>
+    <a class="btn btn-md btn-primary btn-block" href="/admin/home">Wstecz</a>
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -26,7 +27,7 @@
             </div>
             <div class="panel-body">
                 <div class="col-md-2"></div>
-                <div class="col-md-8">
+                <div class="col-md-8" style="text-align: center";>
                     <a href="/dodawanie_ewidencji" class="btn btn-info" role="button">Dodawanie ewidencji</a>
                     <a href="/lista_ewidencji" class="btn btn-info" role="button">Lista ewidencji</a>
                     <a href="/lista_ewidencji_elementy" class="btn btn-info" role="button">Lista ewidencji elementy</a>

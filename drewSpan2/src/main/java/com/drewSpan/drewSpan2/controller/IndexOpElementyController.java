@@ -36,18 +36,23 @@ public class IndexOpElementyController {
 
     @PostMapping("/save_index_op_tech")
     public ModelAndView saveIndexOpTech(@ModelAttribute IndexOpElementy indexOpElementy) {
-        indexOpElementyService.save(indexOpElementy);
         ModelAndView modelAndView = new ModelAndView();
-        List<IndexOpElementy> indexOpElementyList = indexOpElementyService.getAllIndexOpElementy();
-        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
-        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
-        modelAndView.addObject("listOpTechs", listOpTechs);
-        modelAndView.addObject("listIndexOps", listIndexOps);
-        modelAndView.addObject("indexOpElementyList", indexOpElementyList);
-        modelAndView.addObject("indexOpElementy",indexOpElementy);
-        modelAndView.setViewName("admin/indeks_operacje_technologiczne");
-        return modelAndView;
+
+
+        try {
+            indexOpElementyService.save(indexOpElementy);
+            modelAndView.addObject("succes","Dodano IndexOpTech");
+            modelAndView.setViewName("/admin/indeks_operacje_technologiczne");
+            return  modelAndView;
+        }
+        catch (Exception ex){
+            modelAndView.addObject("error","Błąd, operacja już istnieje.");
+            modelAndView.setViewName("/admin/indeks_operacje_technologiczne");
+            return modelAndView;
+        }
+
     }
+
 
 
 /*

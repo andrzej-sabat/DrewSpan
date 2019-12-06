@@ -54,18 +54,19 @@ public class KrMaszynyController {
 
     @PostMapping("/save_krmaszyny")
     public ModelAndView saveKrMaszynyh(@ModelAttribute KrMaszyny krMaszyny) {
+        ModelAndView modelAndView = new ModelAndView();
         try {
             krMaszynyService.save(krMaszyny);
+            modelAndView.addObject("succes","Dodano operację.");
+            modelAndView.setViewName("/admin/dodawanie_maszyny");
+            return modelAndView;
         }
         catch (Exception ex){
-            throw new IllegalArgumentException("Niepoprawne dane");
+            modelAndView.addObject("error","Błąd, operacja już istnieje.");
+            modelAndView.setViewName("/admin/dodawanie_maszyny");
+            return modelAndView;
         }
-        ModelAndView modelAndView = new ModelAndView();
-        List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
-        modelAndView.addObject("listKrMaszynys", listKrMaszynys);
-        modelAndView.addObject("krMaszyny",krMaszyny);
-        modelAndView.setViewName("admin/lista_maszyn");
-        return modelAndView;
+
     }
 
 

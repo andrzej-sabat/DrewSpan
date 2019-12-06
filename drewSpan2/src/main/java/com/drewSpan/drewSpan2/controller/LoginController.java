@@ -225,21 +225,6 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/delete_ewidencjaElementy_user", method = RequestMethod.GET)
-    public ModelAndView deleteEwidencjaElementyUser(HttpServletRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        int ewidencjaElementyId = Integer.parseInt(request.getParameter("id"));
-        ewidencjaElementyService.removeEwidencjaElementyById(ewidencjaElementyId);
-        ModelAndView modelAndView = new ModelAndView();
 
-        long user_id = userService.findUserByLogin(auth.getName()).getId();
-        Date date = userService.convertToDate((LocalDate.now()));
-        System.out.println(date);
-        List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllByUserAndData(user_id,date);
-        modelAndView.addObject("ewidencjaElementyList",ewidencjaElementyList);
-        modelAndView.setViewName("user/lista_dodanych");
-        return modelAndView;
-
-    }
 
 }
