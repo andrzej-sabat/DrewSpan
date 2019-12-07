@@ -1,9 +1,10 @@
 package com.drewSpan.drewSpan2.service;
 
 import com.drewSpan.drewSpan2.model.Ewidencja;
-import com.drewSpan.drewSpan2.model.KrMaszyny;
 import com.drewSpan.drewSpan2.model.User;
+import com.drewSpan.drewSpan2.model.Wydajnosc;
 import com.drewSpan.drewSpan2.repository.EwidencjaRepository;
+import com.drewSpan.drewSpan2.repository.WydajnoscRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,6 @@ import java.util.List;
 public class EwidencjaService {
     @Autowired
     EwidencjaRepository ewidencjaRepository;
-
     public List<Ewidencja> findAllEwidencja() {
         return ewidencjaRepository.findAll();
     }
@@ -27,6 +27,7 @@ public class EwidencjaService {
     public LocalDate getLocalDate() {
         return LocalDate.now();
     }
+
 
     public void updateEwidencja(Long e_id, Integer e_czas_pracy, Date e_data, Integer e_zmiana, Long kr_maszyny_id, Long user_id, Long e_ide){
         ewidencjaRepository.updateEwidencja(e_id,e_czas_pracy,e_data,e_zmiana,kr_maszyny_id,user_id,e_ide);
@@ -45,3 +46,5 @@ public class EwidencjaService {
         ewidencjaRepository.deleteById(id);
     }
 }
+
+
