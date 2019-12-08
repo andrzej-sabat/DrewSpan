@@ -325,7 +325,7 @@ public class EwidencjaController {
 
     @PostMapping("/save_ewidencja")
     public ModelAndView saveEwidencja(@ModelAttribute Ewidencja ewidencja, @ModelAttribute EwidencjaElementy ewidencjaElementy) {
-
+        ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         long user_id = userService.findUserByLogin(auth.getName()).getId();
@@ -345,6 +345,9 @@ public class EwidencjaController {
         Long ewidencja_id = ewidencja.getId();
         int zmiana = ewidencja.getZmiana();
         int czas_pracy = ewidencja.getCzas_pracy();
+
+        try {
+
 
         List<Ewidencja> ewidencjaListByDate = ewidencjaService.findAllByUserAndData(user_id,date);
         if(id_elementu == 0 ) {
@@ -387,11 +390,51 @@ public class EwidencjaController {
             }
 
         }
+        }
+        catch (Exception e){
+            modelAndView.addObject("error","Błąd, wartości nie mogą być zerowe.");
+            List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
+            List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
+            User user = userService.findUserByLogin(auth.getName());
+            ewidencja.setUser(user);
+            String user_code = user.getCode();
+            String user_lastName = user.getLastName();
+            String user_section = user.getSection();
+            String user_name = user.getName();
+            String user_login = user.getLogin();
+
+            List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
+            List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+            List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+            List<User> userList = userService.findAllUsers();
+            Integer rozmiar_listy = listKrMaszynys.size();
+            Integer rozmiar_listy_indeksow = listIndexOps.size();
+            Integer rozmiar_listy_operacji = listOpTechs.size();
+            modelAndView.addObject("ewidencjaList", ewidencjaList);
+            modelAndView.addObject("ewidencjaElementyList", ewidencjaElementyList);
+            modelAndView.addObject("ewidencjaList",ewidencjaList);
+            modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+            modelAndView.addObject("userList",userList);
+            modelAndView.addObject("rozmiar_listy", rozmiar_listy);
+            modelAndView.addObject("listOpTechs", listOpTechs);
+            modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
+            modelAndView.addObject("listIndexOps", listIndexOps);
+            modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
+            modelAndView.addObject("user_id",user_id);
+            modelAndView.addObject("user_code",user_code);
+            modelAndView.addObject("user_login",user_login);
+            modelAndView.addObject("user_lastName",user_lastName);
+            modelAndView.addObject("user_section",user_section);
+            modelAndView.addObject("user_name",user_name);
+            modelAndView.addObject("standardDate", new Date());
+            modelAndView.setViewName("/admin/ewidencja");
+            return modelAndView;
+        }
 
 
 
 
-        ModelAndView modelAndView = new ModelAndView();
+
         List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
         List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
         User user = userService.findUserByLogin(auth.getName());
@@ -407,7 +450,7 @@ public class EwidencjaController {
         List<OpTech> listOpTechs = opTechService.getAllOpTechs();
         List<User> userList = userService.findAllUsers();
 
-        long id_maszynyy = krMaszynyService.getKrMaszyny(1).getKrm_id();
+
         Integer rozmiar_listy = listKrMaszynys.size();
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
@@ -421,7 +464,6 @@ public class EwidencjaController {
         modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
         modelAndView.addObject("listIndexOps", listIndexOps);
         modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
-        modelAndView.addObject("id_maszyny",id_maszynyy);
         modelAndView.addObject("user_id",user_id);
         modelAndView.addObject("user_code",user_code);
         modelAndView.addObject("user_login",user_login);
@@ -437,29 +479,65 @@ public class EwidencjaController {
     @PostMapping("/save_ewidencja_user")
     public ModelAndView saveEwidencjaUser(@ModelAttribute Ewidencja ewidencja, @ModelAttribute EwidencjaElementy ewidencjaElementy) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
+        ModelAndView modelAndView = new ModelAndView();
         long user_id = userService.findUserByLogin(auth.getName()).getId();
         Date date = userService.convertToDate((LocalDate.now()));
 
-        List<Ewidencja> ewidencjaListByDate = ewidencjaService.findAllByUserAndData(user_id,date);
-        if(ewidencjaListByDate.size()<1){
+        try {
+            List<Ewidencja> ewidencjaListByDate = ewidencjaService.findAllByUserAndData(user_id, date);
+            if (ewidencjaListByDate.size() < 1) {
 
-            ewidencjaService.save(ewidencja);
-            ewidencjaElementy.setEwidencja(ewidencja);
-            ewidencjaElementyService.save(ewidencjaElementy);
-            ewidencjaElementy.setId(0);
+                ewidencjaService.save(ewidencja);
+                ewidencjaElementy.setEwidencja(ewidencja);
+                ewidencjaElementyService.save(ewidencjaElementy);
+                ewidencjaElementy.setId(0);
+            } else {
+
+                Ewidencja istniejaca_ewidencja = ewidencjaListByDate.get(0);
+                ewidencjaElementy.setEwidencja(istniejaca_ewidencja);
+                ewidencjaElementyService.save(ewidencjaElementy);
+                ewidencjaElementy.setId(0);
+
+            }
         }
-        else {
+         catch (Exception e) {
+             modelAndView.addObject("error", "Błąd, wartości nie mogą być zerowe.");
+             User user = userService.findUserByLogin(auth.getName());
+             /*long user_id = user.getId();*/
+             String user_code = user.getCode();
+             String user_lastName = user.getLastName();
+             String user_section = user.getSection();
+             String user_login = user.getLogin();
 
-            Ewidencja istniejaca_ewidencja = ewidencjaListByDate.get(0);
-            ewidencjaElementy.setEwidencja(istniejaca_ewidencja);
-            ewidencjaElementyService.save(ewidencjaElementy);
-            ewidencjaElementy.setId(0);
+             List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
+             List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+             List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+             long id_maszyny = krMaszynyService.getKrMaszyny(1).getKrm_id();
+             Integer rozmiar_listy = listKrMaszynys.size();
+             Integer rozmiar_listy_indeksow = listIndexOps.size();
+             Integer rozmiar_listy_operacji = listOpTechs.size();
 
-        };
+             modelAndView.addObject("user_id",user_id);
+             modelAndView.addObject("user_code",user_code);
+             modelAndView.addObject("user_lastName",user_lastName);
+             modelAndView.addObject("user_section",user_section);
+             modelAndView.addObject("user_login",user_login);
+             modelAndView.addObject("id_maszyny",id_maszyny);
+             modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+             modelAndView.addObject("rozmiar_listy", rozmiar_listy);
+             modelAndView.addObject("listOpTechs", listOpTechs);
+             modelAndView.addObject("rozmiar_listy_operacji",rozmiar_listy_operacji);
+             modelAndView.addObject("listIndexOps", listIndexOps);
+             modelAndView.addObject("rozmiar_listy_indeksow", rozmiar_listy_indeksow);
+             modelAndView.addObject("standardDate", new Date());
+             modelAndView.addObject("user",user);
+             modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
+             modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
+             modelAndView.setViewName("user/user_home");
+             return modelAndView;
 
+         }
 
-        ModelAndView modelAndView = new ModelAndView();
 
         User user = userService.findUserByLogin(auth.getName());
         /*long user_id = user.getId();*/

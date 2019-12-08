@@ -34,6 +34,8 @@
 
                     <form th:action="@{/save_indexOp}" th:object="${indexOp}" method="post" >
                     <div class="row">
+                        <div th:if="${error}" th:text="${error}" class="alert alert-danger"/>
+                        <div th:if="${succes}" th:text="${succes}" class="alert alert-info"/>
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
                             <input type="hidden" th:field="*{id_indeksu}"/>

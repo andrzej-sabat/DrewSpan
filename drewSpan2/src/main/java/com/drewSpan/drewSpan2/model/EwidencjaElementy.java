@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.Date;
 
 @Data
@@ -52,9 +53,11 @@ public class EwidencjaElementy {
     private KrMaszyny maszyna;
 
     @Column(name = "ilosc")
+    @Min(1)
     private int ilosc;
 
     @Column(name = "czas")
+    @Min(1)
     private int czas;
 
     @Column(name = "data")

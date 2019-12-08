@@ -61,7 +61,8 @@
             <div class="panel-body">
                 <form action="#"  th:action="@{/save_ewidencja_user}" method="post" >
                     <div class="row">
-
+                        <div th:if="${error}" th:text="${error}" class="alert alert-danger"/>
+                        <div th:if="${succes}" th:text="${succes}" class="alert alert-info"/>
                         <div class="row" style="padding-bottom:20px;">
 
                             <!-- LEWA   KOLUMNA   DANYCH -->

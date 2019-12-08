@@ -54,13 +54,16 @@ public class KrMaszynyController {
 
     @PostMapping("/save_krmaszyny")
     public ModelAndView saveKrMaszynyh(@ModelAttribute KrMaszyny krMaszyny) {
+        ModelAndView modelAndView = new ModelAndView();
         try {
             krMaszynyService.save(krMaszyny);
         }
-        catch (Exception ex){
-            throw new IllegalArgumentException("Niepoprawne dane");
+        catch (Exception e){
+            modelAndView.addObject("error","Błąd, maszyna już istnieje.");
+            modelAndView.setViewName("/admin/dodawanie_maszyny");
+            return modelAndView;
         }
-        ModelAndView modelAndView = new ModelAndView();
+
         List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);
         modelAndView.addObject("krMaszyny",krMaszyny);

@@ -2,7 +2,6 @@ package com.drewSpan.drewSpan2.controller;
 
 import com.drewSpan.drewSpan2.model.OpTech;
 import com.drewSpan.drewSpan2.service.OpTechService;
-import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 
@@ -61,11 +58,8 @@ public class OpTechController {
 
 
     @PostMapping("/save_op_tech")
-    public ModelAndView saveOpTechh(@ModelAttribute OpTech opTech)  {
+    public ModelAndView saveOpTechh(@ModelAttribute OpTech opTech) {
         ModelAndView modelAndView = new ModelAndView();
-
-
-
         try {
             OpTechService.save(opTech);
             //modelAndView.addObject("succes","Dodano operację.");
@@ -73,12 +67,10 @@ public class OpTechController {
             //return modelAndView;
         }
         catch (Exception e){
-           modelAndView.addObject("error","Błąd, operacja już istnieje.");
-           modelAndView.setViewName("/admin/dodawanie_operacji");
-           return modelAndView;
+            modelAndView.addObject("error","Błąd, operacja już istnieje.");
+            modelAndView.setViewName("/admin/dodawanie_operacji");
+            return modelAndView;
         }
-
-
 
         List<OpTech> listOpTechs = OpTechService.getAllOpTechs();
         modelAndView.addObject("listOpTechs", listOpTechs);

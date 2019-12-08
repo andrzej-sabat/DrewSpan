@@ -63,15 +63,17 @@ public class IndexOpController {
 
     @PostMapping("/save_indexOp")
     public ModelAndView saveIndexOp(@ModelAttribute IndexOp indexOp) {
-
+        ModelAndView modelAndView = new ModelAndView();
 
         try {
             indexOpService.save(indexOp);
         }
-        catch (Exception ex){
-            throw new IllegalArgumentException("Niepoprawne dane");
+        catch (Exception e){
+            modelAndView.addObject("error","Błąd, indeks już istnieje.");
+            modelAndView.setViewName("/admin/dodawanie_indeksu");
+            return modelAndView;
         }
-          ModelAndView modelAndView = new ModelAndView();
+
         List<IndexOp> listIndexOp= indexOpService.getAllIndexOp();
         modelAndView.addObject("listIndexOp", listIndexOp);
         modelAndView.addObject("indexOp",indexOp);
