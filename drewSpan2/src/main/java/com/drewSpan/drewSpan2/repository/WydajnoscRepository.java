@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -66,10 +67,12 @@ public interface WydajnoscRepository extends JpaRepository<Wydajnosc,Long> {
     // Kwerenda  Wydajnosc
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "create temporary table wydajnosc as SELECT czas_calkowity.user_id, czas_calkowity.knt_nazwisko, czas_calkowity.data, concat(format((czas_calkowity.SumaCWN/(czas_calkowity.e_czas_pracy-czas_calkowity.Czas - 30)) * 100,2),\"%\") AS wydajnosc\n" +
+    @Query(value = "create temporary table wydajnosc as SELECT czas_calkowity.user_id, czas_calkowity.knt_nazwisko, czas_calkowity.data, sum(concat(format((czas_calkowity.SumaCWN/(czas_calkowity.e_czas_pracy-czas_calkowity.Czas - 30)) * 100,2),\"%\"))/count(czas_calkowity.data) AS wydajnosc\n" +
             "FROM czas_calkowity\n" +
             "GROUP BY czas_calkowity.user_id, czas_calkowity.knt_nazwisko, czas_calkowity.data, czas_calkowity.SumaCWN/czas_calkowity.e_czas_pracy-czas_calkowity.Czas-30", nativeQuery = true)
     void createWydajnosc();
+
+
 
     // Lista Wydajnosc
     @Query(nativeQuery = true, value = "SELECT * from wydajnosc;")
@@ -80,4 +83,15 @@ public interface WydajnoscRepository extends JpaRepository<Wydajnosc,Long> {
             "FROM " +
             "    Wydajnosc ")
     List<Wydajnosc> findWydajnosc();
+
+
+
+
+    @Query("SELECT " +
+            "    new com.drewSpan.drewSpan2.model.Wydajnosc(wydajnosc.user_id,wydajnosc.knt_nazwisko,AVG(wydajnosc.wydajnosc)) " +
+            "FROM " +
+            "    Wydajnosc " +
+            "where YEAR(wydajnosc.data) = ?1 AND MONTH(wydajnosc.data) = ?2 " +
+            "GROUP BY wydajnosc.user_id, wydajnosc.knt_nazwisko, MONTH(wydajnosc.data)")
+    List<Wydajnosc> findWydajnoscByDate(int year, int month);
 }

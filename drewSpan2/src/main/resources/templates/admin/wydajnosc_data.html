@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dodawanie Indeksu</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="container" style="width: 100%;">
+
+        <form th:action="@{/logout}" method="get">
+            <button class="btn btn-md btn-danger btn-block" name="registration"
+                    type="Submit">Wyloguj
+            </button>
+        </form>
+        <br/>
+
+
+        <div class="panel-group" style="margin-top:40px">
+            <div class="panel panel-primary">
+
+                <div class="panel-body">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+
+                        <form th:action="@{/wydajnosc_szukaj}" th:object="${someBean}" method="post" >
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <label>Podaj rok</label>
+                                    <input type="text" id="year" name="year" placeholder="YYYY"
+                                           class="form-control"/> <br/>
+
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <label>Podaj miesiąc</label>
+                                    <input type="text" id="month" name="month" placeholder="MM"
+                                           class="form-control" /> <br/>
+
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn-md btn-primary btn-block" name="dodaj_indeks" value="Dodaj" type="Submit">
+                                                Szukaj
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+
+                    <div class="col-md-2"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

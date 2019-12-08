@@ -11,13 +11,22 @@ public class Wydajnosc {
     private Long user_id;
     private String knt_nazwisko;
     private String data;
-    private String wydajnosc;
+    private Double wydajnosc;
 
-    public Wydajnosc(Long user_id, String knt_nazwisko, String data, String wydajnosc) {
+    public Wydajnosc(Long user_id, String knt_nazwisko, String data, Double wydajnosc) {
         this.user_id = user_id;
         this.knt_nazwisko = knt_nazwisko;
         this.data = data;
         this.wydajnosc = wydajnosc;
+    }
+
+    public Wydajnosc(Long user_id, String knt_nazwisko, Double wydajnosc) {
+        this.user_id = user_id;
+        this.knt_nazwisko = knt_nazwisko;
+        this.wydajnosc = wydajnosc;
+    }
+
+    public Wydajnosc() {
     }
 
     public Long getId() {
@@ -52,11 +61,11 @@ public class Wydajnosc {
         this.data = data;
     }
 
-    public String getWydajnosc() {
+    public Double getWydajnosc() {
         return wydajnosc;
     }
 
-    public void setWydajnosc(String wydajnosc) {
+    public void setWydajnosc(Double wydajnosc) {
         this.wydajnosc = wydajnosc;
     }
 }

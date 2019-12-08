@@ -5,6 +5,7 @@ import com.drewSpan.drewSpan2.repository.WydajnoscRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,4 +28,6 @@ public class WydajnoscService {
 
     public void dropTempTables() { wydajnoscRepository.dropTempTables();}
     public List<Wydajnosc> findWydajnosc() { return wydajnoscRepository.findWydajnosc();}
+
+    public List<Wydajnosc> findWydajnoscByDate(int year,int month) { return  wydajnoscRepository.findWydajnoscByDate(year,month);}
 }
