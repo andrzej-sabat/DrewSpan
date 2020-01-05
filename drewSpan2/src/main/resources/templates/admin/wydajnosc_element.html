@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:dt="http://java.sun.com/xml/ns/persistence/orm">
+
+<head>
+    <title>Operacje technologiczne</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function set_change(){
+            var zmiana = /*[[${#dates.format(standardDate, 'HH')}]]*/;
+            if(zmiana >= 7 && zmiana < 15){
+                document.getElementById("zmiana").value = "1";
+            } else if(zmiana >=15 && zmiana < 23){
+                document.getElementById("zmiana").value = "2";
+            } else {
+                document.getElementById("zmiana").value = "3";
+            }
+        }
+
+
+        /*]]>*/
+    </script>
+</head>
+
+<body onload="set_change();">
+<div class="container" style="width: 100%;">
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Wyloguj
+        </button>
+    </form>
+    <br/>
+    <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do menu</a>
+
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${userName}"></span>
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <br class="das">
+
+                    <br class="col-md-12">
+                    <div class="row" style="padding-bottom:20px;">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+
+                                <h3 class="form-signin-heading" th:text="Element" style="text-align: center;"></h3>
+                                <form th:action="@{/wydajnosc_po_elemencie}" th:object="${indexOpElementy}" method="post" >
+                                    <div class="col-md-12">
+
+
+                                        <select class="form-control" id="id" placeholder="Indeks" style="text-align: center" th:field="*{id}">
+                                            <option th:each="index : ${listIndexOpElementy}" th:value="${index.id}" th:text="${index.indexOp.i_nazwa + ' --------- ' + index.opTech.opt_nazwa}" ></option>
+                                        </select> <br/>
+
+
+                                        <br/>
+                                        <br/>
+                                    </div>
+
+                                    <button class="btn btn-md btn-primary btn-block" name="wybierz" value="Zapisz" type="Submit" style="width:40%; margin:auto;">
+                                        Wybierz
+                                    </button>
+                                </form>
+
+
+
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+
+                    </br>
+                    </br>
+                    <div class="row" style="margin: auto; ">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div>
+                                    <div align="center">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br />
+                <br />
+                <br />
+
+
+
+
+
+                <!--<div class="row form_signin">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6" th:object="${user}">
+                                <label>Imie pracownika</label>
+                                <input required="required" type="text" id="imie_pracownika" name="imie_pracownika" placeholder="Imie pracownika"
+                                       class="form-control" th:field="*{name}"/> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6" th:object="${user}">
+                                <label>Kod pracownika</label>
+                                <input required="required" type="text" id="kod_pracownika" name="kod_pracownika" placeholder="Kod pracownika"
+                                       class="form-control" th:field="*{code}"/> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6" th:object="${user}">
+                                <label>Id_ewidencji</label>
+                                <input required="required" type="text" id="id_ewidencji" name="id_ewidencji" placeholder="Id_ewidencji"
+                                       class="form-control" th:field="*{code}"/> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <label>Indeks</label>
+                                <select class="form-control" id="indeks" onchange="fill_index_name()" placeholder="Indeks">
+                                    <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_kod}"></option>
+                                </select> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <label>Nazwa indeksu</label>
+                                <select class="form-control" id="nazwa_indeksu"  onchange="fill_index_code()" placeholder="Nazwa indeksu">
+                                    <option th:each="index : ${listIndexOps}" th:value="${index}" th:text="${index.i_nazwa}"></option>
+                                </select> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <label>Operacja</label>
+                                <select class="form-control" id="kod_operacji" onchange="fill_op_name()" placeholder="Operacja">
+                                    <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_kod}"></option>
+                                </select> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <label>Nazwa operacji</label>
+                                <select class="form-control" id="nazwa_operacji" onchange="fill_op_code()" placeholder="Nazwa operacji">
+                                    <option th:each="operacja : ${listOpTechs}" th:value="${operacja}" th:text="${operacja.opt_nazwa}"></option>
+                                </select> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <label>Ilość</label>
+                                <input required="required" type="text" id="ilosc" name="ilosc" placeholder="Ilość"
+                                       class="form-control"/>
+                                <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <label>Czas</label>
+                                <input required="required" type="text" id="czas" name="czas" placeholder="Czas"
+                                       class="form-control"/>
+                                <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                        &lt;!&ndash;<div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <label>Data</label>
+                                <input required="required" class="form-control" type="text" id="start" name="trip-start"
+                                       th:value="${#dates.format(#dates.createNow(),'dd/MM/YYYY')}"/>
+                                </br>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>&ndash;&gt;
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>-->
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    function fill_fields(){
+                        var x = document.getElementById("kod_maszyny").selectedIndex;
+                        var y = document.getElementById("kod_maszyny").options;
+                        var krm_kod = y[x].text;
+                        var rozmiar_listy = /*[[${rozmiar_listy}]]*/;
+
+                        var index;
+                        var jsonObj = JSON.parse(JSON.stringify(/*[[${listKrMaszynys}]]*/));
+                        for (index = 0; index < rozmiar_listy; ++index) {
+                            if(krm_kod == jsonObj[index]['krm_kod']){
+                                var id_maszyny = jsonObj[index]['krm_id'];
+                                var nazwa_maszyny = jsonObj[index]['krm_nazwa'];
+                                document.getElementById("id_maszyny").value = id_maszyny;
+                                document.getElementById("nazwa_maszyny").value = nazwa_maszyny;
+
+
+                            }
+
+                        }
+
+                    }
+                    /*]]>*/
+                </script>
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    function fill_index_name(){
+                        var x = document.getElementById("indeks").selectedIndex;
+                        var y = document.getElementById("indeks").options;
+                        var indeks = y[x].text;
+                        var rozmiar_listy_indeksow = /*[[${rozmiar_listy_indeksow}]]*/;
+                        var index;
+                        var jsonObj = JSON.parse(JSON.stringify(/*[[${listIndexOps}]]*/));
+                        for (index = 0; index < rozmiar_listy_indeksow; index++) {
+                            if(indeks == jsonObj[index]['i_kod']){
+                                var nazwa_indeksu = jsonObj[index]['i_nazwa'];
+                                document.getElementById("nazwa_indeksu").options.selectedIndex = index;
+                                var id_indeksu = jsonObj[index]['id_indeksu'];
+                                document.getElementById("id_indeksu").options.selectedIndex = index;
+
+                            }
+                        }
+                    }
+                    /*]]>*/
+                </script>
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    function fill_index_code(){
+                        var x = document.getElementById("nazwa_indeksu").selectedIndex;
+                        var y = document.getElementById("nazwa_indeksu").options;
+                        var nazwa_indeksu = y[x].text;
+                        var rozmiar_listy_indeksow = /*[[${rozmiar_listy_indeksow}]]*/;
+                        var index;
+                        var jsonObj = JSON.parse(JSON.stringify(/*[[${listIndexOps}]]*/));
+                        for (index = 0; index < rozmiar_listy_indeksow; index++) {
+                            if(nazwa_indeksu == jsonObj[index]['i_nazwa']){
+                                var kod_indeksu = jsonObj[index]['i_kod'];
+                                document.getElementById("indeks").options.selectedIndex = index;
+                                var id_indeksu = jsonObj[index]['id_indeksu'];
+                                document.getElementById("id_indeksu").options.selectedIndex = index;
+                                document.getElementById("id_operacji").options.selectedIndex = index;
+                            }
+                        }
+                    }
+                    /*]]>*/
+                </script>
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    function fill_op_name(){
+                        var x = document.getElementById("kod_operacji").selectedIndex;
+                        var y = document.getElementById("kod_operacji").options;
+                        var kod_operacji = y[x].text;
+                        var rozmiar_listy_operacji = /*[[${rozmiar_listy_operacji}]]*/;
+                        var index;
+                        var jsonObj = JSON.parse(JSON.stringify(/*[[${listOpTechs}]]*/));
+                        for (index = 0; index < rozmiar_listy_operacji; index++) {
+                            if(kod_operacji == jsonObj[index]['opt_kod']){
+                                var nazwa_operacji = jsonObj[index]['opt_nazwa'];
+                                document.getElementById("nazwa_operacji").options.selectedIndex = index;
+                                document.getElementById("id_operacji").options.selectedIndex = index;
+                            }
+                        }
+                    }
+                    /*]]>*/
+                </script>
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    function fill_op_code(){
+                        var x = document.getElementById("nazwa_operacji").selectedIndex;
+                        var y = document.getElementById("nazwa_operacji").options;
+                        var nazwa_operacji = y[x].text;
+                        var rozmiar_listy_operacji = /*[[${rozmiar_listy_operacji}]]*/;
+                        var index;
+                        var jsonObj = JSON.parse(JSON.stringify(/*[[${listOpTechs}]]*/));
+                        for (index = 0; index < rozmiar_listy_operacji; index++) {
+                            if(nazwa_operacji == jsonObj[index]['opt_nazwa']){
+                                var kod_operacji = jsonObj[index]['opt_kod'];
+                                document.getElementById("kod_operacji").options.selectedIndex = index;
+                            }
+                        }
+                    }
+                    /*]]>*/
+                </script>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<script src="../../js/custom.js"></script>
+</div>
+</body>
+</html>

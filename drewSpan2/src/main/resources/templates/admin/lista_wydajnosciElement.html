@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <title>Lista wydajności pracowników</title>
+    <title>Lista wydajności według elementu</title>
 </head>
 <body>
 
@@ -35,30 +35,29 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div>
-                                    <div align="center">
+                                  <!--  <div align="center">
                                         <legend>Wydajność pracowników</legend>
                                         <input  class="form-control w-25" data-live-search="true" type="text" id="searchName" onkeyup="searchName()" placeholder="Wyszukiwanie po nazwisku..." style="text-align: center"><br/>
-                                        <!--  <input  class="form-control w-25" data-live-search="true" type="text" id="searchData" onkeyup="searchData()" placeholder="Wyszukiwanie po dacie..." style="text-align: center"><br/>
-                                          <input  class="form-control w-25" data-live-search="true" type="text" id="searchId" onkeyup="searchId()" placeholder="Wyszukiwanie po id pracownika..." style="text-align: center">
-                                          --><br/>
-                                    </div>
+                                      &lt;!&ndash;  <input  class="form-control w-25" data-live-search="true" type="text" id="searchData" onkeyup="searchData()" placeholder="Wyszukiwanie po dacie..." style="text-align: center"><br/>
+                                        <input  class="form-control w-25" data-live-search="true" type="text" id="searchId" onkeyup="searchId()" placeholder="Wyszukiwanie po id pracownika..." style="text-align: center">
+                                        &ndash;&gt;<br/>
+                                    </div>-->
+                                    <p th:text="${nazwaElementu}"></p>
                                     <div class="table-responsive">
                                         <table id="wydajnosc_tabela" class="table table-striped table-bordered"
                                                dt:table="true">
                                             <thead>
                                             <tr>
-                                                <th>Pracownik</th>
-                                                <th>Id pracownika</th>
-                                                <th>Data</th>
+                                                <th>Id operacji</th>
+                                                <th>Id indeksu</th>
                                                 <th>Wydajność</th>
 
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="wydajnosc : ${listaWydajnosci}">
-                                                <td th:text="${wydajnosc?.knt_nazwisko}"></td>
-                                                <td th:text="${wydajnosc?.user_id}"></td>
-                                                <td th:text="${wydajnosc?.data}"></td>
+                                            <tr th:each="wydajnosc : ${listaWydajnosciElement}">
+                                                <td th:text="${wydajnosc?.opt_id}"></td>
+                                                <td th:text="${wydajnosc?.id_indeksu}"></td>
                                                 <td th:text="${wydajnosc?.wydajnosc + '%'}"></td>
                                             </tr>
                                             </tbody>

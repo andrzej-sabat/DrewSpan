@@ -19,6 +19,7 @@ public interface EwidencjaRepository extends JpaRepository<Ewidencja, Long> {
     @Query(value = "update ewidencja SET e_id = ?1, e_czas_pracy = ?2, e_data=?3, e_zmiana=?4, kr_maszyny_id=?5, user_id = ?6 WHERE e_id = ?7", nativeQuery = true)
     void updateEwidencja(Long e_id, Integer e_czas_pracy, Date e_data, Integer e_zmiana, Long kr_maszyny_id, Long user_id, Long e_ide);
 
+
     @Query(value = "SELECT * FROM ewidencja WHERE user_id = ?1 AND e_data = ?2", nativeQuery = true)
     List<Ewidencja> findAllByUserIdAndData(Long user_id,Date date);
 }

@@ -52,7 +52,7 @@
         </button>
     </form>
     <br/>
-    <a class="btn btn-md btn-primary btn-block" href="admin/home">Kartoteki i produkcja</a>
+    <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do menu głównego</a>
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -207,7 +207,7 @@
                                         <datalist id="lista_nazw_operacji">
                                             <option th:each="operacja : ${listOpTechs}" th:value="${operacja.opt_nazwa}" th:text="${operacja.opt_nazwa}"></option>
                                         </datalist>
-                                            <!-- </select>--> <br/>
+                                        <br/>
                                         <label>Czas</label>
                                         <input required="required" type="text" id="czas" name="czas"
                                                class="form-control" />

@@ -22,7 +22,10 @@
 <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do menu</a>
 <a class="btn btn-md btn-primary btn-block" href="/dodawanie_pracownika">Dodaj pracownika</a></li>
 <a class="btn btn-md btn-primary btn-block" href="/dodawanie_pracownika_tech">Dodaj pracownika technicznego</a></li>
-    <div class="panel-group" style="margin-top:40px">
+<br/>
+<div th:if="${deleted}" th:text="${deleted}" class="alert alert-info" style="text-align: center"/>
+<div th:if="${Nodeleted}" th:text="${Nodeleted}" class="alert alert-danger" style="text-align: center"/>
+<div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <span th:utext="${userName}"></span>

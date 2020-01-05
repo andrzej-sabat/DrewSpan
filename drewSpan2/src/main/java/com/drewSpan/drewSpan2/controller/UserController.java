@@ -127,11 +127,21 @@ public class UserController {
     @RequestMapping(value = "/delete_user", method = RequestMethod.GET)
     public ModelAndView deleteUser(HttpServletRequest request) {
         int userId = Integer.parseInt(request.getParameter("id"));
-        userService.removeUserById((long) userId);
         ModelAndView modelAndView = new ModelAndView();
-        List<User> listUsers= userService.findAllUsers();
-        modelAndView.addObject("listUsers", listUsers);
-        modelAndView.setViewName("admin/lista_pracownikow");
+        try {
+            userService.removeUserById((long) userId);
+            List<User> listUsers = userService.findAllUsers();
+            modelAndView.addObject("listUsers", listUsers);
+            modelAndView.setViewName("admin/lista_pracownikow");
+            modelAndView.addObject("deleted", "Pomyślnie usunięto pracownika");
+        }
+        catch(Exception e) {
+            List<User> listUsers = userService.findAllUsers();
+            modelAndView.addObject("listUsers", listUsers);
+            modelAndView.setViewName("admin/lista_pracownikow");
+            modelAndView.addObject("Nodeleted", "Nie udało się usunąć pracownika");
+            System.out.println(e);
+        }
         return modelAndView;
     }
 

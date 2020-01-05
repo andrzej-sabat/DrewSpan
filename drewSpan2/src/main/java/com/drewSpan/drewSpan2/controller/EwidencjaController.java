@@ -40,8 +40,9 @@ public class EwidencjaController {
     public ModelAndView listaEwidencji(ModelAndView model) throws IOException {
         List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
         model.addObject("ewidencjaList",ewidencjaList);
+        System.out.println(ewidencjaList.get(0).getData());
+        System.out.println(ewidencjaList.get(0).getData().toString());
         model.setViewName("admin/lista_ewidencji");
-
         return model;
     }
 
