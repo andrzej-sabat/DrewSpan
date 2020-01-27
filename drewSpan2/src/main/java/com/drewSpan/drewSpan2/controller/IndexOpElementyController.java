@@ -32,16 +32,34 @@ public class IndexOpElementyController {
 
     @PostMapping("/save_index_op_tech")
     public ModelAndView saveIndexOpTech(@ModelAttribute IndexOpElementy indexOpElementy) {
-        indexOpElementyService.save(indexOpElementy);
         ModelAndView modelAndView = new ModelAndView();
-        List<IndexOpElementy> indexOpElementyList = indexOpElementyService.getAllIndexOpElementy();
-        List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
-        List<OpTech> listOpTechs = opTechService.getAllOpTechs();
-        modelAndView.addObject("listOpTechs", listOpTechs);
-        modelAndView.addObject("listIndexOps", listIndexOps);
-        modelAndView.addObject("indexOpElementyList", indexOpElementyList);
-        modelAndView.addObject("indexOpElementy",indexOpElementy);
-        modelAndView.setViewName("admin/indeks_operacje_technologiczne");
+        try {
+            indexOpElementyService.save(indexOpElementy);
+            List<IndexOpElementy> indexOpElementyList = indexOpElementyService.getAllIndexOpElementy();
+            List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+            List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+            modelAndView.addObject("listOpTechs", listOpTechs);
+            modelAndView.addObject("listIndexOps", listIndexOps);
+            modelAndView.addObject("indexOpElementyList", indexOpElementyList);
+            modelAndView.addObject("indexOpElementy", indexOpElementy);
+            modelAndView.addObject("succes","Pomyślnie dodano indeks-operacje technologiczną");
+            modelAndView.setViewName("admin/indeks_operacje_technologiczne");
+        }
+        catch (Exception e){
+
+
+
+            List<IndexOpElementy> indexOpElementyList = indexOpElementyService.getAllIndexOpElementy();
+            List<IndexOp> listIndexOps = indexOpService.getAllIndexOp();
+            List<OpTech> listOpTechs = opTechService.getAllOpTechs();
+            modelAndView.addObject("listOpTechs", listOpTechs);
+            modelAndView.addObject("listIndexOps", listIndexOps);
+            modelAndView.addObject("indexOpElementyList", indexOpElementyList);
+            modelAndView.addObject("indexOpElementy", indexOpElementy);
+            modelAndView.addObject("succes","Pomyślnie dodano indeks-operacje technologiczną");
+            modelAndView.setViewName("admin/indeks_operacje_technologiczne");
+
+        }
         return modelAndView;
     }
 
@@ -136,13 +154,29 @@ public String save(
 
     @RequestMapping(value = "/delete_indeks_operacje_technologiczne", method = RequestMethod.GET)
     public ModelAndView deleteIndexOpElementy(HttpServletRequest request) {
-        long indexOpElementyId = Integer.parseInt(request.getParameter("id"));
-        indexOpElementyService.deleteIndexOpElementy(indexOpElementyId);
         ModelAndView modelAndView = new ModelAndView();
-        List<IndexOpElementy> listIndexOpElementy= indexOpElementyService.getAllIndexOpElementy();
-        modelAndView.addObject("listIndexOpElementy", listIndexOpElementy);
-        modelAndView.setViewName("admin/indeks_operacje_technologiczne_lista");
+
+        try {
+            long indexOpElementyId = Integer.parseInt(request.getParameter("id"));
+            indexOpElementyService.deleteIndexOpElementy(indexOpElementyId);
+            List<IndexOpElementy> listIndexOpElementy = indexOpElementyService.getAllIndexOpElementy();
+            modelAndView.addObject("listIndexOpElementy", listIndexOpElementy);
+            modelAndView.setViewName("admin/indeks_operacje_technologiczne_lista");
+            modelAndView.addObject("deleted","Pomyślnie usunięto indeks-operacje technologiczną");
+        } catch (Exception e){
+
+            List<IndexOpElementy> listIndexOpElementy = indexOpElementyService.getAllIndexOpElementy();
+            modelAndView.addObject("listIndexOpElementy", listIndexOpElementy);
+            modelAndView.setViewName("admin/indeks_operacje_technologiczne_lista");
+        }
         return modelAndView;
     }
+
+    @RequestMapping(value = "delete_indeks_operacje_technologiczne/admin/home", method = RequestMethod.GET)
+    public String backToAdminMenuAfterDeleteopTech(){
+
+        return "admin/home";
+    }
+
 
 }

@@ -85,12 +85,22 @@ public class IndexOpController {
 
     @RequestMapping(value = "/delete_indexOp", method = RequestMethod.GET)
     public ModelAndView deleteIndexOp(HttpServletRequest request) {
-        long id_indeksu = Integer.parseInt(request.getParameter("id_indeksu"));
-        indexOpService.deleteIndexOp(id_indeksu);
         ModelAndView modelAndView = new ModelAndView();
-        List<IndexOp> listIndexOp= indexOpService.getAllIndexOp();
-        modelAndView.addObject("listIndexOp", listIndexOp);
-        modelAndView.setViewName("admin/lista_indeksow");
+
+        try {
+            long id_indeksu = Integer.parseInt(request.getParameter("id_indeksu"));
+            indexOpService.deleteIndexOp(id_indeksu);
+            List<IndexOp> listIndexOp = indexOpService.getAllIndexOp();
+            modelAndView.addObject("listIndexOp", listIndexOp);
+            modelAndView.setViewName("admin/lista_indeksow");
+            modelAndView.addObject("deleted","Pomyślnie usunięto indeks");
+        } catch (Exception e) {
+
+            List<IndexOp> listIndexOp = indexOpService.getAllIndexOp();
+            modelAndView.addObject("listIndexOp", listIndexOp);
+            modelAndView.setViewName("admin/lista_indeksow");
+
+        }
         return modelAndView;
     }
 

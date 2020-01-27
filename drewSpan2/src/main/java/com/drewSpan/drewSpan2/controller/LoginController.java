@@ -255,6 +255,8 @@ public class LoginController implements ErrorController {
         return "user/home";
     }
 
+
+
     private static final String PATH = "/error";
 
     /*@RequestMapping(value = PATH)

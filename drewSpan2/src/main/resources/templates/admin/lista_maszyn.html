@@ -24,6 +24,7 @@
     <a class="btn btn-md btn-primary btn-block" href="/dodawanie_maszyny">Dodaj maszynę</a>
 
     </br>
+    <div th:if="${deleted}" th:text="${deleted}" class="alert alert-info" style="text-align: center"/>
     <div th:if="${succes}" th:text="${succes}" class="alert alert-info" style="text-align: center"/>
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">

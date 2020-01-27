@@ -56,6 +56,7 @@ public class KrMaszynyController {
     public ModelAndView saveKrMaszynyh(@ModelAttribute KrMaszyny krMaszyny) {
         ModelAndView modelAndView = new ModelAndView();
 
+
         try {
             krMaszynyService.save(krMaszyny);
             modelAndView.addObject("succes","Pomyślnie dodano maszynę");
@@ -77,12 +78,25 @@ public class KrMaszynyController {
 
     @RequestMapping(value = "/delete_krmaszyny", method = RequestMethod.GET)
     public ModelAndView deleteKrMaszyny(HttpServletRequest request) {
-        long krm_id = Integer.parseInt(request.getParameter("krm_id"));
-        krMaszynyService.deleteKrMaszyny(krm_id);
         ModelAndView modelAndView = new ModelAndView();
-        List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
-        modelAndView.addObject("listKrMaszynys", listKrMaszynys);
-        modelAndView.setViewName("admin/lista_maszyn");
+        try {
+            long krm_id = Integer.parseInt(request.getParameter("krm_id"));
+            krMaszynyService.deleteKrMaszyny(krm_id);
+
+            List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
+            modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+            modelAndView.addObject("deleted","Pomyślnie usunięto maszynę");
+            modelAndView.setViewName("admin/lista_maszyn");
+
+        }
+        catch (Exception e){
+
+            List<KrMaszyny> listKrMaszynys = krMaszynyService.getAllKrMaszynys();
+            modelAndView.addObject("listKrMaszynys", listKrMaszynys);
+            modelAndView.setViewName("admin/lista_maszyn");
+
+        }
+
         return modelAndView;
     }
 

@@ -82,12 +82,23 @@ public class OpTechController {
 
     @RequestMapping(value = "/delete_opTech", method = RequestMethod.GET)
     public ModelAndView deleteOpTech(HttpServletRequest request) {
-        long opTechId = Integer.parseInt(request.getParameter("opt_id"));
-        OpTechService.deleteOpTech(opTechId);
         ModelAndView modelAndView = new ModelAndView();
-        List<OpTech> listOpTechs = OpTechService.getAllOpTechs();
-        modelAndView.addObject("listOpTechs", listOpTechs);
-        modelAndView.setViewName("admin/lista_operacji");
+
+        try {
+            long opTechId = Integer.parseInt(request.getParameter("opt_id"));
+            OpTechService.deleteOpTech(opTechId);
+            List<OpTech> listOpTechs = OpTechService.getAllOpTechs();
+            modelAndView.addObject("listOpTechs", listOpTechs);
+            modelAndView.addObject("deleted","Pomyślnie usunięto operację");
+            modelAndView.setViewName("admin/lista_operacji");
+
+        } catch (Exception e){
+
+            List<OpTech> listOpTechs = OpTechService.getAllOpTechs();
+            modelAndView.addObject("listOpTechs", listOpTechs);
+            modelAndView.setViewName("admin/lista_operacji");
+
+        }
         return modelAndView;
     }
 
