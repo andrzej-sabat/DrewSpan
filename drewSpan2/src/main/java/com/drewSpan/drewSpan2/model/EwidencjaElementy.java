@@ -41,7 +41,7 @@ public class EwidencjaElementy {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY, /*orphanRemoval = true,*/ optional = false)
+    @ManyToOne(fetch = FetchType.LAZY/* orphanRemoval = true,*/)
     @JoinColumn(name = "e_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Ewidencja ewidencja;

@@ -55,8 +55,11 @@ public class KrMaszynyController {
     @PostMapping("/save_krmaszyny")
     public ModelAndView saveKrMaszynyh(@ModelAttribute KrMaszyny krMaszyny) {
         ModelAndView modelAndView = new ModelAndView();
+
         try {
             krMaszynyService.save(krMaszyny);
+            modelAndView.addObject("succes","Pomyślnie dodano maszynę");
+
         }
         catch (Exception e){
             modelAndView.addObject("error","Błąd, maszyna już istnieje.");

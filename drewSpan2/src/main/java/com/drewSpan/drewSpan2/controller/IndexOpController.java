@@ -67,6 +67,7 @@ public class IndexOpController {
 
         try {
             indexOpService.save(indexOp);
+            modelAndView.addObject("succes","Pomyślnie dodano indeks");
         }
         catch (Exception e){
             modelAndView.addObject("error","Błąd, indeks już istnieje.");

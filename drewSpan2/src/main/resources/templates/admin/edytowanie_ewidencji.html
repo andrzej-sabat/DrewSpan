@@ -21,19 +21,6 @@
                 document.getElementById("zmiana").value = "3";
             }
 
-            var data = /*[[${#dates.format(standardDate, 'dd-MM-yyyy')}]]*/;
-            document.getElementById("data").value = data;
-
-            document.getElementById("maszyna").value = null;
-            document.getElementById("kod_maszyny").value = null;
-            document.getElementById("nazwa_maszyny").value = null;
-            document.getElementById("indeks").value = null;
-            document.getElementById("ilosc").value = null;
-            document.getElementById("kod_operacji").value = null;
-            document.getElementById("nazwa_operacji").value = null;
-            document.getElementById("czas").value = null;
-            document.getElementById("kod_indeksu").value = null;
-            document.getElementById("nazwa_indeksu").value = null;
 
 
         }
@@ -59,14 +46,14 @@
                 <span th:utext="${userName}"></span>
             </div>
             <div class="panel-body">
-                <form action="#"  th:action="@{/save_ewidencja}" method="post" >
+                <form action="#"  th:action="@{/save_ewidencja_only}" method="post" >
                     <div class="row">
-                        <div th:if="${error}" th:text="${error}" class="alert alert-danger" style="text-align: center"/>
-                        <div th:if="${succes}" th:text="${succes}" class="alert alert-info" style="text-align: center"/>
+                        <div th:if="${error}" th:text="${error}" class="alert alert-danger"/>
+                        <div th:if="${succes}" th:text="${succes}" class="alert alert-info"/>
                         <div class="row" style="padding-bottom:20px;">
 
                             <!-- LEWA   KOLUMNA   DANYCH -->
-                            <div class="col-md-6" >
+                            <div class="col-md-12" >
                                 <div class="row two_columns" style="margin: auto;">
                                     <h3 class="form-signin-heading" style="text-align: center;">Dane do ewidencji</h3>
                                     <br/>
@@ -96,12 +83,11 @@
 
                                         <input  required="required" type="text" name="user" placeholder="Kod pracownika"
                                                class="form-control" th:value="${ewidencja.user.code}"/> <br/>
-                                        <input type="hidden" th:field="*{ewidencjaElementy.ewidencja.id}"/>
 
                                         <!-- <label>Id ewidencji</label>
                                          <input required="required" type="text" id="ewidencja" name="ewidencja" placeholder="e_id"
                                                 class="form-control" th:value="${user_code}"/> <br/>-->
-
+                                        <input type="hidden" th:field="*{ewidencja.id}">
                                         <br/>
                                         <br/>
                                     </div>
@@ -122,19 +108,19 @@
                                         <label>Czas pracy</label>
                                         <input required="required" type="text" id="czas_pracy" name="czas_pracy" placeholder="Czas pracy"
                                                class="form-control" th:value="480" > <br/>
-
+                                        <input type="hidden" th:field="*{ewidencja.maszyna.krm_id}">
 
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- PRAWA    KOLUMNA    DANYCH -->
+                           <!-- &lt;!&ndash; PRAWA    KOLUMNA    DANYCH &ndash;&gt;
                             <div class="col-md-6" th:object="${ewidencjaElementy}">
                                 <div class="row two_columns" style="margin: auto; ">
                                     <h3 class="form-signin-heading"  style="text-align: center;">Dane elementu</h3>
                                     <br/>
 
-                                    <!--Kod maszyny - Id maszyny - Nazwa maszyny -->
+                                    &lt;!&ndash;Kod maszyny - Id maszyny - Nazwa maszyny &ndash;&gt;
                                     <div class="col-md-4">
                                         <input type="hidden" th:field="*{id}">
                                         <label>Id maszyny</label>
@@ -158,7 +144,7 @@
                                         <br/>
                                     </div>
 
-                                    <!--Indeks - Nazwa indeksu - Ilość-->
+                                    &lt;!&ndash;Indeks - Nazwa indeksu - Ilość&ndash;&gt;
                                     <div class="col-md-4">
                                         <label>Id indeksu</label>
                                         <input list="lista_id_indeksow" id="id_indeksu" name="indexOp" type="text" class="form-control" onchange="fill_index_name_and_code()" onkeyup="fill_index_name_and_code()" />
@@ -188,7 +174,7 @@
                                         <br/>
                                     </div>
 
-                                    <!--Id Operacji - Kod Operacji - Nazwa operacji - Czas -->
+                                    &lt;!&ndash;Id Operacji - Kod Operacji - Nazwa operacji - Czas &ndash;&gt;
                                     <div class="col-md-4">
                                         <label>Id operacji</label>
                                         <input list="lista_id_operacji" id="id_operacji" name="opTech" type="text" class="form-control" onchange="fill_op_name_and_code()" onkeyup="fill_op_name_and_code()" />
@@ -216,7 +202,7 @@
 
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
 
                         </div>
 

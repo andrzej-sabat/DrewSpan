@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "kr_maszyny")
-public class KrMaszyny implements java.io.Serializable {
+public class KrMaszyny {
 
     private static final long serialVersionUID = 1L;
     @Id

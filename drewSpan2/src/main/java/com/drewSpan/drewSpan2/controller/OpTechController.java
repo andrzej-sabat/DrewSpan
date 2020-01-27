@@ -62,7 +62,7 @@ public class OpTechController {
         ModelAndView modelAndView = new ModelAndView();
         try {
             OpTechService.save(opTech);
-            //modelAndView.addObject("succes","Dodano operację.");
+            modelAndView.addObject("succes","Pomyślnie dodano operację.");
             //modelAndView.setViewName("/admin/dodawanie_operacji");
             //return modelAndView;
         }

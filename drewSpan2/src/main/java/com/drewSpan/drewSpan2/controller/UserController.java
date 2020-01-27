@@ -82,21 +82,31 @@ public class UserController {
     @PostMapping("/zapisz_pracownika")
     public ModelAndView saveuser(@ModelAttribute User user, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
-        List<User> listUsers= userService.findAllUsers();
-        modelAndView.addObject("listUsers", listUsers);
 
-        User userInDatabase = userService.findUserByLogin(user.getLogin());
-        if(userInDatabase != null){
-            result.addError(new ObjectError("userExists","Login juz istnieje"));
-        }
-        if(result.hasErrors()){
-            modelAndView.addObject("user",user);
+        try {
+            User userInDatabase = userService.findUserByLogin(user.getLogin());
+            if (userInDatabase != null) {
+                result.addError(new ObjectError("userExists", "Login juz istnieje"));
+            }
+            if (result.hasErrors()) {
+                modelAndView.addObject("user", user);
+                modelAndView.setViewName("admin/lista_pracownikow");
+                return modelAndView;
+            }
+
+            modelAndView.addObject("user", user);
             modelAndView.setViewName("admin/lista_pracownikow");
-            return modelAndView;
+            user.setRoles(roleRepository.findRoleById(2));
+            userService.save(user);
+            modelAndView.addObject("succes", "Pomyślnie dodano pracownika");
+            List<User> listUsers= userService.findAllUsers();
+            modelAndView.addObject("listUsers", listUsers);
         }
-
-        user.setRoles(roleRepository.findRoleById(2));
-        userService.save(user);
+        catch (Exception e){
+            List<User> listUsers= userService.findAllUsers();
+            modelAndView.addObject("listUsers", listUsers);
+            modelAndView.setViewName("admin/lista_pracownikow");
+        }
         return modelAndView;
     }
 
@@ -118,7 +128,9 @@ public class UserController {
             return modelAndView;
         }
 
-
+        modelAndView.addObject("succes","Pomyślnie dodano pracownika");
+        modelAndView.addObject("user",user);
+        modelAndView.setViewName("admin/lista_pracownikow");
         user.setRoles(roleRepository.findRoleById(1));
         userService.save(user);
         return modelAndView;
@@ -139,8 +151,7 @@ public class UserController {
             List<User> listUsers = userService.findAllUsers();
             modelAndView.addObject("listUsers", listUsers);
             modelAndView.setViewName("admin/lista_pracownikow");
-            modelAndView.addObject("Nodeleted", "Nie udało się usunąć pracownika");
-            System.out.println(e);
+
         }
         return modelAndView;
     }
@@ -151,6 +162,9 @@ public class UserController {
         modelAndView.setViewName("admin/home");
         return modelAndView;
     }
+
+
+
 
 
 

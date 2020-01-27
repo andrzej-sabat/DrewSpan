@@ -27,7 +27,11 @@ public interface EwidencjaElementyRepository extends JpaRepository<EwidencjaElem
     @Query(value = "update ewidencja_elementy SET id_element = ?1, kr_maszyny_id = ?2, czas=?3, data=?4, ilosc=?5, id_indeksu = ?6, user_id = ?7, opt_id = ?8, e_id = ?9  WHERE id_element = ?10", nativeQuery = true)
     void updateEwidencjaElementy(Long id_element, Long krMaszyny_id, Integer czas, Date data, Integer ilosc, Long id_indeksu, Long user_id, Long opt_id, Long e_id,Long id_elementu);
 
-    @Query(value = "SELECT * FROM ewidencja_elementy WHERE user_id = ?1 AND data = ?2", nativeQuery = true)
-    List<EwidencjaElementy> findAllByUserIdAndData(Long user_id,Date date);
+    @Query(value = "SELECT * FROM ewidencja_elementy WHERE user_id = ?1 AND DATE(data) = CURDATE()", nativeQuery = true)
+    List<EwidencjaElementy> findAllByUserIdAndData(Long user_id);
 
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "delete from ewidencja_elementy where e_id = ?1", nativeQuery = true)
+    void deleteAllById(Long e_id);
 }

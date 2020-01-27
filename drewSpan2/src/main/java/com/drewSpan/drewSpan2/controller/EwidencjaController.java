@@ -40,8 +40,6 @@ public class EwidencjaController {
     public ModelAndView listaEwidencji(ModelAndView model) throws IOException {
         List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
         model.addObject("ewidencjaList",ewidencjaList);
-        System.out.println(ewidencjaList.get(0).getData());
-        System.out.println(ewidencjaList.get(0).getData().toString());
         model.setViewName("admin/lista_ewidencji");
         return model;
     }
@@ -149,7 +147,6 @@ public class EwidencjaController {
         ModelAndView modelAndView = new ModelAndView();
         int ewidencjaId = Integer.parseInt(request.getParameter("id"));
         Ewidencja ewidencja = ewidencjaService.findById(ewidencjaId);
-        EwidencjaElementy ewidencjaElementy = ewidencjaElementyService.findByEwidencja(ewidencja);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -170,7 +167,6 @@ public class EwidencjaController {
         Integer rozmiar_listy_indeksow = listIndexOps.size();
         Integer rozmiar_listy_operacji = listOpTechs.size();
         modelAndView.addObject("ewidencja",ewidencja);
-        modelAndView.addObject("ewidencjaElementy",ewidencjaElementy);
         modelAndView.addObject("ewidencjaList",ewidencjaList);
         modelAndView.addObject("listKrMaszynys", listKrMaszynys);
         modelAndView.addObject("userList",userList);
@@ -186,7 +182,7 @@ public class EwidencjaController {
         modelAndView.addObject("user_section",user_section);
         modelAndView.addObject("user_name",user_name);
 
-        modelAndView.setViewName("admin/ewidencja");
+        modelAndView.setViewName("admin/edytowanie_ewidencji");
         return modelAndView;
     }
 
@@ -302,26 +298,63 @@ public class EwidencjaController {
 
     @RequestMapping(value = "/delete_ewidencja", method = RequestMethod.GET)
     public ModelAndView deleteEwidencja(HttpServletRequest request) {
-        int ewidencjaId = Integer.parseInt(request.getParameter("id"));
-        Ewidencja ewidencja = ewidencjaService.findById(ewidencjaId);
-        ewidencjaService.removeEwidencjaById(ewidencjaId);
-
         ModelAndView modelAndView = new ModelAndView();
-        List<Ewidencja> ewidencjaList= ewidencjaService.findAllEwidencja();
-        modelAndView.addObject("ewidencjaList",ewidencjaList);
-        modelAndView.setViewName("admin/lista_ewidencji");
+
+        try {
+            int ewidencjaId = Integer.parseInt(request.getParameter("id"));
+            ewidencjaElementyService.deleteAllById((long) ewidencjaId);
+            Ewidencja ewidencja = ewidencjaService.findById(ewidencjaId);
+            ewidencjaService.remove(ewidencja);
+
+            List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
+            modelAndView.addObject("ewidencjaList", ewidencjaList);
+            modelAndView.addObject("deleted", "Pomyślnie usunięto ewidencje wraz z elementami przypisanymi do niej");
+            modelAndView.setViewName("admin/lista_ewidencji");
+        }
+        catch (Exception e){
+
+            List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
+            modelAndView.addObject("ewidencjaList", ewidencjaList);
+            modelAndView.setViewName("admin/lista_ewidencji");
+
+        }
+
         return modelAndView;
     }
 
     @RequestMapping(value = "/delete_ewidencja_elementy", method = RequestMethod.GET)
     public ModelAndView deleteEwidencjaElementy(HttpServletRequest request) {
-        int ewidencjaElementyId = Integer.parseInt(request.getParameter("id"));
-        ewidencjaElementyService.removeEwidencjaElementyById(ewidencjaElementyId);
         ModelAndView modelAndView = new ModelAndView();
-        List<EwidencjaElementy> ewidencjaElementyList= ewidencjaElementyService.findAllEwidencjaElementy();
-        modelAndView.addObject("ewidencjaElementyList",ewidencjaElementyList);
-        modelAndView.setViewName("admin/lista_ewidencji_elementy");
+        try {
+            int ewidencjaElementyId = Integer.parseInt(request.getParameter("id"));
+            ewidencjaElementyService.removeEwidencjaElementyById(ewidencjaElementyId);
+
+            List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
+            modelAndView.addObject("ewidencjaElementyList", ewidencjaElementyList);
+            modelAndView.addObject("deleted", "Pomyślnie usunięto element");
+            modelAndView.setViewName("admin/lista_ewidencji_elementy");
+
+        }
+        catch (Exception e){
+
+            List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllEwidencjaElementy();
+            modelAndView.addObject("ewidencjaElementyList", ewidencjaElementyList);
+            modelAndView.setViewName("admin/lista_ewidencji_elementy");
+
+
+        }
         return modelAndView;
+    }
+
+    @PostMapping("/save_ewidencja_only")
+    public ModelAndView saveEwidencjaOnly(@ModelAttribute Ewidencja ewidencja){
+        ModelAndView modelAndView = new ModelAndView();
+            ewidencjaService.save(ewidencja);
+            List<Ewidencja> ewidencjaList = ewidencjaService.findAllEwidencja();
+            modelAndView.addObject("ewidencjaList",ewidencjaList);
+            modelAndView.setViewName("/admin/lista_ewidencji");
+            return modelAndView;
+
     }
 
     @PostMapping("/save_ewidencja")
@@ -472,7 +505,7 @@ public class EwidencjaController {
         modelAndView.addObject("user_section",user_section);
         modelAndView.addObject("user_name",user_name);
         modelAndView.addObject("standardDate", new Date());
-
+        modelAndView.addObject("succes","Pomyślnie dodano element");
         modelAndView.setViewName("admin/ewidencja");
         return modelAndView;
     }
@@ -571,6 +604,7 @@ public class EwidencjaController {
         modelAndView.addObject("user",user);
         modelAndView.addObject("userName", user.getLastName() + " (" + user.getLogin() + ")");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
+        modelAndView.addObject("succes","Pomyślnie dodano element");
         modelAndView.setViewName("user/user_home");
         return modelAndView;
     }

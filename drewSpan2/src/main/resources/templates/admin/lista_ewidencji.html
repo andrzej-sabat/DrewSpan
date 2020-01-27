@@ -22,6 +22,9 @@
   <br/>
   <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do menu</a>
 
+  </br> </br>
+  <div th:if="${deleted}" th:text="${deleted}" class="alert alert-info" style="text-align: center"/>
+
   <div class="panel-group" style="margin-top:40px">
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -81,7 +84,7 @@
 
 
                         <td>
-                          <a th:href="@{/edit_ewidencjaa/?id={id}(id=${ewidencja.id})}"
+                          <a th:href="@{/edit_ewidencja/?id={id}(id=${ewidencja.id})}"
                              class="btn btn-sm btn-info">Edytuj</a>
                           <a th:href="@{/delete_ewidencja/?id={id}(id=${ewidencja.id})}"
                              class="btn btn-sm btn-danger">Usuń</a>

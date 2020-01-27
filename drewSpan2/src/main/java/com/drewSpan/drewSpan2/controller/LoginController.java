@@ -3,28 +3,22 @@ package com.drewSpan.drewSpan2.controller;
 import com.drewSpan.drewSpan2.model.*;
 import com.drewSpan.drewSpan2.service.*;
 
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.extras.java8time.expression.Temporals;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.*;
 import java.time.LocalDate;
-import java.time.temporal.Temporal;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 @Controller
-public class LoginController {
+public class LoginController implements ErrorController {
 
     @Autowired
     private UserService userService;
@@ -136,14 +130,11 @@ public class LoginController {
         long user_id = userService.findUserByLogin(auth.getName()).getId();
         Date date = userService.convertToDate((LocalDate.now()));
         System.out.println(date);
-        List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllByUserAndData(user_id,date);
+        List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllByUserAndData(user_id);
         modelAndView.addObject("ewidencjaElementyList",ewidencjaElementyList);
         modelAndView.setViewName("user/lista_dodanych");
         return modelAndView;
     }
-
-
-
 
     @RequestMapping(value="/user/user_home", method = RequestMethod.GET)
     public ModelAndView userHome(HttpServletRequest request){
@@ -227,19 +218,68 @@ public class LoginController {
 
     @RequestMapping(value = "/delete_ewidencjaElementy_user", method = RequestMethod.GET)
     public ModelAndView deleteEwidencjaElementyUser(HttpServletRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        int ewidencjaElementyId = Integer.parseInt(request.getParameter("id"));
-        ewidencjaElementyService.removeEwidencjaElementyById(ewidencjaElementyId);
-        ModelAndView modelAndView = new ModelAndView();
 
-        long user_id = userService.findUserByLogin(auth.getName()).getId();
-        Date date = userService.convertToDate((LocalDate.now()));
-        System.out.println(date);
-        List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllByUserAndData(user_id,date);
-        modelAndView.addObject("ewidencjaElementyList",ewidencjaElementyList);
-        modelAndView.setViewName("user/lista_dodanych");
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        try {
+            int ewidencjaElementyId = Integer.parseInt(request.getParameter("id"));
+            ewidencjaElementyService.removeEwidencjaElementyById(ewidencjaElementyId);
+
+            long user_id = userService.findUserByLogin(auth.getName()).getId();
+            List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllByUserAndData(user_id);
+            modelAndView.addObject("ewidencjaElementyList", ewidencjaElementyList);
+            modelAndView.addObject("deleted", "Pomyślnie usunięto element");
+            modelAndView.setViewName("user/lista_dodanych");
+        }
+        catch (Exception e){
+
+            long user_id = userService.findUserByLogin(auth.getName()).getId();
+            List<EwidencjaElementy> ewidencjaElementyList = ewidencjaElementyService.findAllByUserAndData(user_id);
+            modelAndView.addObject("ewidencjaElementyList", ewidencjaElementyList);
+            modelAndView.setViewName("user/lista_dodanych");
+
+        }
         return modelAndView;
 
     }
 
+    @RequestMapping(value = "edit_ewidencja_elementy_user/user/home", method = RequestMethod.GET)
+    public String backToUserMenu(){
+
+        return "user/home";
+    }
+
+    @RequestMapping(value = "delete_ewidencjaElementy_user/user/home", method = RequestMethod.GET)
+    public String backToUserMenuAfterDelete(){
+
+        return "user/home";
+    }
+
+    private static final String PATH = "/error";
+
+    /*@RequestMapping(value = PATH)
+    public ModelAndView handleError(HttpServletRequest request) {
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        ModelAndView model = new ModelAndView();
+        if (status != null) {
+            Integer statusCode = Integer.valueOf(status.toString());
+
+            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+
+                model.setViewName("admin/home");
+                return model;
+            }
+            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                model.setViewName("admin/home");
+                return model;
+            }
+        }
+        model.setViewName("admin/home");
+        return model;
+    }*/
+
+    @Override
+    public String getErrorPath() {
+        return null;
+    }
 }
