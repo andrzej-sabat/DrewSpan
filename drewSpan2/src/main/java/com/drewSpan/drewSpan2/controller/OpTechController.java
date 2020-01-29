@@ -59,9 +59,19 @@ public class OpTechController {
 
     @PostMapping("/save_op_tech")
     public ModelAndView saveOpTechh(@ModelAttribute OpTech opTech) {
-
-        OpTechService.save(opTech);
         ModelAndView modelAndView = new ModelAndView();
+        try {
+            OpTechService.save(opTech);
+            modelAndView.addObject("succes","Pomyślnie dodano operację.");
+            //modelAndView.setViewName("/admin/dodawanie_operacji");
+            //return modelAndView;
+        }
+        catch (Exception e){
+            modelAndView.addObject("error","Błąd, operacja już istnieje.");
+            modelAndView.setViewName("/admin/dodawanie_operacji");
+            return modelAndView;
+        }
+
         List<OpTech> listOpTechs = OpTechService.getAllOpTechs();
         modelAndView.addObject("listOpTechs", listOpTechs);
         modelAndView.addObject("opTech",opTech);
@@ -72,12 +82,23 @@ public class OpTechController {
 
     @RequestMapping(value = "/delete_opTech", method = RequestMethod.GET)
     public ModelAndView deleteOpTech(HttpServletRequest request) {
-        long opTechId = Integer.parseInt(request.getParameter("opt_id"));
-        OpTechService.deleteOpTech(opTechId);
         ModelAndView modelAndView = new ModelAndView();
-        List<OpTech> listOpTechs = OpTechService.getAllOpTechs();
-        modelAndView.addObject("listOpTechs", listOpTechs);
-        modelAndView.setViewName("admin/lista_operacji");
+
+        try {
+            long opTechId = Integer.parseInt(request.getParameter("opt_id"));
+            OpTechService.deleteOpTech(opTechId);
+            List<OpTech> listOpTechs = OpTechService.getAllOpTechs();
+            modelAndView.addObject("listOpTechs", listOpTechs);
+            modelAndView.addObject("deleted","Pomyślnie usunięto operację");
+            modelAndView.setViewName("admin/lista_operacji");
+
+        } catch (Exception e){
+
+            List<OpTech> listOpTechs = OpTechService.getAllOpTechs();
+            modelAndView.addObject("listOpTechs", listOpTechs);
+            modelAndView.setViewName("admin/lista_operacji");
+
+        }
         return modelAndView;
     }
 

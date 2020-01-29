@@ -11,13 +11,16 @@
 </head>
 
 <body>
-<div class="container">
+<div class="container" style="width:100%">
 
     <form th:action="@{/logout}" method="get">
         <button class="btn btn-md btn-danger btn-block" name="registration"
                 type="Submit">Wyloguj
         </button>
     </form>
+    <br/>
+    <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do menu głownego</a>
+
 
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
@@ -25,13 +28,13 @@
                 <span th:utext="${userName}"></span>
             </div>
             <div class="panel-body">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
+                <div class="col-md-1"></div>
+                <div class="col-md-10" style="text-align: center;">
                     <a href="/lista_pracownikow" class="btn btn-info" role="button">Lista pracowników</a>
                     <a href="/dodawanie_pracownika" class="btn btn-info" role="button">Dodaj pracownika</a>
                     <a href="/dodawanie_pracownika_tech" class="btn btn-info" role="button">Dodaj pracownika technicznego</a>
                 </div>
-                <div class="col-md-2"></div>
+                <div class="col-md-1"></div>
             </div>
 
 

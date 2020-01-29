@@ -13,11 +13,15 @@
 <body>
 <div class="container">
 
-    <form th:action="@{/logout}" method="get">
-        <button class="btn btn-md btn-danger btn-block" name="registration"
-                type="Submit">Wyloguj
-        </button>
-    </form>
+    <div class="container" style="width: 100%;">
+
+        <form th:action="@{/logout}" method="get">
+            <button class="btn btn-md btn-danger btn-block" name="registration"
+                    type="Submit">Wyloguj
+            </button>
+        </form>
+        <br/>
+        <a class="btn btn-md btn-primary btn-block" href="admin/home">Kartoteki i produkcja</a>
 
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
@@ -27,8 +31,11 @@
             <div class="panel-body">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
+
                     <form th:action="@{/save_indexOp}" th:object="${indexOp}" method="post" >
                     <div class="row">
+                        <div th:if="${error}" th:text="${error}" class="alert alert-danger"/>
+                        <div th:if="${succes}" th:text="${succes}" class="alert alert-info"/>
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
                             <input type="hidden" th:field="*{id_indeksu}"/>
@@ -58,7 +65,7 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button class="btn btn-lg btn-primary btn-block" name="dodaj_indeks" value="Dodaj" type="Submit">
+                                    <button class="btn btn-md btn-primary btn-block" name="dodaj_indeks" value="Dodaj" type="Submit">
                                         Zapisz indeks
                                     </button>
                                 </div>

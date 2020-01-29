@@ -1,26 +1,29 @@
 package com.drewSpan.drewSpan2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Set;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Data
 @Entity
 @Table(name = "kr_maszyny")
-public class KrMaszyny implements java.io.Serializable {
+public class KrMaszyny {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "krm_id")
     private long krm_id;
-    @Column(name = "krm_kod")
+    @Column(name = "krm_kod", length = 200, unique = true)
     private String krm_kod;
     @Column(name = "krm_nazwa")
     private String krm_nazwa;
 
     @OneToMany(mappedBy = "maszyna", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Ewidencja> ewidencja;
 
     public long getKrm_id() {

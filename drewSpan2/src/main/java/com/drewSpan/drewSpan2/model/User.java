@@ -1,5 +1,6 @@
 package com.drewSpan.drewSpan2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,6 +46,7 @@ public class User {
     private String section;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Ewidencja> ewidencja;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -106,4 +108,5 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
 }

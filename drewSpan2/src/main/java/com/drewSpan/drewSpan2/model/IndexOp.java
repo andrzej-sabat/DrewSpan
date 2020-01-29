@@ -20,9 +20,9 @@ public class IndexOp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_indeksu")
     private long id_indeksu;
-    @Column(name = "i_kod")
+    @Column(name = "i_kod", length = 200 ,unique = true)
     private String i_kod;
-    @Column(name = "i_nazwa")
+    @Column(name = "i_nazwa", length = 200 , unique = true)
     private String i_nazwa;
 
     @JsonIgnore

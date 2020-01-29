@@ -12,28 +12,6 @@
     <title>Lista maszyn</title>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> Menu <i
-                    class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand" href="admin/home">Kartoteki i produkcja</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse"
-             id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-left">
-                <li class="active"></li>
-                <li><a href="/dodawanie_maszyny">Dodaj maszynę</a></li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
 
 <div class="container-fluid">
     <form th:action="@{/logout}" method="get">
@@ -41,7 +19,13 @@
                 type="Submit">Wyloguj
         </button>
     </form>
+    <br/>
+    <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do menu</a>
+    <a class="btn btn-md btn-primary btn-block" href="/dodawanie_maszyny">Dodaj maszynę</a>
 
+    </br>
+    <div th:if="${deleted}" th:text="${deleted}" class="alert alert-info" style="text-align: center"/>
+    <div th:if="${succes}" th:text="${succes}" class="alert alert-info" style="text-align: center"/>
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -77,9 +61,9 @@
                                                 <td th:text="${krMaszyny?.krm_nazwa}"></td>
                                                 <td>
                                                     <a th:href="@{/edit_krmaszyny/?krm_id={krm_id}(krm_id=${krMaszyny.krm_id})}"
-                                                       class="btn btn-info">Edytuj</a>
+                                                       class="btn btn-sm btn-info">Edytuj</a>
                                                     <a th:href="@{/delete_krmaszyny/?krm_id={krm_id}(krm_id=${krMaszyny.krm_id})}"
-                                                       class="btn btn-danger">Usuń</a>
+                                                       class="btn btn-sm btn-danger">Usuń</a>
                                                 </td>
                                             </tr>
                                             </tbody>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:dt="http://java.sun.com/xml/ns/persistence/orm">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+          xmlns:dt="http://www.thymeleaf.org/dandelion/datatables" />
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title>Lista wydajności pracowników</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Wyloguj
+        </button>
+    </form>
+    <br/>
+    <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do menu</a>
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${userName}"></span>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div>
+                                    <div align="center">
+                                        <legend>Wydajność pracowników</legend>
+                                        <input  class="form-control w-25" data-live-search="true" type="text" id="searchName" onkeyup="searchName()" placeholder="Wyszukiwanie po nazwisku..." style="text-align: center"><br/>
+                                        <!--  <input  class="form-control w-25" data-live-search="true" type="text" id="searchData" onkeyup="searchData()" placeholder="Wyszukiwanie po dacie..." style="text-align: center"><br/>
+                                          <input  class="form-control w-25" data-live-search="true" type="text" id="searchId" onkeyup="searchId()" placeholder="Wyszukiwanie po id pracownika..." style="text-align: center">
+                                          --><br/>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table id="wydajnosc_tabela" class="table table-striped table-bordered"
+                                               dt:table="true">
+                                            <thead>
+                                            <tr>
+                                                <th>Pracownik</th>
+                                                <th>Id pracownika</th>
+                                                <th>Data</th>
+                                                <th>Wydajność</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="wydajnosc : ${listaWydajnosci}">
+                                                <td th:text="${wydajnosc?.knt_nazwisko}"></td>
+                                                <td th:text="${wydajnosc?.user_id}"></td>
+                                                <td th:text="${wydajnosc?.data}"></td>
+                                                <td th:text="${wydajnosc?.wydajnosc + '%'}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function searchName() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchName");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("wydajnosc_tabela");
+        tr = table.getElementsByTagName("tr");
+
+
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+    }
+
+    /*]]>*/
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function searchId() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchId");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("wydajnosc_tabela");
+        tr = table.getElementsByTagName("tr");
+
+
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+    }
+
+    /*]]>*/
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function searchData() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchData");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("wydajnosc_tabela");
+        tr = table.getElementsByTagName("tr");
+
+
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+    }
+
+    /*]]>*/
+</script>
+</body>
+</html>

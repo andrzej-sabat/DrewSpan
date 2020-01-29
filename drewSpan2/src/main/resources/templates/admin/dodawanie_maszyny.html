@@ -18,6 +18,8 @@
                 type="Submit">Wyloguj
         </button>
     </form>
+    <br/>
+    <a class="btn btn-md btn-primary btn-block" href="admin/home">Powrót do menu</a>
 
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
@@ -29,6 +31,8 @@
                 <div class="col-md-8">
                     <form th:action="@{/save_krmaszyny}" th:object="${krMaszyny}" method="post" >
                     <div class="row">
+                        <div th:if="${error}" th:text="${error}" class="alert alert-danger" style="text-align: center"/>
+                        <div th:if="${succes}" th:text="${succes}" class="alert alert-info" style="text-align: center"/>
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
                             <input type="hidden" th:field="*{krm_id}"/>
@@ -58,7 +62,7 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button class="btn btn-lg btn-primary btn-block" name="dodaj_maszyne" value="Dodaj" type="Submit">
+                                    <button class="btn btn-md btn-primary btn-block" name="dodaj_maszyne" value="Dodaj" type="Submit">
                                         Zapisz maszynę
                                     </button>
                                 </div>

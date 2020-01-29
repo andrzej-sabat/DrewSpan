@@ -13,11 +13,15 @@
 <body>
 <div class="container">
 
-    <form th:action="@{/logout}" method="get">
-        <button class="btn btn-md btn-danger btn-block" name="registration"
-                type="Submit">Wyloguj
-        </button>
-    </form>
+    <div class="container" style="width: 100%;">
+
+        <form th:action="@{/logout}" method="get">
+            <button class="btn btn-md btn-danger btn-block" name="registration"
+                    type="Submit">Wyloguj
+            </button>
+        </form>
+        <br/>
+        <a class="btn btn-md btn-primary btn-block" href="admin/home">Kartoteki i produkcja</a>
 
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
@@ -25,10 +29,13 @@
                 <span th:utext="${userName}"></span>
             </div>
             <div class="panel-body">
+
                 <form action="#"  th:action="@{/save_op_tech}" th:object="${opTech}" method="post" >
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
                         <div class="row">
+                            <div th:if="${error}" th:text="${error}" class="alert alert-danger"/>
+                            <div th:if="${succes}" th:text="${succes}" class="alert alert-info"/>
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
                                 <input type="hidden" th:field="*{opt_id}"/>
@@ -58,7 +65,7 @@
 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <button class="btn btn-lg btn-primary btn-block" name="dodaj_operacje" value="Dodaj" type="Submit">
+                                        <button class="btn btn-md btn-primary btn-block" name="dodaj_operacje" value="Dodaj" type="Submit">
                                             Zapisz operacje
                                         </button>
                                     </div>

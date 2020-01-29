@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -61,9 +63,18 @@ public class IndexOpController {
 
     @PostMapping("/save_indexOp")
     public ModelAndView saveIndexOp(@ModelAttribute IndexOp indexOp) {
-
-        indexOpService.save(indexOp);
         ModelAndView modelAndView = new ModelAndView();
+
+        try {
+            indexOpService.save(indexOp);
+            modelAndView.addObject("succes","Pomyślnie dodano indeks");
+        }
+        catch (Exception e){
+            modelAndView.addObject("error","Błąd, indeks już istnieje.");
+            modelAndView.setViewName("/admin/dodawanie_indeksu");
+            return modelAndView;
+        }
+
         List<IndexOp> listIndexOp= indexOpService.getAllIndexOp();
         modelAndView.addObject("listIndexOp", listIndexOp);
         modelAndView.addObject("indexOp",indexOp);
@@ -74,12 +85,22 @@ public class IndexOpController {
 
     @RequestMapping(value = "/delete_indexOp", method = RequestMethod.GET)
     public ModelAndView deleteIndexOp(HttpServletRequest request) {
-        long id_indeksu = Integer.parseInt(request.getParameter("id_indeksu"));
-        indexOpService.deleteIndexOp(id_indeksu);
         ModelAndView modelAndView = new ModelAndView();
-        List<IndexOp> listIndexOp= indexOpService.getAllIndexOp();
-        modelAndView.addObject("listIndexOp", listIndexOp);
-        modelAndView.setViewName("admin/lista_indeksow");
+
+        try {
+            long id_indeksu = Integer.parseInt(request.getParameter("id_indeksu"));
+            indexOpService.deleteIndexOp(id_indeksu);
+            List<IndexOp> listIndexOp = indexOpService.getAllIndexOp();
+            modelAndView.addObject("listIndexOp", listIndexOp);
+            modelAndView.setViewName("admin/lista_indeksow");
+            modelAndView.addObject("deleted","Pomyślnie usunięto indeks");
+        } catch (Exception e) {
+
+            List<IndexOp> listIndexOp = indexOpService.getAllIndexOp();
+            modelAndView.addObject("listIndexOp", listIndexOp);
+            modelAndView.setViewName("admin/lista_indeksow");
+
+        }
         return modelAndView;
     }
 
